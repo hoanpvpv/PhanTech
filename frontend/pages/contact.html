@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Liên hệ - Công ty PhanTech</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../assets/fonts/themify-icons-font/themify-icons/themify-icons.css">
+</head>
+
+<body>
+    <div class="scale-wrapper">
+        <!-- Navbar -->
+        <div id="nav-container"></div>
+
+        <main style="background-color: #f8f9fa;">
+            <!-- Banner -->
+            <div class="banner text-center text-white bg-primary py-5">
+                <h1>Liên hệ với chúng tôi</h1>
+                <p>Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+            </div>
+
+            <!-- Thông tin liên hệ -->
+            <div class="about-contact container my-5">
+                <h2 class="text-center text-primary mb-4">Thông tin liên hệ</h2>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                        <i class="ti-location-pin text-primary display-4"></i>
+                        <h5 class="mt-3">Địa chỉ</h5>
+                        <p>Số 123, Đường ABC, Quận XYZ, Thành phố Hồ Chí Minh</p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                        <i class="ti-email text-primary display-4"></i>
+                        <h5 class="mt-3">Email</h5>
+                        <p>contact@phantech.com</p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                        <i class="ti-mobile text-primary display-4"></i>
+                        <h5 class="mt-3">Điện thoại</h5>
+                        <p>0123 456 789</p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                        <i class="ti-facebook text-primary display-4"></i>
+                        <h5 class="mt-3">Facebook</h5>
+                        <p><a href="https://facebook.com/phantech" target="_blank"
+                                class="text-primary">facebook.com/phantech</a></p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                        <i class="ti-comment text-primary display-4"></i>
+                        <h5 class="mt-3">Zalo</h5>
+                        <p><a href="https://zalo.me/0123456789" target="_blank" class="text-primary">Zalo: 0123 456
+                                789</a></p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 text-center">
+                        <i class="ti-twitter text-primary display-4"></i>
+                        <h5 class="mt-3">Twitter</h5>
+                        <p><a href="https://twitter.com/phantech" target="_blank"
+                                class="text-primary">twitter.com/phantech</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Form liên hệ -->
+            <div class="about-contact container-fluid bg-primary text-white py-5">
+                <div class="container">
+                    <h2 class="text-center mb-4">Liên hệ với chúng tôi</h2>
+                    <form class="contact-form">
+                        <div class="row">
+                            <!-- Họ và tên -->
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" placeholder="Họ và tên" required>
+                            </div>
+                            <!-- Số điện thoại -->
+                            <div class="col-md-6 mb-3">
+                                <input type="tel" class="form-control" placeholder="Số điện thoại" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Email -->
+                            <div class="col-md-6 mb-3">
+                                <input type="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <!-- Lựa chọn công ty hoặc cá nhân -->
+                            <div class="col-md-6 mb-3">
+                                <select class="form-select" required>
+                                    <option value="" disabled selected>Bạn là</option>
+                                    <option value="company">Công ty</option>
+                                    <option value="individual">Cá nhân</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Danh sách sản phẩm yêu cầu -->
+                        <div class="mb-3">
+                            <label class="form-label">Sản phẩm quan tâm:</label>
+                            <div id="product-requests" class="bg-white text-dark p-2 rounded mb-3">
+                                <!-- Danh sách sản phẩm sẽ được thêm vào đây -->
+                            </div>
+                        </div>
+
+                        <!-- Danh sách yêu cầu -->
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="4" placeholder="Danh sách yêu cầu của bạn"
+                                id="request-details" required></textarea>
+                        </div>
+                        <!-- Nút gửi -->
+                        <button type="submit" class="btn btn-light w-100">Gửi ngay</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bản đồ -->
+            <div class="container my-5">
+                <h2 class="text-center text-primary mb-4">Bản đồ</h2>
+                <div class="map-responsive">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.682574420091!2d106.6800683153344!3d10.76262299232744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3f1c6f6e5b%3A0x2b1b1b1b1b1b1b1b!2zQ8O0bmcgdHkgUGjDoXQgdHLhuqVuaCBDw7RuZyBuZ2jhu4cgduG7iyBQaGFuVGVjaA!5e0!3m2!1sen!2s!4v1681234567890!5m2!1sen!2s"
+                        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer-container"></div>
+        <div id="cart-container"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="../cart.js"></script>
+    <script>
+        // Hàm tải nội dung từ tệp HTML
+        async function loadComponent(containerId, filePath) {
+            const response = await fetch(filePath);
+            const content = await response.text();
+            document.getElementById(containerId).innerHTML = content;
+
+            // Khởi tạo giỏ hàng sau khi tải component
+            if (containerId === 'cart-container' && typeof initCart === 'function') {
+                setTimeout(initCart, 200);
+            }
+        }
+
+        // Tải các component
+        loadComponent('nav-container', '../component/nav.html');
+        loadComponent('footer-container', '../component/footer.html');
+        loadComponent('cart-container', '../component/cart.html');
+
+        // Hiển thị sản phẩm từ URL parameters hoặc localStorage
+        async function displayRequestedProducts() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productParam = urlParams.get('product');
+            const serviceParam = urlParams.get('service'); // Thêm xử lý tham số dịch vụ
+            const fromCart = urlParams.get('fromCart');
+
+            const productRequests = document.getElementById('product-requests');
+            if (!productRequests) return;
+
+            // Tải danh sách sản phẩm từ products.json
+            const response = await fetch('/pages/products.json');
+            if (!response.ok) {
+                console.error('Không thể tải dữ liệu sản phẩm');
+                return;
+            }
+            const products = await response.json();
+
+            let displayedProducts = [];
+
+            // Nếu từ giỏ hàng
+            if (fromCart === 'true') {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                displayedProducts = cart;
+            }
+            // Nếu từ trang chi tiết sản phẩm
+            else if (productParam) {
+                const product = products.find(p => p.name === productParam);
+                if (product) {
+                    displayedProducts = [{ name: product.name, image: product.images[0] }];
+                }
+            }
+            // Nếu từ trang dịch vụ
+            else if (serviceParam) {
+                // Xác định hình ảnh dựa theo loại dịch vụ
+                let serviceImage = '/assets/images/service-default.jpg';
+
+                if (serviceParam.includes('Lắp đặt')) {
+                    serviceImage = '/assets/images/installation.jpg';
+                } else if (serviceParam.includes('Bảo trì')) {
+                    serviceImage = '/assets/images/maintenance.jpg';
+                } else if (serviceParam.includes('Sửa chữa')) {
+                    serviceImage = '/assets/images/repair.jpg';
+                } else if (serviceParam.includes('Nâng cấp')) {
+                    serviceImage = '/assets/images/upgrade.jpg';
+                } else if (serviceParam.includes('Tư vấn')) {
+                    serviceImage = '/assets/images/advisory.jpg';
+                }
+
+                displayedProducts = [{ name: serviceParam, image: serviceImage }];
+            }
+
+            if (displayedProducts.length === 0) {
+                productRequests.innerHTML = '<p class="text-muted">Chưa có sản phẩm nào được chọn</p>';
+                return;
+            }
+
+            // Hiển thị sản phẩm
+            let html = '<div class="product-list">';
+            displayedProducts.forEach(item => {
+                html += `
+                <div class="product-item d-flex align-items-center mb-2 p-2 border-bottom">
+                    <img src="${item.image}" alt="${item.name}" width="40" height="40" class="me-2" style="object-fit: cover; border-radius: 3px;">
+                    <span>${item.name}</span>
+                </div>`;
+            });
+            html += '</div>';
+
+            productRequests.innerHTML = html;
+
+            // Thêm danh sách sản phẩm vào trường textarea
+            const textarea = document.getElementById('request-details');
+            let productList = "Tôi quan tâm đến các sản phẩm/dịch vụ sau:\n";
+            displayedProducts.forEach(item => {
+                productList += `- ${item.name}\n`;
+            });
+            productList += "\nChi tiết yêu cầu: ";
+            textarea.value = productList;
+        }
+
+        document.addEventListener('DOMContentLoaded', displayRequestedProducts);
+    </script>
+    <script src="../main.js"></script>
+
+    <style>
+        #product-requests {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #product-requests .product-item:last-child {
+            border-bottom: none !important;
+        }
+    </style>
+</body>
+
+</html>

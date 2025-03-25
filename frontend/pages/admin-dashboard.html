@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Công ty PhanTech</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../assets/fonts/themify-icons-font/themify-icons/themify-icons.css">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        .dashboard-container {
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .nav-tabs .nav-link {
+            color: #007bff;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .tinymce-container {
+            min-height: 200px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body style="background-color: #f8f9fa;">
+    <div class="scale-wrapper">
+        <div class="dashboard-container">
+            <h1 class="text-center mb-4">Admin Dashboard</h1>
+            <button class="btn btn-danger mb-3" onclick="logout()">Đăng xuất</button>
+            <ul class="nav nav-tabs mb-4">
+                <li class="nav-item">
+                    <a class="nav-link active" id="products-tab" data-bs-toggle="tab" href="#products">Sản phẩm thang
+                        máy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="projects-tab" data-bs-toggle="tab" href="#projects">Dự án</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="requests-tab" data-bs-toggle="tab" href="#requests">Yêu cầu khách hàng</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Tab Sản phẩm thang máy -->
+                <div class="tab-pane fade show active" id="products">
+                    <button class="btn btn-custom mb-3" data-bs-toggle="modal" data-bs-target="#productModal"
+                        onclick="openProductModal('create')">Thêm sản phẩm</button>
+                    <div class="search-bar">
+                        <input type="text" class="form-control" id="product-search"
+                            placeholder="Tìm kiếm sản phẩm theo tên...">
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Loại</th>
+                                <th>Tải trọng</th>
+                                <th>Tốc độ</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body"></tbody>
+                    </table>
+                </div>
+
+                <!-- Tab Dự án -->
+                <div class="tab-pane fade" id="projects">
+                    <button class="btn btn-custom mb-3" data-bs-toggle="modal" data-bs-target="#projectModal"
+                        onclick="openProjectModal('create')">Thêm dự án</button>
+                    <div class="search-bar">
+                        <input type="text" class="form-control" id="project-search"
+                            placeholder="Tìm kiếm dự án theo tên...">
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tên dự án</th>
+                                <th>Địa điểm</th>
+                                <th>Ngày hoàn thành</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="project-table-body"></tbody>
+                    </table>
+                </div>
+
+                <!-- Tab Yêu cầu khách hàng -->
+                <div class="tab-pane fade" id="requests">
+                    <div class="search-bar">
+                        <input type="text" class="form-control" id="request-search"
+                            placeholder="Tìm kiếm yêu cầu theo tên khách hàng...">
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tên khách hàng</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Loại khách</th>
+                                <th>Ngày nhận</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="request-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal cho Sản phẩm -->
+        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">Thêm sản phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="product-form">
+                            <input type="hidden" id="product-id">
+                            <div class="mb-3">
+                                <label for="product-name" class="form-label">Tên sản phẩm</label>
+                                <input type="text" class="form-control" id="product-name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-type" class="form-label">Loại thang máy</label>
+                                <select class="form-control" id="product-type" required>
+                                    <option value="homelift">Thang máy gia đình</option>
+                                    <option value="passenger">Thang máy chở khách</option>
+                                    <option value="glass">Thang máy kính</option>
+                                    <option value="hydraulic">Thang máy thủy lực</option>
+                                    <option value="freight">Thang máy hàng hóa</option>
+                                    <option value="hospital">Thang máy bệnh viện</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-load" class="form-label">Tải trọng</label>
+                                <input type="text" class="form-control" id="product-load" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-speed" class="form-label">Tốc độ</label>
+                                <input type="text" class="form-control" id="product-speed" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-images" class="form-label">Hình ảnh (cách nhau bởi dấu phẩy)</label>
+                                <input type="text" class="form-control" id="product-images"
+                                    placeholder="VD: ../assets/images/homelift1.png, ../assets/images/freight.png">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-video" class="form-label">Link video YouTube (embed)</label>
+                                <input type="text" class="form-control" id="product-video"
+                                    placeholder="VD: https://www.youtube.com/embed/dQw4w9WgXcQ">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-description" class="form-label">Mô tả</label>
+                                <textarea class="form-control" id="product-description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-cabinSize" class="form-label">Kích thước cabin</label>
+                                <input type="text" class="form-control" id="product-cabinSize"
+                                    placeholder="VD: 1000mm x 800mm x 2100mm">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-motorPower" class="form-label">Công suất động cơ</label>
+                                <input type="text" class="form-control" id="product-motorPower" placeholder="VD: 2.2kW">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-material" class="form-label">Vật liệu</label>
+                                <input type="text" class="form-control" id="product-material"
+                                    placeholder="VD: Thép không gỉ, kính cường lực">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-price" class="form-label">Giá ước tính</label>
+                                <input type="text" class="form-control" id="product-price"
+                                    placeholder="VD: 450 triệu VND">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-specialFeatures" class="form-label">Tính năng đặc biệt</label>
+                                <input type="text" class="form-control" id="product-specialFeatures"
+                                    placeholder="VD: Hệ thống tiết kiệm điện, đèn LED tự động">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product-content" class="form-label">Bài viết</label>
+                                <textarea class="tinymce-container" id="product-content"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-custom">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal cho Dự án -->
+        <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="projectModalLabel">Thêm dự án</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="project-form">
+                            <input type="hidden" id="project-id">
+                            <div class="mb-3">
+                                <label for="project-name" class="form-label">Tên dự án</label>
+                                <input type="text" class="form-control" id="project-name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="project-location" class="form-label">Địa điểm</label>
+                                <input type="text" class="form-control" id="project-location" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="project-date" class="form-label">Ngày hoàn thành</label>
+                                <input type="date" class="form-control" id="project-date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="project-images" class="form-label">Hình ảnh (cách nhau bởi dấu phẩy)</label>
+                                <input type="text" class="form-control" id="project-images"
+                                    placeholder="VD: ../assets/images/project1.png, ../assets/images/project2.png">
+                            </div>
+                            <div class="mb-3">
+                                <label for="project-video" class="form-label">Link video YouTube (embed)</label>
+                                <input type="text" class="form-control" id="project-video"
+                                    placeholder="VD: https://www.youtube.com/embed/dQw4w9WgXcQ">
+                            </div>
+                            <div class="mb-3">
+                                <label for="project-content" class="form-label">Bài viết</label>
+                                <textarea class="tinymce-container" id="project-content"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-custom">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal chi tiết yêu cầu -->
+        <div class="modal fade" id="requestDetailModal" tabindex="-1" aria-labelledby="requestDetailModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="requestDetailModalLabel">Chi tiết yêu cầu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Tên khách hàng:</strong> <span id="detail-customer-name"></span></p>
+                        <p><strong>Số điện thoại:</strong> <span id="detail-phone"></span></p>
+                        <p><strong>Email:</strong> <span id="detail-email"></span></p>
+                        <p><strong>Loại khách:</strong> <span id="detail-customer-type"></span></p>
+                        <p><strong>Ngày nhận:</strong> <span id="detail-received-date"></span></p>
+                        <p><strong>Sản phẩm/Dịch vụ:</strong> <span id="detail-items"></span></p>
+                        <p><strong>Nội dung yêu cầu:</strong> <span id="detail-request-content"></span></p>
+                        <p><strong>Trạng thái:</strong> <span id="detail-status"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Khởi tạo TinyMCE
+        tinymce.init({
+            selector: '.tinymce-container',
+            height: 300,
+            plugins: 'link image lists',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image'
+        });
+
+        // Dữ liệu mẫu ban đầu
+        let products = JSON.parse(localStorage.getItem('products')) || [
+            {
+                name: "Thang máy gia đình EcoLift 350",
+                type: "homelift",
+                loadCapacity: "350kg",
+                speed: "0.4m/s",
+                images: ["../assets/images/homelift1.png", "../assets/images/freight.png", "../assets/images/homelift1.png", "../assets/images/homelift1.png", "../assets/images/homelift1.png"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                description: "Thang máy gia đình tiết kiệm năng lượng, phù hợp cho nhà ở từ 2-4 tầng. Thiết kế nhỏ gọn, vận hành êm ái.",
+                cabinSize: "1000mm x 800mm x 2100mm",
+                motorPower: "2.2kW",
+                material: "Thép không gỉ, kính cường lực",
+                estimatedPrice: "450 triệu VND",
+                specialFeatures: "Hệ thống tiết kiệm điện, đèn LED tự động",
+                content: "<p>Đây là bài viết chi tiết về thang máy EcoLift 350...</p>"
+            }
+        ];
+        let projects = JSON.parse(localStorage.getItem('projects')) || [
+            {
+                name: "Dự án chung cư XYZ",
+                location: "Hà Nội",
+                date: "2023-12-15",
+                images: ["../assets/images/project1.png", "../assets/images/project2.png"],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                content: "<p>Dự án lắp đặt thang máy tại chung cư XYZ...</p>"
+            }
+        ];
+        let requests = JSON.parse(localStorage.getItem('customerRequests')) || [
+            {
+                customerName: "Nguyễn Văn A",
+                phone: "0987654321",
+                email: "nguyenvana@example.com",
+                customerType: "Cá nhân",
+                items: ["Thang máy gia đình EcoLift 350", "Dịch vụ bảo trì"],
+                requestContent: "Yêu cầu tư vấn lắp đặt thang máy cho nhà 3 tầng.",
+                receivedDate: "2025-03-23 10:30:00",
+                processed: false
+            },
+            {
+                customerName: "Công ty ABC",
+                phone: "0123456789",
+                email: "abc@company.com",
+                customerType: "Công ty",
+                items: ["Thang máy chở khách 1000kg"],
+                requestContent: "Cần báo giá và lắp đặt trong tháng này.",
+                receivedDate: "2025-03-22 15:45:00",
+                processed: true
+            }
+        ];
+
+        // Hiển thị danh sách sản phẩm
+        function displayProducts(searchQuery = '') {
+            const tbody = document.getElementById('product-table-body');
+            tbody.innerHTML = '';
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            filteredProducts.forEach((product, index) => {
+                const row = `
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>${product.type}</td>
+                        <td>${product.loadCapacity}</td>
+                        <td>${product.speed}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openProductModal('edit', ${index})">Sửa</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${index})">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Hiển thị danh sách dự án
+        function displayProjects(searchQuery = '') {
+            const tbody = document.getElementById('project-table-body');
+            tbody.innerHTML = '';
+            const filteredProjects = projects.filter(project =>
+                project.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            filteredProjects.forEach((project, index) => {
+                const row = `
+                    <tr>
+                        <td>${project.name}</td>
+                        <td>${project.location}</td>
+                        <td>${project.date}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#projectModal" onclick="openProjectModal('edit', ${index})">Sửa</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProject(${index})">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Hiển thị danh sách yêu cầu
+        function displayRequests(searchQuery = '') {
+            const tbody = document.getElementById('request-table-body');
+            tbody.innerHTML = '';
+            const filteredRequests = requests.filter(request =>
+                request.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            filteredRequests.forEach((request, index) => {
+                const row = `
+                    <tr>
+                        <td>${request.customerName}</td>
+                        <td>${request.phone}</td>
+                        <td>${request.email}</td>
+                        <td>${request.customerType}</td>
+                        <td>${request.receivedDate}</td>
+                        <td>${request.processed ? 'Đã xử lý' : 'Chưa xử lý'}</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#requestDetailModal" onclick="showRequestDetail(${index})">Xem chi tiết</button>
+                            <button class="btn btn-success btn-sm" onclick="markRequestProcessed(${index})" ${request.processed ? 'disabled' : ''}>Đánh dấu đã xử lý</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Hiển thị chi tiết yêu cầu
+        function showRequestDetail(index) {
+            const request = requests[index];
+            document.getElementById('detail-customer-name').textContent = request.customerName;
+            document.getElementById('detail-phone').textContent = request.phone;
+            document.getElementById('detail-email').textContent = request.email;
+            document.getElementById('detail-customer-type').textContent = request.customerType;
+            document.getElementById('detail-received-date').textContent = request.receivedDate;
+            document.getElementById('detail-items').textContent = request.items.join(', ');
+            document.getElementById('detail-request-content').textContent = request.requestContent;
+            document.getElementById('detail-status').textContent = request.processed ? 'Đã xử lý' : 'Chưa xử lý';
+        }
+
+        // Mở modal sản phẩm
+        function openProductModal(action, index = null) {
+            const modalLabel = document.getElementById('productModalLabel');
+            const form = document.getElementById('product-form');
+            if (action === 'create') {
+                modalLabel.textContent = 'Thêm sản phẩm';
+                form.reset();
+                tinymce.get('product-content').setContent('');
+                document.getElementById('product-id').value = '';
+            } else if (action === 'edit') {
+                modalLabel.textContent = 'Sửa sản phẩm';
+                const product = products[index];
+                document.getElementById('product-id').value = index;
+                document.getElementById('product-name').value = product.name;
+                document.getElementById('product-type').value = product.type;
+                document.getElementById('product-load').value = product.loadCapacity;
+                document.getElementById('product-speed').value = product.speed;
+                document.getElementById('product-images').value = product.images.join(', ');
+                document.getElementById('product-video').value = product.video;
+                document.getElementById('product-description').value = product.description;
+                document.getElementById('product-cabinSize').value = product.cabinSize;
+                document.getElementById('product-motorPower').value = product.motorPower;
+                document.getElementById('product-material').value = product.material;
+                document.getElementById('product-price').value = product.estimatedPrice;
+                document.getElementById('product-specialFeatures').value = product.specialFeatures;
+                tinymce.get('product-content').setContent(product.content || '');
+            }
+        }
+
+        // Mở modal dự án
+        function openProjectModal(action, index = null) {
+            const modalLabel = document.getElementById('projectModalLabel');
+            const form = document.getElementById('project-form');
+            if (action === 'create') {
+                modalLabel.textContent = 'Thêm dự án';
+                form.reset();
+                tinymce.get('project-content').setContent('');
+                document.getElementById('project-id').value = '';
+            } else if (action === 'edit') {
+                modalLabel.textContent = 'Sửa dự án';
+                const project = projects[index];
+                document.getElementById('project-id').value = index;
+                document.getElementById('project-name').value = project.name;
+                document.getElementById('project-location').value = project.location;
+                document.getElementById('project-date').value = project.date;
+                document.getElementById('project-images').value = project.images.join(', ');
+                document.getElementById('project-video').value = project.video;
+                tinymce.get('project-content').setContent(project.content || '');
+            }
+        }
+
+        // Xử lý form sản phẩm
+        document.getElementById('product-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.getElementById('product-id').value;
+            const product = {
+                name: document.getElementById('product-name').value,
+                type: document.getElementById('product-type').value,
+
+                loadCapacity: document.getElementById('product-load').value,
+                speed: document.getElementById('product-speed').value,
+                images: document.getElementById('product-images').value.split(',').map(img => img.trim()),
+                video: document.getElementById('product-video').value,
+                description: document.getElementById('product-description').value,
+                cabinSize: document.getElementById('product-cabinSize').value,
+                motorPower: document.getElementById('product-motorPower').value,
+                material: document.getElementById('product-material').value,
+                estimatedPrice: document.getElementById('product-price').value,
+                specialFeatures: document.getElementById('product-specialFeatures').value,
+                content: tinymce.get('product-content').getContent()
+            };
+            if (id === '') {
+                products.push(product);
+            } else {
+                products[id] = product;
+            }
+            localStorage.setItem('products', JSON.stringify(products));
+            displayProducts(document.getElementById('product-search').value);
+            bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+        });
+
+        // Xử lý form dự án
+        document.getElementById('project-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.getElementById('project-id').value;
+            const project = {
+                name: document.getElementById('project-name').value,
+                location: document.getElementById('project-location').value,
+                date: document.getElementById('project-date').value,
+                images: document.getElementById('project-images').value.split(',').map(img => img.trim()),
+                video: document.getElementById('project-video').value,
+                content: tinymce.get('project-content').getContent()
+            };
+            if (id === '') {
+                projects.push(project);
+            } else {
+                projects[id] = project;
+            }
+            localStorage.setItem('projects', JSON.stringify(projects));
+            displayProjects(document.getElementById('project-search').value);
+            bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
+        });
+
+        // Xóa sản phẩm
+        function deleteProduct(index) {
+            if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+                products.splice(index, 1);
+                localStorage.setItem('products', JSON.stringify(products));
+                displayProducts(document.getElementById('product-search').value);
+            }
+        }
+
+        // Xóa dự án
+        function deleteProject(index) {
+            if (confirm('Bạn có chắc muốn xóa dự án này?')) {
+                projects.splice(index, 1);
+                localStorage.setItem('projects', JSON.stringify(projects));
+                displayProjects(document.getElementById('project-search').value);
+            }
+        }
+
+        // Đánh dấu yêu cầu đã xử lý
+        function markRequestProcessed(index) {
+            requests[index].processed = true;
+            localStorage.setItem('customerRequests', JSON.stringify(requests));
+            displayRequests(document.getElementById('request-search').value);
+        }
+
+        // Đăng xuất
+        function logout() {
+            if (confirm('Bạn có muốn đăng xuất?')) {
+                window.location.href = '/pages/admin-login.html';
+            }
+        }
+
+        // Sự kiện tìm kiếm
+        document.getElementById('product-search').addEventListener('input', function () {
+            displayProducts(this.value);
+        });
+        document.getElementById('project-search').addEventListener('input', function () {
+            displayProjects(this.value);
+        });
+        document.getElementById('request-search').addEventListener('input', function () {
+            displayRequests(this.value);
+        });
+
+        // Khởi chạy
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProducts();
+            displayProjects();
+            displayRequests();
+        });
+    </script>
+</body>
+
+</html>

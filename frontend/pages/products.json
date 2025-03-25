@@ -1,0 +1,242 @@
+[
+    {
+        "name": "Thang máy gia đình EcoLift 350",
+        "type": "homelift",
+        "loadCapacity": "350kg",
+        "speed": "0.4m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/freight.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "description": "Thang máy gia đình tiết kiệm năng lượng, phù hợp cho nhà ở từ 2-4 tầng. Thiết kế nhỏ gọn, vận hành êm ái.",
+        "cabinSize": "1000mm x 800mm x 2100mm",
+        "motorPower": "2.2kW",
+        "material": "Thép không gỉ, kính cường lực",
+        "estimatedPrice": "450 triệu VND",
+        "specialFeatures": "Hệ thống tiết kiệm điện, đèn LED tự động"
+    },
+    {
+        "name": "Thang máy gia đình EcoLift 500",
+        "type": "homelift",
+        "loadCapacity": "500kg",
+        "speed": "0.6m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/3tmd-ClzJzs",
+        "description": "Phiên bản nâng cấp của EcoLift, tải trọng lớn hơn, thích hợp cho gia đình đông người hoặc biệt thự.",
+        "cabinSize": "1200mm x 1000mm x 2200mm",
+        "motorPower": "3.0kW",
+        "material": "Thép không gỉ, kính cường lực",
+        "estimatedPrice": "550 triệu VND",
+        "specialFeatures": "Điều khiển thông minh, cảm biến an toàn"
+    },
+    {
+        "name": "Thang máy chở khách HighSpeed 1000",
+        "type": "passenger",
+        "loadCapacity": "1000kg",
+        "speed": "1.5m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/9bZkp7q19f0",
+        "description": "Thang máy tốc độ cao dành cho tòa nhà thương mại, chung cư cao tầng. Chứa được tối đa 13 người.",
+        "cabinSize": "1600mm x 1400mm x 2400mm",
+        "motorPower": "7.5kW",
+        "material": "Thép không gỉ, nhôm",
+        "estimatedPrice": "1.2 tỷ VND",
+        "specialFeatures": "Tốc độ cao, hệ thống giảm rung"
+    },
+    {
+        "name": "Thang máy chở khách Comfort 800",
+        "type": "passenger",
+        "loadCapacity": "800kg",
+        "speed": "1.0m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/XYZ12345678",
+        "description": "Thang máy tiện nghi cho các tòa nhà văn phòng hoặc khách sạn vừa và nhỏ.",
+        "cabinSize": "1400mm x 1200mm x 2300mm",
+        "motorPower": "5.5kW",
+        "material": "Thép không gỉ, gỗ trang trí",
+        "estimatedPrice": "900 triệu VND",
+        "specialFeatures": "Thiết kế sang trọng, điều hòa không khí"
+    },
+    {
+        "name": "Thang máy kính GlassView 500",
+        "type": "glass",
+        "loadCapacity": "500kg",
+        "speed": "0.6m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/abcdef12345",
+        "description": "Thang máy kính thẩm mỹ, sử dụng kính cường lực trong suốt, lý tưởng cho biệt thự hoặc showroom.",
+        "cabinSize": "1100mm x 900mm x 2200mm",
+        "motorPower": "3.0kW",
+        "material": "Kính cường lực, thép không gỉ",
+        "estimatedPrice": "700 triệu VND",
+        "specialFeatures": "Tầm nhìn toàn cảnh, ánh sáng tự nhiên"
+    },
+    {
+        "name": "Thang máy kính GlassView 350",
+        "type": "glass",
+        "loadCapacity": "350kg",
+        "speed": "0.4m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/ghi789jklmn",
+        "description": "Thang máy kính nhỏ gọn, phù hợp cho không gian gia đình hiện đại.",
+        "cabinSize": "900mm x 800mm x 2100mm",
+        "motorPower": "2.2kW",
+        "material": "Kính cường lực, thép không gỉ",
+        "estimatedPrice": "600 triệu VND",
+        "specialFeatures": "Thiết kế tối giản, vận hành êm ái"
+    },
+    {
+        "name": "Thang máy thủy lực HydroMax 800",
+        "type": "hydraulic",
+        "loadCapacity": "800kg",
+        "speed": "0.8m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/opq456rstuv",
+        "description": "Thang máy thủy lực mạnh mẽ, hoạt động ổn định, thích hợp cho các công trình yêu cầu độ bền cao.",
+        "cabinSize": "1400mm x 1200mm x 2300mm",
+        "motorPower": "5.5kW",
+        "material": "Thép hợp kim, nhôm",
+        "estimatedPrice": "950 triệu VND",
+        "specialFeatures": "Công nghệ thủy lực, chịu tải tốt"
+    },
+    {
+        "name": "Thang máy thủy lực HydroMax 1000",
+        "type": "hydraulic",
+        "loadCapacity": "1000kg",
+        "speed": "1.0m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/wxy789zabcd",
+        "description": "Phiên bản tải trọng lớn của HydroMax, dành cho các tòa nhà công nghiệp hoặc thương mại.",
+        "cabinSize": "1600mm x 1400mm x 2400mm",
+        "motorPower": "7.5kW",
+        "material": "Thép hợp kim, nhôm",
+        "estimatedPrice": "1.1 tỷ VND",
+        "specialFeatures": "Độ bền cao, vận hành mạnh mẽ"
+    },
+    {
+        "name": "Thang máy hàng hóa FreightPro 2000",
+        "type": "freight",
+        "loadCapacity": "2000kg",
+        "speed": "0.5m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/efg123hijkl",
+        "description": "Thang máy vận chuyển hàng hóa công nghiệp, chịu tải nặng, phù hợp cho nhà kho và nhà máy.",
+        "cabinSize": "2000mm x 1800mm x 2500mm",
+        "motorPower": "11kW",
+        "material": "Thép công nghiệp",
+        "estimatedPrice": "1.5 tỷ VND",
+        "specialFeatures": "Sàn chống trượt, cửa đôi"
+    },
+    {
+        "name": "Thang máy hàng hóa FreightPro 1500",
+        "type": "freight",
+        "loadCapacity": "1500kg",
+        "speed": "0.5m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/mno456pqrst",
+        "description": "Thang máy hàng hóa tầm trung, lý tưởng cho các cơ sở sản xuất vừa và nhỏ.",
+        "cabinSize": "1800mm x 1600mm x 2400mm",
+        "motorPower": "9kW",
+        "material": "Thép công nghiệp",
+        "estimatedPrice": "1.3 tỷ VND",
+        "specialFeatures": "Cửa rộng, tải trọng ổn định"
+    },
+    {
+        "name": "Thang máy bệnh viện MediLift 1500",
+        "type": "hospital",
+        "loadCapacity": "1500kg",
+        "speed": "1.0m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/uvw789xyzab",
+        "description": "Thang máy chuyên dụng cho bệnh viện, thiết kế rộng rãi để chứa cáng cứu thương.",
+        "cabinSize": "1800mm x 1600mm x 2400mm",
+        "motorPower": "7.5kW",
+        "material": "Thép không gỉ y tế",
+        "estimatedPrice": "1.4 tỷ VND",
+        "specialFeatures": "Khử trùng UV, nút ưu tiên khẩn cấp"
+    },
+    {
+        "name": "Thang máy bệnh viện MediLift 1000",
+        "type": "hospital",
+        "loadCapacity": "1000kg",
+        "speed": "0.8m/s",
+        "images": [
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png",
+            "../assets/images/homelift1.png"
+        ],
+        "video": "https://www.youtube.com/embed/cde123fghij",
+        "description": "Thang máy bệnh viện nhỏ hơn, phù hợp cho các phòng khám hoặc bệnh viện tư nhân.",
+        "cabinSize": "1600mm x 1400mm x 2300mm",
+        "motorPower": "5.5kW",
+        "material": "Thép không gỉ y tế",
+        "estimatedPrice": "1.1 tỷ VND",
+        "specialFeatures": "Tay vịn chống khuẩn, vận hành êm"
+    }
+]

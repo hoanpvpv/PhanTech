@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trang chủ - Shop Bán Hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../assets/fonts/themify-icons-font/themify-icons/themify-icons.css">
+</head>
+
+<body>
+    <div class="scale-wrapper">
+        <!-- Navbar -->
+        <div id="nav-container"></div>
+
+        <main style="background-color: #e9ecef;">
+            <div class="banner">
+                <h1>Chào mừng đến với PhanTech</h1>
+                <p>Nơi hội tụ công nghệ và kỹ thuật tiên tiến nhất</p>
+
+            </div>
+
+            <!-- Product -->
+            <div id="product-container"></div>
+
+            <!-- Giới thiệu -->
+            <div class="intro container my-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <h2 class="text-primary">Về chúng tôi</h2>
+                        <p>
+                            Công ty Phát triển Công nghệ và Kỹ thuật PhanTech là đơn vị tiên phong trong lĩnh vực cung
+                            cấp các giải pháp thang máy hiện đại, chất lượng cao. Với hơn 10 năm kinh nghiệm, chúng tôi
+                            đã xây dựng được lòng tin của hàng nghìn khách hàng trên khắp cả nước.
+                        </p>
+                        <p>
+                            Chúng tôi không chỉ cung cấp sản phẩm mà còn mang đến các dịch vụ toàn diện như lắp đặt, bảo
+                            trì, sửa chữa và nâng cấp thang máy. Đội ngũ kỹ sư của chúng tôi luôn sẵn sàng hỗ trợ khách
+                            hàng với tinh thần trách nhiệm cao nhất.
+                        </p>
+                        <button class="btn service-btn">Chi tiết</button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+                        <img src="../assets/images/img_intro1.png" alt="Hình ảnh công ty" class="img-fluid rounded">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service -->
+            <div id="service-container"></div>
+
+            <!-- Footer -->
+            <div id="footer-container"></div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Hàm tải nội dung từ tệp HTML
+        async function loadComponent(containerId, filePath) {
+            const response = await fetch(filePath);
+            const content = await response.text();
+            document.getElementById(containerId).innerHTML = content;
+        }
+
+        // Tải các component
+        loadComponent('nav-container', '../component/nav.html');
+        loadComponent('product-container', '../component/nav-products.html');
+        loadComponent('service-container', '../component/nav-service.html');
+        loadComponent('footer-container', '../component/footer.html');
+    </script>
+    <script src="../main.js"></script>
+</body>
+
+</html>
