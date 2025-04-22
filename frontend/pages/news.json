@@ -1,0 +1,45 @@
+[
+    {
+        "id": 1,
+        "title": "Công nghệ thang máy mới nhất 2025",
+        "description": "Khám phá những cải tiến mới nhất trong công nghệ thang máy, mang lại hiệu suất vượt trội và tiết kiệm năng lượng.",
+        "date": "05/04/2025",
+        "image": "../assets/images/img_intro2.jpg",
+        "fullContent": "Năm 2025 đánh dấu một bước ngoặt quan trọng trong ngành công nghiệp thang máy với sự ra đời của các công nghệ tiên tiến, được tích hợp trí tuệ nhân tạo (AI) và Internet vạn vật (IoT)."
+    },
+    {
+        "id": 2,
+        "title": "Bảo trì thang máy: Những điều cần biết",
+        "description": "Hướng dẫn chi tiết về việc bảo trì thang máy để đảm bảo an toàn và tuổi thọ lâu dài.",
+        "date": "01/04/2025",
+        "image": "../assets/images/img_intro2.jpg"
+    },
+    {
+        "id": 3,
+        "title": "PhanTech tại Triển lãm Công nghệ 2025",
+        "description": "Cùng nhìn lại những điểm nhấn của PhanTech tại triển lãm công nghệ lớn nhất năm.",
+        "date": "28/03/2025",
+        "image": "../assets/images/img_intro2.jpg"
+    },
+    {
+        "id": 4,
+        "title": "Tương lai của thang máy thông minh",
+        "description": "Tìm hiểu cách thang máy thông minh đang thay đổi trải nghiệm người dùng và tiết kiệm năng lượng.",
+        "date": "22/03/2025",
+        "image": "../assets/images/img_intro2.jpg"
+    },
+    {
+        "id": 5,
+        "title": "Giải pháp thang máy cho tòa nhà cao tầng",
+        "description": "Phân tích các giải pháp tối ưu cho hệ thống thang máy trong các tòa nhà chọc trời.",
+        "date": "15/03/2025",
+        "image": "../assets/images/img_intro2.jpg"
+    },
+    {
+        "id": 6,
+        "title": "PhanTech mở rộng thị trường miền Nam",
+        "description": "Thông tin về kế hoạch mở rộng hoạt động kinh doanh của PhanTech tại thị trường miền Nam.",
+        "date": "08/03/2025",
+        "image": "../assets/images/img_intro2.jpg"
+    }
+]

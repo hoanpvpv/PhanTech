@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tin tức - PhanTech</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../assets/fonts/themify-icons-font/themify-icons/themify-icons.css">
+
+    <!-- Internal CSS styles for news detail page -->
+    <style>
+        /* News Article Styling */
+        #news-detail .card {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        #news-detail .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Image styles */
+        .image-wrapper {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        #news-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-wrapper:hover #news-image {
+            transform: scale(1.05);
+        }
+
+        /* Content styles */
+        #news-detail-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+
+        #news-detail-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        #news-detail-description {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            font-style: italic;
+            background-color: #f8f8f8;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        /* Article body styling */
+        #news-full-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            margin-top: 1.5rem;
+        }
+
+        #news-full-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        #news-full-content p:first-of-type::first-letter {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            float: left;
+            line-height: 1;
+            padding-right: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Back button styling */
+        .service-btn {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            background-color: #004080;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        /* Banner styling enhancement */
+        .banner {
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #004080);
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .banner p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .image-wrapper {
+                height: 250px;
+            }
+
+            #news-detail-title {
+                font-size: 1.8rem;
+            }
+
+            #news-full-content p:first-of-type::first-letter {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scale-wrapper">
+        <!-- Navbar -->
+        <div id="nav-container"></div>
+
+        <main style="background-color: #e9ecef;">
+            <!-- Banner -->
+            <div class="banner">
+                <h1 id="news-title">Tin tức chi tiết</h1>
+                <p id="news-date">Ngày đăng: Loading...</p>
+            </div>
+
+            <!-- News Detail Content -->
+            <section id="news-detail" class="container my-5">
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            <div class="image-wrapper">
+                                <img id="news-image" src="" alt="">
+                                <div class="image-overlay"></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 id="news-detail-title" class="card-title"></h5>
+                                <p id="news-detail-date" class="text-muted"></p>
+                                <p id="news-detail-description" class="card-text"></p>
+                                <!-- Nội dung chi tiết -->
+                                <div id="news-full-content">
+                                    <!-- Nội dung sẽ được thêm từ JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div class="text-center mt-4">
+                    <a href="index.html" class="btn service-btn">Quay lại trang chủ</a>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <div id="footer-container"></div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Hàm tải nội dung từ tệp HTML
+        async function loadComponent(containerId, filePath) {
+            const response = await fetch(filePath);
+            const content = await response.text();
+            document.getElementById(containerId).innerHTML = content;
+        }
+
+        // Hàm tải dữ liệu chi tiết tin tức
+        async function loadNewsDetail() {
+            try {
+                // Lấy ID từ URL query string
+                const urlParams = new URLSearchParams(window.location.search);
+                const newsId = 1
+
+                // Tải dữ liệu từ JSON
+                const response = await fetch('news.json');
+                const newsData = await response.json();
+
+                // Tìm bài viết theo ID
+                const news = newsData.find(item => item.id == newsId);
+
+                if (news) {
+                    // Cập nhật nội dung trang
+                    document.getElementById('news-title').textContent = news.title;
+                    document.getElementById('news-date').textContent = `Ngày đăng: ${news.date}`;
+                    document.getElementById('news-image').src = news.image;
+                    document.getElementById('news-image').alt = news.title;
+                    document.getElementById('news-detail-title').textContent = news.title;
+                    document.getElementById('news-detail-date').textContent = `Ngày đăng: ${news.date}`;
+                    document.getElementById('news-detail-description').textContent = news.description;
+
+                    // Hiển thị nội dung đầy đủ nếu có
+                    if (news.fullContent) {
+                        // Chuyển đổi xuống dòng \n thành thẻ <p> HTML
+                        const paragraphs = news.fullContent.split('\n\n');
+                        const htmlContent = paragraphs
+                            .map(paragraph => `<p>${paragraph}</p>`)
+                            .join('');
+                        document.getElementById('news-full-content').innerHTML = htmlContent;
+                    } else {
+                        document.getElementById('news-full-content').innerHTML = '<p>Không có nội dung chi tiết.</p>';
+                    }
+                } else {
+                    document.getElementById('news-detail-title').textContent = 'Không tìm thấy bài viết';
+                    document.getElementById('news-full-content').innerHTML = '<p>Bài viết không tồn tại hoặc đã bị xóa.</p>';
+                }
+            } catch (error) {
+                console.error('Lỗi khi tải dữ liệu chi tiết tin tức:', error);
+                document.getElementById('news-full-content').innerHTML = '<p>Đã xảy ra lỗi khi tải nội dung. Vui lòng thử lại sau.</p>';
+            }
+        }
+
+        // Tải các component
+        loadComponent('nav-container', '../component/nav.html');
+        loadComponent('footer-container', '../component/footer.html');
+
+        // Tải chi tiết tin tức
+        loadNewsDetail();
+    </script>
+    <script src="main.js"></script>
+</body>
+
+</html>
