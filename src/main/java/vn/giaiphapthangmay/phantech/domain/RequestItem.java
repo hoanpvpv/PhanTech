@@ -29,6 +29,10 @@ public class RequestItem {
         return product;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public void setProduct(Product product) {
         this.product = product;
     }

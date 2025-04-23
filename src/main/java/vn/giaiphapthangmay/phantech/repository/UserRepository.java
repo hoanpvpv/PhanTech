@@ -11,8 +11,13 @@ import vn.giaiphapthangmay.phantech.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
     List<User> findAllByRole(Role role);
 
+    void deleteById(long id);
+
+    boolean existsByEmail(String email);
+
+    User save(User newUser);
 }

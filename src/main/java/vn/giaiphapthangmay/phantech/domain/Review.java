@@ -107,4 +107,8 @@ public class Review {
         this.user = user;
     }
 
+    public long getId() {
+        return id;
+    }
+
 }

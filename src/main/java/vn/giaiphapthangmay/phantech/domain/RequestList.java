@@ -35,6 +35,10 @@ public class RequestList {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String noteInfo;
 
+    public long getId() {
+        return id;
+    }
+
     public String getStatus() {
         return status;
     }

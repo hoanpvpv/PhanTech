@@ -21,6 +21,10 @@ public class Service {
     private String detailDesc;
     private String image;
 
+    public long getId() {
+        return id;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }

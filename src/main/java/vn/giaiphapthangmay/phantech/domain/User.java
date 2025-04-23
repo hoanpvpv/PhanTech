@@ -25,6 +25,11 @@ public class User {
     private String phone;
     private String address;
     private LocalDateTime createdAt;
+
+    public long getId() {
+        return id;
+    }
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

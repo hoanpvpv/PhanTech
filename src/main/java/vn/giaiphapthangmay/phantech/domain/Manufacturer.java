@@ -18,6 +18,19 @@ public class Manufacturer {
     private String origin;
     @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
+    private String logo;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
