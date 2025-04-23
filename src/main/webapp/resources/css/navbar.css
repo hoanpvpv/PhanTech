@@ -1,0 +1,47 @@
+/* Navbar */
+.navbar {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+/* Logo */
+.logo {
+    height: auto;
+    max-height: 60px;
+    max-width: 80%;
+}
+
+/* Flag Icons */
+.flag {
+    width: 20px;
+    height: 15px;
+    margin-right: 8px;
+}
+
+/* Navbar links */
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    margin-right: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .logo {
+        max-height: 45px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+}
+
+#languageDropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
