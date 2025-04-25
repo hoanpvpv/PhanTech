@@ -50,7 +50,22 @@
                                                             <div class="invalid-feedback">Vui lòng nhập tên sản phẩm
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3">
+                                                            <label for="price" class="form-label">Giá sản phẩm <span
+                                                                    class="text-danger">*</span></label>
+                                                            <form:input path="price" id="price" class="form-control"
+                                                                type="number" step="1000" min="0" required="true" />
+                                                            <div class="invalid-feedback">Vui lòng nhập giá sản phẩm
+                                                            </div>
 
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="shortDescription" class="form-label">Mô tả ngắn
+                                                                <span class="text-danger">*</span></label>
+                                                            <form:input path="shortDescription" id="shortDescription"
+                                                                class="form-control" required="true" />
+                                                            <div class="invalid-feedback">Vui lòng nhập mô tả ngắn</div>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-md-6 mb-3">
                                                                 <label for="manufacturer" class="form-label">Nhà sản
@@ -288,23 +303,90 @@
                 <script
                     src="https://cdn.tiny.cloud/1/nygcenmzq3prqg0wrri75srh2s6zin8p8bykol8nmskn6vf1/tinymce/7/tinymce.min.js"
                     referrerpolicy="origin"></script>
+
                 <!-- TinyMCE Initialization -->
                 <script>
                     tinymce.init({
                         selector: '#description',
-                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                        plugins: [
+                            // Core editing features
+                            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media',
+                            'searchreplace', 'table', 'visualblocks', 'wordcount', 'preview', // Thêm plugin preview
+                            // Premium features
+                            'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker',
+                            'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage',
+                            'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes',
+                            'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword',
+                            'exportword', 'exportpdf'
+                        ],
+                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | preview | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                         height: 400,
                         language: 'vi',
                         branding: false,
                         promotion: false,
                         menubar: true,
-                        images_upload_url: '/admin/product/upload-image-product', // Endpoint để upload ảnh từ TinyMCE nếu cần
+
+                        // Cấu hình cho hình ảnh responsive
+                        image_advtab: true,
+                        image_class_list: [
+                            { title: 'Responsive', value: 'img-fluid' }
+                        ],
+                        image_dimensions: false,
+                        automatic_uploads: true,
+                        images_upload_url: '/admin/product/upload-image-product', // Endpoint để upload ảnh từ TinyMCE
                         file_picker_types: 'image',
-                        // Đặt theme và options khác nếu cần
+
+                        // Áp dụng style responsive cho tất cả hình ảnh
+                        content_style: 'img { max-width: 100%; height: auto; display: block; }',
+
+                        // Cấu hình cho chức năng xem trước
+                        preview_styles: 'font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow',
+                        preview_modes: 'visual',
+
+                        tinycomments_mode: 'embedded',
+                        tinycomments_author: 'Admin',
+                        mergetags_list: [
+                            { value: 'product.name', title: 'Tên sản phẩm' },
+                            { value: 'manufacturer.name', title: 'Nhà sản xuất' },
+                        ],
+                        ai_request: (request, respondWith) => respondWith.string(() =>
+                            Promise.reject('AI Assistant chưa được cấu hình')),
+
+                        // Mở rộng setup để xử lý hình ảnh responsive
                         setup: function (editor) {
                             editor.on('change', function () {
                                 editor.save();
+                            });
+
+                            // Xử lý hình ảnh đã có khi khởi tạo editor
+                            editor.on('init', function () {
+                                // Thêm class cho tất cả hình ảnh đã có
+                                editor.getBody().querySelectorAll('img').forEach(function (img) {
+                                    img.classList.add('img-fluid');
+                                    img.removeAttribute('width');
+                                    img.removeAttribute('height');
+                                    img.style.maxWidth = '100%';
+                                    img.style.height = 'auto';
+                                });
+                            });
+
+                            // Xử lý hình ảnh khi chèn vào
+                            editor.on('ObjectSelected', function (e) {
+                                if (e.target.nodeName == 'IMG') {
+                                    e.target.classList.add('img-fluid');
+                                    e.target.removeAttribute('width');
+                                    e.target.removeAttribute('height');
+                                }
+                            });
+
+                            // Áp dụng responsive cho hình ảnh mới
+                            editor.on('SetContent', function () {
+                                const imgs = editor.getBody().querySelectorAll('img:not(.img-fluid)');
+                                imgs.forEach(img => {
+                                    img.classList.add('img-fluid');
+                                    img.removeAttribute('width');
+                                    img.removeAttribute('height');
+                                });
                             });
                         }
                     });

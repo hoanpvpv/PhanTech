@@ -6,25 +6,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.validation.Valid;
+import vn.giaiphapthangmay.phantech.domain.Product;
+import vn.giaiphapthangmay.phantech.domain.Project;
 import vn.giaiphapthangmay.phantech.domain.User;
 import vn.giaiphapthangmay.phantech.domain.dto.RegisterDTO;
 import vn.giaiphapthangmay.phantech.service.ProductService;
+import vn.giaiphapthangmay.phantech.service.ProjectService;
 import vn.giaiphapthangmay.phantech.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomePageController {
     // private final ProductService productService; // Khai báo biến productService
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final ProductService productService; // Khai báo biến productService
+    private final ProjectService projectService; // Khai báo biến projectService
 
-    public HomePageController(UserService userService, PasswordEncoder passwordEncoder) {
+    public HomePageController(UserService userService, PasswordEncoder passwordEncoder,
+            ProductService productService, ProjectService projectService) {
+        this.userService = userService; // Khởi tạo userService từ UserService
+        this.projectService = projectService; // Khởi tạo projectService từ ProjectService
+        this.productService = productService; // Khởi tạo productService từ ProductService
         this.passwordEncoder = passwordEncoder; // Khởi tạo passwordEncoder từ BCryptPasswordEncoder
-        this.userService = userService;
-        // this.productService = productService; // Khởi tạo productService từ
-        // ProductService
     }
 
     @GetMapping("/register")
@@ -58,6 +67,16 @@ public class HomePageController {
         // Lưu user vào cơ sở dữ liệu
         this.userService.handleSaveUser(user);
         return "redirect:/login";
+
+    }
+
+    @GetMapping("")
+    public String getHomePage(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("projects", projects);
+        return "client/auth/index"; // Trả về trang chính
 
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.giaiphapthangmay.phantech.domain.Product;
+import vn.giaiphapthangmay.phantech.domain.Project;
 import vn.giaiphapthangmay.phantech.repository.ProductRepository;
 
 @Service
@@ -33,6 +34,10 @@ public class ProductService {
 
     public Optional<Product> getProductById(long id) {
         return productRepository.findById(id);
+    }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
     public Product createProduct(Product product, MultipartFile imageFile1, MultipartFile imageFile2,
@@ -89,6 +94,8 @@ public class ProductService {
             existing.setDocumentation(product.getDocumentation());
             existing.setManufacturer(product.getManufacturer());
             existing.setElevatorType(product.getElevatorType());
+            existing.setPrice(product.getPrice());
+            existing.setShortDescription(product.getShortDescription());
 
             // Xử lý các file ảnh
             if (!imageFile1.isEmpty()) {
@@ -145,7 +152,7 @@ public class ProductService {
         }).collect(Collectors.toList());
     }
 
-    public Map<String, String> uploadImageForProduct(MultipartFile file) throws IOException {
+    public Map<String, String> uploadImageForTinyMCE(MultipartFile file) throws IOException {
         // Lưu file và lấy tên file
         String savedFileName = uploadService.handleSaveUploadFile(file, "product");
 

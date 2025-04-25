@@ -19,8 +19,6 @@
                     src="https://cdn.tiny.cloud/1/nygcenmzq3prqg0wrri75srh2s6zin8p8bykol8nmskn6vf1/tinymce/7/tinymce.min.js"
                     referrerpolicy="origin"></script>
 
-                <!-- ...các thẻ meta và CSS khác... -->
-
                 <!-- TinyMCE -->
                 <script
                     src="https://cdn.tiny.cloud/1/nygcenmzq3prqg0wrri75srh2s6zin8p8bykol8nmskn6vf1/tinymce/7/tinymce.min.js"
@@ -74,6 +72,22 @@
                                                             <div class="invalid-feedback">Vui lòng nhập địa chỉ dự án
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3">
+                                                            <label for="floor" class="form-label">Số tầng <span
+                                                                    class="text-danger">*</span></label>
+                                                            <form:input path="floor" id="floor" class="form-control"
+                                                                required="true" />
+                                                            <div class="invalid-feedback">Vui lòng nhập số tầng dự án
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="date" class="form-label">Ngày hoàn thành <span
+                                                                    class="text-danger">*</span></label>
+                                                            <form:input path="date" id="date" type="date"
+                                                                class="form-control" required="true" />
+                                                            <div class="invalid-feedback">Vui lòng nhập ngày hoàn thành
+                                                                dự án</div>
+                                                        </div>
 
                                                         <div class="row">
                                                             <div class="col-md-6 mb-3">
@@ -82,6 +96,10 @@
                                                                 <select name="product.id" id="product"
                                                                     class="form-control product-select">
                                                                     <option value="">-- Không có --</option>
+                                                                    <c:if test="${not empty project.product}">
+                                                                        <option value="${project.product.id}" selected>
+                                                                            ${project.product.name}</option>
+                                                                    </c:if>
                                                                 </select>
                                                                 <div class="form-text">Nhập tối thiểu 2 ký tự để tìm
                                                                     kiếm sản phẩm</div>
@@ -98,25 +116,26 @@
                                                                 </form:select>
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3">
+                                                            <label for="imageFile" class="form-label">Hình ảnh dự án
+                                                                <span class="text-danger">*</span></label>
+                                                            <input type="file" name="imageFile" id="imageFile"
+                                                                class="form-control" accept="image/*" required="true" />
+                                                            <div class="invalid-feedback">Vui lòng chọn hình ảnh cho dự
+                                                                án</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h5 class="border-bottom pb-2">Mô tả dự án</h5>
+                                                        <div class="mb-3">
+                                                            <form:textarea path="description" id="description"
+                                                                class="form-control" rows="12" />
+                                                        </div>
                                                     </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="imageFile" class="form-label">Hình ảnh dự án
-                                                            <span class="text-danger">*</span></label>
-                                                        <input type="file" name="imageFile" id="imageFile"
-                                                            class="form-control" accept="image/*" required="true" />
-                                                        <div class="invalid-feedback">Vui lòng chọn hình ảnh cho dự
-                                                            án</div>
-                                                    </div>
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <h5 class="border-bottom pb-2">Mô tả dự án</h5>
-                                                    <div class="mb-3">
-                                                        <form:textarea path="description" id="description"
-                                                            class="form-control" rows="12" />
-                                                    </div>
-                                                </div>
+
                                         </div>
 
                                         <div class="d-flex justify-content-between">
@@ -164,8 +183,20 @@
                         branding: false,
                         promotion: false,
                         menubar: true,
+
+                        // Cấu hình cho hình ảnh responsive
+                        image_advtab: true,
+                        image_class_list: [
+                            { title: 'Responsive', value: 'img-fluid' }
+                        ],
+                        image_dimensions: false,
+                        automatic_uploads: true,
                         images_upload_url: '/admin/project/upload-image-project', // Endpoint để upload ảnh từ TinyMCE
                         file_picker_types: 'image',
+
+                        // Áp dụng style responsive cho tất cả hình ảnh
+                        content_style: 'img { max-width: 100%; height: auto; display: block; }',
+
                         tinycomments_mode: 'embedded',
                         tinycomments_author: 'Admin',
                         mergetags_list: [
@@ -174,10 +205,42 @@
                         ],
                         ai_request: (request, respondWith) => respondWith.string(() =>
                             Promise.reject('AI Assistant chưa được cấu hình')),
-                        // Lưu nội dung khi thay đổi
+
+                        // Mở rộng setup để xử lý hình ảnh responsive
                         setup: function (editor) {
                             editor.on('change', function () {
                                 editor.save();
+                            });
+
+                            // Xử lý hình ảnh đã có khi khởi tạo editor
+                            editor.on('init', function () {
+                                // Thêm class cho tất cả hình ảnh đã có
+                                editor.getBody().querySelectorAll('img').forEach(function (img) {
+                                    img.classList.add('img-fluid');
+                                    img.removeAttribute('width');
+                                    img.removeAttribute('height');
+                                    img.style.maxWidth = '100%';
+                                    img.style.height = 'auto';
+                                });
+                            });
+
+                            // Xử lý hình ảnh khi chèn vào
+                            editor.on('ObjectSelected', function (e) {
+                                if (e.target.nodeName == 'IMG') {
+                                    e.target.classList.add('img-fluid');
+                                    e.target.removeAttribute('width');
+                                    e.target.removeAttribute('height');
+                                }
+                            });
+
+                            // Áp dụng responsive cho hình ảnh mới
+                            editor.on('SetContent', function () {
+                                const imgs = editor.getBody().querySelectorAll('img:not(.img-fluid)');
+                                imgs.forEach(img => {
+                                    img.classList.add('img-fluid');
+                                    img.removeAttribute('width');
+                                    img.removeAttribute('height');
+                                });
                             });
                         }
                     });
@@ -246,6 +309,16 @@
                                     return "Đang tìm...";
                                 }
                             }
+                        });
+
+                        // Đảm bảo form gửi đúng giá trị product ID
+                        $('form').on('submit', function () {
+                            var productId = $('.product-select').val();
+                            if (productId) {
+                                // Kiểm tra xem productId có được chọn hay không
+                                console.log("Product ID được chọn: " + productId);
+                            }
+                            return true;
                         });
                     });
                 </script>

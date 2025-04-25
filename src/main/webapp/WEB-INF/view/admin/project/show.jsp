@@ -14,7 +14,24 @@
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
             </head>
+            <style>
+                /* Đảm bảo hình ảnh trong nội dung từ TinyMCE hiển thị responsive */
+                .modal-body img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                }
+
+                /* Đảm bảo các bảng trong nội dung TinyMCE không bị tràn */
+                .modal-body table {
+                    max-width: 100%;
+                    width: 100%;
+                    overflow-x: auto;
+                    display: block;
+                }
+            </style>
 
             <body class="sb-nav-fixed">
                 <jsp:include page="../layout/header.jsp" />
@@ -123,9 +140,22 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                     <tr>
+                                                                                                        <th>Ngày hoàn
+                                                                                                            thành:
+                                                                                                        </th>
+                                                                                                        <td>${project.date}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
                                                                                                         <th>Tên dự án:
                                                                                                         </th>
                                                                                                         <td>${project.name}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <th>Số tầng:
+                                                                                                        </th>
+                                                                                                        <td>${project.floor}
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                     <tr>
@@ -297,6 +327,26 @@
                         if (projectsTable) {
                             new simpleDatatables.DataTable(projectsTable);
                         }
+
+                        // Xử lý hình ảnh trong nội dung TinyMCE để đảm bảo responsive
+                        document.querySelectorAll('.modal-body div img').forEach(function (img) {
+                            img.classList.add('img-fluid');
+                            img.removeAttribute('width');
+                            img.removeAttribute('height');
+                        });
+
+                        // Xử lý khi modal mở
+                        const viewModals = document.querySelectorAll('[id^="viewModal"]');
+                        viewModals.forEach(function (modal) {
+                            modal.addEventListener('shown.bs.modal', function () {
+                                const images = this.querySelectorAll('.modal-body div img');
+                                images.forEach(function (img) {
+                                    img.classList.add('img-fluid');
+                                    img.removeAttribute('width');
+                                    img.removeAttribute('height');
+                                });
+                            });
+                        });
                     });
                 </script>
             </body>

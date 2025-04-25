@@ -1,5 +1,8 @@
 package vn.giaiphapthangmay.phantech.domain;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +22,17 @@ public class Project {
     private String description;
     private String address;
     private String image;
+    private long floor;
+    private LocalDate date;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -80,6 +94,14 @@ public class Project {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getFloor() {
+        return floor;
+    }
+
+    public void setFloor(long floor) {
+        this.floor = floor;
     }
 
 }

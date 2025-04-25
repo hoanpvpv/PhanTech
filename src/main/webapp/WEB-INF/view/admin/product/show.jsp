@@ -15,6 +15,29 @@
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
+            <style>
+                /* Đảm bảo hình ảnh trong nội dung từ TinyMCE hiển thị responsive */
+                .modal-body img {
+                    max-width: 100%;
+                    height: auto !important;
+                    display: block;
+                }
+
+                /* Áp dụng cho nội dung mô tả sản phẩm */
+                .modal-body .description-content img {
+                    max-width: 100%;
+                    height: auto !important;
+                    margin-bottom: 10px;
+                }
+
+                /* Đảm bảo các bảng trong nội dung TinyMCE không bị tràn */
+                .modal-body table {
+                    max-width: 100%;
+                    width: 100%;
+                    overflow-x: auto;
+                    display: block;
+                }
+            </style>
 
             <body class="sb-nav-fixed">
                 <jsp:include page="../layout/header.jsp" />
@@ -41,6 +64,7 @@
                                                         <tr>
                                                             <th>ID</th>
                                                             <th>Tên sản phẩm</th>
+                                                            <th>Giá sản phẩm</th>
                                                             <th>Tải trọng</th>
                                                             <th>Tốc độ</th>
                                                             <th>Nhà sản xuất</th>
@@ -54,6 +78,7 @@
                                                             <tr>
                                                                 <td>${product.id}</td>
                                                                 <td>${product.name}</td>
+                                                                <td>${product.price}</td>
                                                                 <td>${product.loadCapacity} kg</td>
                                                                 <td>${product.speed} m/s</td>
                                                                 <td>${product.manufacturer.name}</td>
@@ -127,6 +152,12 @@
                                                                                                         <th>Tên sản
                                                                                                             phẩm:</th>
                                                                                                         <td>${product.name}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <th>Giá sản
+                                                                                                            phẩm:</th>
+                                                                                                        <td>${product.price}
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                     <tr>
@@ -396,6 +427,38 @@
                         if (productsTable) {
                             new simpleDatatables.DataTable(productsTable);
                         }
+
+                        // Xử lý hình ảnh trong nội dung TinyMCE để đảm bảo responsive
+                        document.querySelectorAll('.description-content img').forEach(function (img) {
+                            img.classList.add('img-fluid');
+                            img.removeAttribute('width');
+                            img.removeAttribute('height');
+                            img.style.maxWidth = '100%';
+                            img.style.height = 'auto';
+                        });
+
+                        // Xử lý khi modal mở
+                        const viewModals = document.querySelectorAll('[id^="viewModal"]');
+                        viewModals.forEach(function (modal) {
+                            modal.addEventListener('shown.bs.modal', function () {
+                                const images = this.querySelectorAll('.description-content img');
+                                images.forEach(function (img) {
+                                    img.classList.add('img-fluid');
+                                    img.removeAttribute('width');
+                                    img.removeAttribute('height');
+                                    img.style.maxWidth = '100%';
+                                    img.style.height = 'auto';
+                                });
+
+                                // Xử lý bảng trong nội dung TinyMCE
+                                const tables = this.querySelectorAll('.description-content table');
+                                tables.forEach(function (table) {
+                                    table.classList.add('table');
+                                    table.classList.add('table-bordered');
+                                    table.style.width = '100%';
+                                });
+                            });
+                        });
                     });
                 </script>
             </body>

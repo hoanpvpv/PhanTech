@@ -125,7 +125,7 @@ public class ProductController {
     @PostMapping("/upload-image-product")
     public ResponseEntity<Map<String, String>> uploadImageForTinyMCE(@RequestParam("file") MultipartFile file)
             throws IOException {
-        Map<String, String> response = productService.uploadImageForProduct(file);
+        Map<String, String> response = productService.uploadImageForTinyMCE(file);
         return ResponseEntity.ok(response);
     }
 

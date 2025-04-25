@@ -27,6 +27,16 @@ public class Product {
     private String pitOrMachineRoom;
     private String powerSupply;
     private double warranty;
+    private String shortDescription;
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
     private double cabinSize;
@@ -36,6 +46,25 @@ public class Product {
     private String image3;
     private String image4;
     private String image5;
+    private double rating;
+    private long price;
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rate) {
+        this.rating = rate;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
     @OneToMany(mappedBy = "product")
