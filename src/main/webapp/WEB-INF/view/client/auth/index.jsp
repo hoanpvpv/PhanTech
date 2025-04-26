@@ -100,8 +100,18 @@
                                         <div class="ec-price">
                                             <span class="current-price">${product.price}₫</span>
                                         </div>
-                                        <div class="ec-description">
-                                            ${product.shortDescription}
+                                        <div class="spec-label me-1">
+                                            <i class="fas fa-tachometer-alt me-1"></i>${product.shortDescription}
+                                        </div>
+                                        <div class="spec-label me-1">
+                                            <i class="fas fa-tachometer-alt me-1"></i>Tốc độ: ${product.speed} m/s
+                                        </div>
+                                        <div class="spec-label me-1">
+                                            <i class="fas fa-weight me-1"></i>Tải trọng: ${product.loadCapacity}
+                                            kg
+                                        </div>
+                                        <div class="spec-label me-1">
+                                            <i class="fas fa-door-open me-1"></i>Loại cửa: ${product.doorType}
                                         </div>
                                     </div>
                                     <div class="ec-footer">
@@ -132,9 +142,6 @@
                                     <div class="pcv-image">
                                         <img src="/images/project/${project.image}" alt="${project.name}"
                                             class="img-fluid">
-                                        <div class="pcv-overlay">
-                                            <div class="pcv-category">${project.service.name}</div>
-                                        </div>
                                     </div>
                                     <div class="pcv-content">
                                         <h5 class="pcv-title">${project.name}</h5>
@@ -146,8 +153,8 @@
                                         </div>
                                         <div class="pcv-stats">
                                             <div class="pcv-stat">
-                                                <div class="pcv-stat-value">${project.product.name}</div>
-                                                <div class="pcv-stat-label">Thang máy</div>
+                                                <div class="pcv-stat-value">${project.service.name}</div>
+                                                <div class="pcv-stat-label">Dịch vụ</div>
                                             </div>
                                             <div class="pcv-stat">
                                                 <div class="pcv-stat-value">${project.floor}</div>

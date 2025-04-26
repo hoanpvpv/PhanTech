@@ -137,6 +137,14 @@
                                                                                         <div class="row mb-3">
                                                                                             <div
                                                                                                 class="col-md-3 fw-bold">
+                                                                                                Đánh giá:</div>
+                                                                                            <div class="col-md-9">
+                                                                                                ${service.rating}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row mb-3">
+                                                                                            <div
+                                                                                                class="col-md-3 fw-bold">
                                                                                                 Mô tả chi tiết:</div>
                                                                                             <div class="col-md-9">
                                                                                                 ${service.detailDesc}

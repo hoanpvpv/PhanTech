@@ -20,6 +20,15 @@ public class Service {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
     private String image;
+    private double rating;
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
     public long getId() {
         return id;
