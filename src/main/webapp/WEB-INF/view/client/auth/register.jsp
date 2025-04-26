@@ -13,8 +13,8 @@
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
                 <!-- Latest compiled JavaScript -->
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
                 <link rel="stylesheet" href="/css/demo.css">
                 <!-- Font Awesome for icons -->
@@ -23,28 +23,7 @@
 
             <body>
                 <!-- Navigation Bar -->
-                <nav id="nav" class="navbar navbar-expand-lg navbar-light">
-                    <div class="container">
-                        <a class="navbar-brand" href="#">
-                            <img src="/images/public/Logo.png" alt="Logo" class="logo">
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/">Trang Chủ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/login">Đăng Nhập</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <jsp:include page="../layout/header.jsp" />
 
                 <!-- Main Content -->
                 <div class="container mt-5 pt-5">

@@ -62,10 +62,7 @@ public class ProjectService {
         // Xử lý Service sử dụng serviceRepository trực tiếp
         if (project.getService() != null && project.getService().getId() > 0) {
             Long serviceId = project.getService().getId();
-            Optional<vn.giaiphapthangmay.phantech.domain.Service> serviceOpt = serviceRepository.findById(serviceId); // Thay
-                                                                                                                      // đổi
-                                                                                                                      // ở
-                                                                                                                      // đây
+            Optional<vn.giaiphapthangmay.phantech.domain.Service> serviceOpt = serviceRepository.findById(serviceId);
             if (serviceOpt.isPresent()) {
                 project.setService(serviceOpt.get());
             } else {
@@ -133,6 +130,10 @@ public class ProjectService {
             return projectRepository.save(existing);
         }
         return null;
+    }
+
+    public List<Project> getAllProjectsByProductId(long productId) {
+        return projectRepository.findByProductId(productId);
     }
 
     public Project getProjectById(long id) {

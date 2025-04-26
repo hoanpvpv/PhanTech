@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserService userService; // Khai báo biến userService
+    private final UserService userService;
 
     public CustomUserDetailsService(UserService userService) {
-        this.userService = userService; // Khởi tạo userService từ UserService
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
+
         vn.giaiphapthangmay.phantech.domain.User user = this.userService.getUserByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

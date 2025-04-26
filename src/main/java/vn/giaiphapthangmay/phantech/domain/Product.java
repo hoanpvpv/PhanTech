@@ -2,8 +2,6 @@ package vn.giaiphapthangmay.phantech.domain;
 
 import java.util.List;
 
-import org.hibernate.mapping.Join;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +20,7 @@ public class Product {
     private double speed;
     private double loadCapacity;
     private String doorType;
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String video;
     private String controlTechnology;
     private String pitOrMachineRoom;

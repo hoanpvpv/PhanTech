@@ -30,6 +30,10 @@ public class User {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

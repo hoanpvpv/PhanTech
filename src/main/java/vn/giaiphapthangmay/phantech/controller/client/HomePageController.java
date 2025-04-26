@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +19,6 @@ import vn.giaiphapthangmay.phantech.service.ProjectService;
 import vn.giaiphapthangmay.phantech.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomePageController {
@@ -79,4 +79,44 @@ public class HomePageController {
         return "client/auth/index"; // Trả về trang chính
 
     }
+
+    @GetMapping("/product/{id}")
+    public String getProductDetail(@PathVariable("id") long id, Model model) {
+        Product product = productService.getProductById(id).get();
+        List<Project> projects = projectService.getAllProjectsByProductId(id);
+        model.addAttribute("product", product);
+        model.addAttribute("projects", projects);
+        return "client/product/detail"; // Trả về trang chi tiết sản phẩm
+    }
+
+    @GetMapping("/project")
+    public String getMethodName(Model model) {
+        List<Project> projects = projectService.getAllProjects();
+        model.addAttribute("projects", projects);
+        return "client/project/show";
+    }
+
+    @GetMapping("/project/{id}")
+    public String getProjectDetail(@PathVariable("id") long id, Model model) {
+        Project project = projectService.getProjectById(id);
+        model.addAttribute("project", project);
+        return "client/project/detail";
+
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "client/auth/login";
+    }
+
+    @GetMapping("/about")
+    public String getAboutPage() {
+        return "client/auth/about";
+    }
+
+    @GetMapping("/accessDenied")
+    public String getAccessDeniedPage() {
+        return "client/auth/accessDenied"; // Trả về trang truy cập bị từ chối
+    }
+
 }
