@@ -24,6 +24,19 @@ public class RequestItem {
     @ManyToOne
     @JoinColumn(name = "request_list_id")
     private RequestList requestList;
+    private boolean canReview = false;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isCanReview() {
+        return canReview;
+    }
+
+    public void setCanReview(boolean canReview) {
+        this.canReview = canReview;
+    }
 
     public Product getProduct() {
         return product;

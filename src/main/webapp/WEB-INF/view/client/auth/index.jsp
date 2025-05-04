@@ -114,11 +114,14 @@
                                     </div>
                                     <div class="ec-footer">
                                         <div class="ec-footer-row">
-                                            <button class="request-list-btn" data-product-id="${product.id}"><i
-                                                    class="fas fa-clipboard-list"></i>Thêm vào danh sách yêu
-                                                cầu</button>
-                                            <button class="request-list-btn" data-product-id="${product.id}"><i
-                                                    class="fas fa-clipboard-list"></i>Liên hệ ngay</button>
+                                            <form action="/add-product-to-request-list/${product.id}" method="post">
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
+                                                <button type="submit" class="btn btn-primary rounded-pill">Thêm vào danh
+                                                    sách yêu cầu</button>
+                                            </form>
+                                            <a href="/product/${product.id}" class="btn btn-outline-secondary">Xem chi
+                                                tiết</a>
                                         </div>
                                     </div>
                                 </div>

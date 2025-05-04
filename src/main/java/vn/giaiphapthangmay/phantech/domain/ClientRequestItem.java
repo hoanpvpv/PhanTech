@@ -33,12 +33,28 @@ public class ClientRequestItem {
         this.product = product;
     }
 
+    public long getId() {
+        return this.id;
+    }
+
+    public ClientRequestList getClientRequestList() {
+        return clientRequestList;
+    }
+
+    public void setClientRequestList(ClientRequestList clientRequestList) {
+        this.clientRequestList = clientRequestList;
+    }
+
     public Service getService() {
         return service;
     }
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 }

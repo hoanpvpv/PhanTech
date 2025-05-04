@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.giaiphapthangmay.phantech.domain.Product;
-import vn.giaiphapthangmay.phantech.domain.Project;
 import vn.giaiphapthangmay.phantech.repository.ProductRepository;
 
 @Service
@@ -161,5 +160,9 @@ public class ProductService {
         response.put("location", "/images/product/" + savedFileName);
 
         return response;
+    }
+
+    public void saveProduct(Product product) {
+        productRepository.save(product);
     }
 }

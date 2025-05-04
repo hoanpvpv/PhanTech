@@ -53,9 +53,9 @@
                         </c:if>
 
                         <!-- Trống giỏ hàng -->
-                        <c:if test="${empty requestItems || requestItems.size() == 0}">
+                        <c:if test="${empty Items || Items.size() == 0}">
                             <div class="text-center py-5">
-                                <i class="fas fa-shopping-cart fa-5x text-muted mb-3"></i>
+                                <i class="fas fa-clipboard-list fa-5x text-muted mb-3"></i>
                                 <h3>Danh sách yêu cầu của bạn đang trống</h3>
                                 <p class="text-muted">Hãy thêm sản phẩm hoặc dịch vụ bạn quan tâm</p>
                                 <a href="/product" class="btn btn-primary mt-3">
@@ -64,7 +64,7 @@
                             </div>
                         </c:if>
 
-                        <c:if test="${not empty requestItems && requestItems.size() > 0}">
+                        <c:if test="${not empty Items && Items.size() > 0}">
                             <div class="row">
                                 <!-- Danh sách sản phẩm -->
                                 <div class="col-lg-8">
@@ -81,19 +81,17 @@
                                                         <tr>
                                                             <th scope="col" width="60">STT</th>
                                                             <th scope="col">Sản phẩm/Dịch vụ</th>
-                                                            <th scope="col" width="120">Số lượng</th>
                                                             <th scope="col" width="80">Thao tác</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:forEach items="${requestItems}" var="item"
-                                                            varStatus="status">
+                                                        <c:forEach items="${Items}" var="item" varStatus="status">
                                                             <tr>
                                                                 <td>${status.index + 1}</td>
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <c:if test="${not empty item.product}">
-                                                                            <img src="/images/product/${item.product.image}"
+                                                                            <img src="/images/product/${item.product.image1}"
                                                                                 class="rounded me-3" width="50"
                                                                                 height="50" alt="${item.product.name}">
                                                                             <div>
@@ -104,7 +102,7 @@
                                                                             </div>
                                                                         </c:if>
                                                                         <c:if test="${not empty item.service}">
-                                                                            <img src="/images/service/${item.service.image}"
+                                                                            <img src="/images/public/${item.service.image}"
                                                                                 class="rounded me-3" width="50"
                                                                                 height="50" alt="${item.service.name}">
                                                                             <div>
@@ -116,24 +114,14 @@
                                                                         </c:if>
                                                                     </div>
                                                                 </td>
-                                                                <td>
-                                                                    <form action="/request/update-quantity"
-                                                                        method="post" class="quantity-form">
-                                                                        <input type="hidden" name="itemId"
-                                                                            value="${item.id}">
-                                                                        <select name="quantity"
-                                                                            class="form-select form-select-sm">
-                                                                            <c:forEach begin="1" end="20" var="i">
-                                                                                <option value="${i}" ${item.quantity==i
-                                                                                    ? 'selected' : '' }>${i}</option>
-                                                                            </c:forEach>
-                                                                        </select>
-                                                                    </form>
-                                                                </td>
                                                                 <td class="text-center">
-                                                                    <form action="/request/remove-item" method="post">
+                                                                    <form action="/remove-request-item" method="post">
+                                                                        <input type="hidden"
+                                                                            name="${_csrf.parameterName}"
+                                                                            value="${_csrf.token}">
                                                                         <input type="hidden" name="itemId"
                                                                             value="${item.id}">
+
                                                                         <button type="submit"
                                                                             class="btn btn-sm btn-outline-danger"
                                                                             title="Xóa khỏi danh sách">
@@ -159,44 +147,42 @@
                                             </h5>
                                         </div>
                                         <div class="card-body">
-                                            <form:form action="/request/submit" method="post"
-                                                modelAttribute="requestList">
+                                            <form action="/submit-request-list" method="post">
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}">
                                                 <div class="mb-3">
                                                     <label for="fullNameInfo" class="form-label">Họ và tên <span
                                                             class="text-danger">*</span></label>
-                                                    <form:input path="fullNameInfo" class="form-control"
-                                                        id="fullNameInfo" required="true" />
-                                                    <form:errors path="fullNameInfo" cssClass="text-danger" />
+                                                    <input name="fullNameInfo" class="form-control" id="fullNameInfo"
+                                                        required="true" value="${user.fullName}" />
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="emailInfo" class="form-label">Email <span
                                                             class="text-danger">*</span></label>
-                                                    <form:input path="emailInfo" type="email" class="form-control"
-                                                        id="emailInfo" required="true" />
-                                                    <form:errors path="emailInfo" cssClass="text-danger" />
+                                                    <input name="emailInfo" type="email" class="form-control"
+                                                        id="emailInfo" required="true" value="${user.email}" />
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="phoneInfo" class="form-label">Số điện thoại <span
                                                             class="text-danger">*</span></label>
-                                                    <form:input path="phoneInfo" class="form-control" id="phoneInfo"
-                                                        required="true" />
-                                                    <form:errors path="phoneInfo" cssClass="text-danger" />
+                                                    <input name="phoneInfo" class="form-control" id="phoneInfo"
+                                                        required="true" value="${user.phone}" />
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="addressInfo" class="form-label">Địa chỉ <span
                                                             class="text-danger">*</span></label>
-                                                    <form:textarea path="addressInfo" class="form-control"
-                                                        id="addressInfo" rows="2" required="true" />
-                                                    <form:errors path="addressInfo" cssClass="text-danger" />
+                                                    <textarea name="addressInfo" class="form-control" id="addressInfo"
+                                                        rows="2" required="true">${user.address}</textarea>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="noteInfo" class="form-label">Ghi chú</label>
-                                                    <form:textarea path="noteInfo" class="form-control" id="noteInfo"
-                                                        rows="3" placeholder="Thông tin thêm về yêu cầu của bạn..." />
+                                                    <textarea name="noteInfo" class="form-control" id="noteInfo"
+                                                        rows="3"
+                                                        placeholder="Thông tin thêm về yêu cầu của bạn..."></textarea>
                                                 </div>
 
                                                 <div class="d-grid gap-2">
@@ -207,7 +193,7 @@
                                                         <i class="fas fa-shopping-cart me-2"></i>Tiếp tục xem sản phẩm
                                                     </a>
                                                 </div>
-                                            </form:form>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -216,23 +202,6 @@
                     </div>
 
                     <jsp:include page="../layout/footer.jsp" />
-
-                    <script>
-                        $(document).ready(function () {
-                            // Tự động submit khi thay đổi số lượng
-                            $('.quantity-form select').change(function () {
-                                $(this).closest('form').submit();
-                            });
-
-                            // Điền thông tin từ người dùng đã đăng nhập nếu có
-                            <c:if test="${not empty pageContext.request.userPrincipal}">
-                                $('#fullNameInfo').val('${user.fullName}');
-                                $('#emailInfo').val('${user.email}');
-                                $('#phoneInfo').val('${user.phone}');
-                                $('#addressInfo').val('${user.address}');
-                            </c:if>
-                        });
-                    </script>
                 </body>
 
                 </html>

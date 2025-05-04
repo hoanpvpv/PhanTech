@@ -1,5 +1,6 @@
 package vn.giaiphapthangmay.phantech.controller.client;
 
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.RSocket.Client;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -7,25 +8,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.net.http.HttpRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import vn.giaiphapthangmay.phantech.domain.ClientRequestList;
 import vn.giaiphapthangmay.phantech.domain.Product;
 import vn.giaiphapthangmay.phantech.domain.Project;
 import vn.giaiphapthangmay.phantech.domain.User;
 import vn.giaiphapthangmay.phantech.domain.dto.RegisterDTO;
+import vn.giaiphapthangmay.phantech.service.ClientRequestListService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
 import vn.giaiphapthangmay.phantech.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;;
 
 @Controller
 public class HomePageController {
@@ -33,13 +33,16 @@ public class HomePageController {
     private final PasswordEncoder passwordEncoder;
     private final ProductService productService;
     private final ProjectService projectService;
+    private final ClientRequestListService clientRequestListService;
 
     public HomePageController(UserService userService, PasswordEncoder passwordEncoder,
-            ProductService productService, ProjectService projectService) {
+            ProductService productService, ProjectService projectService,
+            ClientRequestListService clientRequestListService) {
         this.userService = userService;
         this.projectService = projectService;
         this.productService = productService;
         this.passwordEncoder = passwordEncoder;
+        this.clientRequestListService = clientRequestListService;
     }
 
     @GetMapping("/register")
@@ -66,6 +69,8 @@ public class HomePageController {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.setRole(this.userService.getRoleByName("USER"));
         user.setCreatedAt(LocalDateTime.now());
+        user.setClientRequestList(new ClientRequestList());
+        this.clientRequestListService.saveClientRequestList(user.getClientRequestList());
         this.userService.handleSaveUser(user);
         return "redirect:/login";
 
@@ -78,30 +83,6 @@ public class HomePageController {
         List<Project> projects = projectService.getAllProjects();
         model.addAttribute("projects", projects);
         return "client/auth/index"; // Trả về trang chính
-    }
-
-    @GetMapping("/product/{id}")
-    public String getProductDetail(@PathVariable("id") long id, Model model) {
-        Product product = productService.getProductById(id).get();
-        List<Project> projects = projectService.getAllProjectsByProductId(id);
-        model.addAttribute("product", product);
-        model.addAttribute("projects", projects);
-        return "client/product/detail"; // Trả về trang chi tiết sản phẩm
-    }
-
-    @GetMapping("/project")
-    public String getListProject(Model model) {
-        List<Project> projects = projectService.getAllProjects();
-        model.addAttribute("projects", projects);
-        return "client/project/show";
-    }
-
-    @GetMapping("/project/{id}")
-    public String getProjectDetail(@PathVariable("id") long id, Model model) {
-        Project project = projectService.getProjectById(id);
-        model.addAttribute("project", project);
-        return "client/project/detail";
-
     }
 
     @GetMapping("/login")

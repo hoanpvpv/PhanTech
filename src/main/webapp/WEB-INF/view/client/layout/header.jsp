@@ -64,9 +64,11 @@
                             <c:if test="${not empty pageContext.request.userPrincipal}">
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/request-history">Lịch sử yêu cầu</a>
+                                    <a class="nav-link" href="/request-list">Danh sách yêu cầu của bạn</a>
+                                    <span class="badge-count">${requestCount}</span>
                                 </li>
-                                <!-- Thay đổi code logout từ dòng 68-72 -->
+
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -75,7 +77,10 @@
                                         <a class="nav-link"
                                             href="/profile">${pageContext.request.userPrincipal.name}</a>
                                         <li><a class="dropdown-item" href="/profile">Hồ sơ</a></li>
-
+                                        <li>
+                                            <hr class="dropdown-divider" />
+                                        </li>
+                                        <li><a class="dropdown-item" href="/request-history">Lịch sử yêu cầu</a></li>
                                         <li>
                                             <hr class="dropdown-divider" />
                                         </li>
