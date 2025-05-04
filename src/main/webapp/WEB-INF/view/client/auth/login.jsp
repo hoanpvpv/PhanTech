@@ -136,7 +136,6 @@
                     });
                 </script>
 
-                <!-- CSS cho separator "hoặc đăng nhập bằng" -->
             </body>
 
             </html>

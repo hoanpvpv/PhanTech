@@ -71,7 +71,6 @@ public class ProjectController {
             @RequestParam(value = "product.id", required = false) Long productId,
             @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
 
-        // Gán productId trực tiếp vào product nếu có
         Product productUse = new Product();
         Optional<Product> productOpt = productService.getProductById(productId);
         productUse = productOpt.get();

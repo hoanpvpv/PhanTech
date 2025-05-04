@@ -2,7 +2,7 @@ package vn.giaiphapthangmay.phantech.service;
 
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import vn.giaiphapthangmay.phantech.repository.UserRepository;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository; // Khai báo biến userRepository
+    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.roleRepository = roleRepository; // Khởi tạo rolerRepository từ RoleRepository
-        this.userRepository = userRepository; // Khởi tạo userRepository từ UserRepository
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean checkEmailExists(String email) {
@@ -42,9 +42,7 @@ public class UserService {
         return newUser;
     }
 
-    // Method to get a user by ID
     public User getUserById(Long id) {
-        // Implementation to retrieve user from database by ID
         return userRepository.findById(id).orElse(null);
     }
 
@@ -53,7 +51,6 @@ public class UserService {
     }
 
     public Role getRoleByName(String name) {
-        // Implementation to retrieve role from database by name
         return roleRepository.findByName(name);
     }
 
@@ -76,10 +73,21 @@ public class UserService {
     }
 
     public Role getRoleById(Long id) {
-        return roleRepository.findById(id).orElse(null); // Lấy vai trò theo ID từ RoleRepository
+        return roleRepository.findById(id).orElse(null);
     }
 
     public User getUserById(long id) {
-        return userRepository.findById(id).orElse(null); // Lấy người dùng theo ID từ UserRepository
+        return userRepository.findById(id).orElse(null);
     }
+
+    public void updateUser(User user, long id) {
+        User existingUser = getUserById(id);
+        if (existingUser != null) {
+            existingUser.setFullName(user.getFullName());
+            existingUser.setPhone(user.getPhone());
+            existingUser.setAddress(user.getAddress());
+            this.userRepository.save(existingUser);
+        }
+    }
+
 }

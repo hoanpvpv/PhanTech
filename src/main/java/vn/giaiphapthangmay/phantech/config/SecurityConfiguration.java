@@ -104,7 +104,7 @@ public class SecurityConfiguration {
                                                 .rememberMeServices(rememberMeServices()))
 
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                                                .accessDeniedPage("/accessDenied"));
+                                                .accessDeniedPage("/access-denied"));
 
                 return http.build();
 

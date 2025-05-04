@@ -41,11 +41,8 @@ public class ClientRequestListController {
         if (currentUser == null) {
             return "redirect:/login"; // Nếu không có người dùng, chuyển hướng đến trang đăng nhập
         }
-        ClientRequestList clientRequestList = currentUser.getClientRequestList(); // Lấy danh sách yêu cầu của người
-                                                                                  // dùng
-        List<ClientRequestItem> clientRequestItems = clientRequestList.getClientRequestItems(); // Lấy danh sách yêu cầu
-                                                                                                // từ danh sách yêu cầu
-                                                                                                // của người dùng
+        ClientRequestList clientRequestList = currentUser.getClientRequestList();
+        List<ClientRequestItem> clientRequestItems = clientRequestList.getClientRequestItems();
         model.addAttribute("ClientRequestItems", clientRequestItems);
         return "client/request-list"; // Trả về trang danh sách yêu cầu
     }
