@@ -14,9 +14,6 @@ import vn.giaiphapthangmay.phantech.domain.Service;
 import vn.giaiphapthangmay.phantech.domain.User;
 import vn.giaiphapthangmay.phantech.repository.ReviewRepository;
 import vn.giaiphapthangmay.phantech.domain.RequestList;
-import vn.giaiphapthangmay.phantech.domain.ClientRequestItem;
-import vn.giaiphapthangmay.phantech.domain.ClientRequestList;
-import vn.giaiphapthangmay.phantech.service.ClientRequestListService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.RequestListService;
 import vn.giaiphapthangmay.phantech.service.ServiceService;
@@ -61,7 +58,7 @@ public class HistoryController {
         }
         List<RequestList> requestLists = this.requestListService.getRequestListByUserId(currentUser.getId());
         model.addAttribute("requestLists", requestLists);
-        return "client/history";
+        return "client/history/show";
     }
 
     @GetMapping("/history/{id}")
@@ -77,10 +74,9 @@ public class HistoryController {
             requestItems = new ArrayList<>();
         } else if (requestItems.get(0).getRequestList().getUser().getId() != userId) {
             return "redirect:/access-denied";
-
         }
         model.addAttribute("Items", requestItems);
-        return "client/history-detail";
+        return "client/history/detail";
     }
 
     @PostMapping("/review")
@@ -106,7 +102,7 @@ public class HistoryController {
             }
 
             // Kiểm tra nếu item đã được đánh giá
-            if (!requestItem.isCanReview()) {
+            if (requestItem.getCanReview() == "DONE") {
                 redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm/dịch vụ này đã được đánh giá!");
                 return "redirect:/history/" + requestItem.getRequestList().getId();
             }
@@ -186,7 +182,7 @@ public class HistoryController {
             this.reviewRepository.save(review);
 
             // Đánh dấu item đã được review
-            requestItem.setCanReview(false);
+            requestItem.setCanReview("DONE");
             this.requestListService.saveRequestItem(requestItem);
 
             redirectAttributes.addFlashAttribute("successMessage", "Đánh giá của bạn đã được gửi thành công!");

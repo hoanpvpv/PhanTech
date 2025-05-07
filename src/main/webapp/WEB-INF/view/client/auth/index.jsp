@@ -28,41 +28,22 @@
                 <div id="nav-products" class="container-fluid my-4 products">
                     <div class="row d-flex flex-wrap g-3">
                         <!-- Cột 1 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item flex-shrink-0">
-                            <a href="products.html"><img src="/images/public/homelift.png" alt="Image 1"
-                                    class="img-fluid"></a>
-                            <p>Thang Máy Gia Đình</p>
-                        </div>
-                        <!-- Cột 2 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
-                            <a href="products.html"><img src="/images/public/epassenger.png" alt="Image 2"
-                                    class="img-fluid"></a>
-                            <p>Thang Máy Chở Khách</p>
-                        </div>
-                        <!-- Cột 3 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
-                            <a href="products.html"><img src="/images/public/Eglass.png" alt="Image 3"
-                                    class="img-fluid"></a>
-                            <p>Thang Máy Kính</p>
-                        </div>
-                        <!-- Cột 4 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
-                            <a href="products.html"><img src="/images/public/freight.png" alt="Image 4"
-                                    class="img-fluid"></a>
-                            <p>Thang Máy Thủy Lực</p>
-                        </div>
-                        <!-- Cột 5 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
-                            <a href="products.html"><img src="/images/public/homelift.png" alt="Image 5"
-                                    class="img-fluid"></a>
-                            <p>Thang Máy Vận Chuyển Hàng Hóa</p>
-                        </div>
-                        <!-- Cột 6 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
-                            <a href="products.html"><img src="/images/public/Ehospital.png" alt="Image 6"
-                                    class="img-fluid"></a>
-                            <p>Thang Máy Bệnh Viện</p>
-                        </div>
+                        <c:forEach items="${elevatorTypes}" var="elevatorType">
+                            <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
+                                <a href="/product/${elevatorType.id}">
+                                    <div class="product-card">
+                                        <div class="product-img-wrapper">
+                                            <img src="/images/public/${elevatorType.image}" alt="${elevatorType.name}"
+                                                class="img-fluid">
+                                        </div>
+                                        <button class="btn product-btn"><a
+                                                class="dropdown-item">${elevatorType.name}</a></button>
+                                    </div>
+                                </a>
+
+                            </div>
+                        </c:forEach>
+
                     </div>
                 </div>
 
@@ -168,7 +149,7 @@
                                         </div>
                                     </div>
                                     <div class="pcv-footer">
-                                        <a href="/projects/${project.id}" class="pcv-btn">Xem chi tiết <i
+                                        <a href="/project/${project.id}" class="pcv-btn">Xem chi tiết <i
                                                 class="fas fa-arrow-right"></i></a>
                                     </div>
                                 </div>
@@ -180,66 +161,22 @@
                 <div id="service" class="container-fluid my-4 services">
                     <h2 class="text-center text-primary mb-4">Dịch Vụ Của Chúng Tôi</h2>
                     <div class="row d-flex flex-wrap g-3 justify-content-center">
-                        <!-- Cột 1 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                            <div class="service-card">
-                                <div class="service-img-wrapper">
-                                    <img src="/images/public/installation.png" alt="Lắp đặt" class="img-fluid">
-                                </div>
-                                <button class="btn service-btn"><a class="dropdown-item" href="installation.html">Lắp
-                                        đặt</a></button>
+
+                        <c:forEach items="${services}" var="service">
+                            <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
+                                <a href="/service/${service.id}">
+
+                                    <div class="service-card">
+                                        <div class="service-img-wrapper">
+                                            <img src="/images/public/${service.image}" alt="${service.name}"
+                                                class="img-fluid">
+                                        </div>
+                                        <button class="btn service-btn"><a
+                                                class="dropdown-item">${service.name}</a></button>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-                        <!-- Cột 2 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                            <div class="service-card">
-                                <div class="service-img-wrapper">
-                                    <img src="/images/public/maintenance.png" alt="Bảo trì" class="img-fluid">
-                                </div>
-                                <button class="btn service-btn"><a class="dropdown-item" href="maintenance.html">Bảo
-                                        trì</a></button>
-                            </div>
-                        </div>
-                        <!-- Cột 3 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                            <div class="service-card">
-                                <div class="service-img-wrapper">
-                                    <img src="/images/public/upgrade.png" alt="Nâng cấp" class="img-fluid">
-                                </div>
-                                <button class="btn service-btn"><a class="dropdown-item" href="upgrade.html">Nâng
-                                        cấp</a></button>
-                            </div>
-                        </div>
-                        <!-- Cột 4 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                            <div class="service-card">
-                                <div class="service-img-wrapper">
-                                    <img src="/images/public/repair.png" alt="Sửa chữa" class="img-fluid">
-                                </div>
-                                <button class="btn service-btn"><a class="dropdown-item" href="repair.html">Sửa
-                                        chữa</a></button>
-                            </div>
-                        </div>
-                        <!-- Cột 5 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                            <div class="service-card">
-                                <div class="service-img-wrapper">
-                                    <img src="/images/public/consulting.png" alt="Tư vấn kỹ thuật" class="img-fluid">
-                                </div>
-                                <button class="btn service-btn"><a class="dropdown-item" href="advisory.html">Tư vấn
-                                        kỹ
-                                        thuật</a></button>
-                            </div>
-                        </div>
-                        <!-- Cột 6 -->
-                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                            <div class="service-card">
-                                <div class="service-img-wrapper">
-                                    <img src="/images/public/maintenance.png" alt="Dịch vụ khác" class="img-fluid">
-                                </div>
-                                <button class="btn service-btn">Dịch Vụ Khác</button>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
                 <jsp:include page="../layout/footer.jsp" />

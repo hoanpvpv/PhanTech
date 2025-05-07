@@ -24,17 +24,17 @@ public class RequestItem {
     @ManyToOne
     @JoinColumn(name = "request_list_id")
     private RequestList requestList;
-    private boolean canReview = false;
+    private String canReview = "NOT";
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public boolean isCanReview() {
+    public String getCanReview() {
         return canReview;
     }
 
-    public void setCanReview(boolean canReview) {
+    public void setCanReview(String canReview) {
         this.canReview = canReview;
     }
 

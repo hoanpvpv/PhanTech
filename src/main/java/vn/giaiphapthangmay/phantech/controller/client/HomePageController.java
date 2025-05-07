@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Provider.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,17 +17,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vn.giaiphapthangmay.phantech.domain.ClientRequestList;
+import vn.giaiphapthangmay.phantech.domain.ElevatorType;
 import vn.giaiphapthangmay.phantech.domain.Product;
 import vn.giaiphapthangmay.phantech.domain.Project;
+import vn.giaiphapthangmay.phantech.domain.Form;
 import vn.giaiphapthangmay.phantech.domain.User;
 import vn.giaiphapthangmay.phantech.domain.dto.RegisterDTO;
+import vn.giaiphapthangmay.phantech.repository.ElevatorTypeRepository;
+import vn.giaiphapthangmay.phantech.repository.FormRepository;
 import vn.giaiphapthangmay.phantech.service.ClientRequestListService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
+import vn.giaiphapthangmay.phantech.service.ServiceService;
 import vn.giaiphapthangmay.phantech.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class HomePageController {
@@ -34,15 +42,23 @@ public class HomePageController {
     private final ProductService productService;
     private final ProjectService projectService;
     private final ClientRequestListService clientRequestListService;
+    private final FormRepository formRepository;
+    private final ServiceService serviceService;
+    private final ElevatorTypeRepository elevatorTypeRepository;
 
-    public HomePageController(UserService userService, PasswordEncoder passwordEncoder,
+    public HomePageController(ElevatorTypeRepository elevatorTypeRepository, UserService userService,
+            PasswordEncoder passwordEncoder,
             ProductService productService, ProjectService projectService,
-            ClientRequestListService clientRequestListService) {
+            ClientRequestListService clientRequestListService, FormRepository formRepository,
+            ServiceService serviceService) {
         this.userService = userService;
         this.projectService = projectService;
         this.productService = productService;
         this.passwordEncoder = passwordEncoder;
         this.clientRequestListService = clientRequestListService;
+        this.formRepository = formRepository;
+        this.serviceService = serviceService;
+        this.elevatorTypeRepository = elevatorTypeRepository;
     }
 
     @GetMapping("/register")
@@ -82,6 +98,10 @@ public class HomePageController {
         model.addAttribute("products", products);
         List<Project> projects = projectService.getAllProjects();
         model.addAttribute("projects", projects);
+        List<vn.giaiphapthangmay.phantech.domain.Service> services = serviceService.getAllServices();
+        model.addAttribute("services", services);
+        List<ElevatorType> elevatorTypes = this.elevatorTypeRepository.findAll();
+        model.addAttribute("elevatorTypes", elevatorTypes);
         return "client/auth/index"; // Trả về trang chính
     }
 
@@ -161,6 +181,19 @@ public class HomePageController {
         this.userService.handleSaveUser(user);
 
         return "redirect:/edit-password?success=change-password";
+    }
+
+    @GetMapping("/contact")
+    public String getContactPage() {
+        return "client/auth/contact";
+    }
+
+    @PostMapping("/submit-form-contact")
+    public String handleContactForm(@RequestParam("name") String name, @RequestParam("address") String address,
+            @RequestParam("email") String email, @RequestParam("phone") String phone,
+            @RequestParam("message") String message) {
+        this.formRepository.save(new Form(name, phone, email, address, message));
+        return "redirect:/contact?success=send-message";
     }
 
 }

@@ -146,12 +146,11 @@ public class ClientRequestListController {
             requestItem.setProduct(item.getProduct());
             requestItem.setService(item.getService());
             requestItem.setRequestList(requestList);
-            requestItem.setCanReview(false);
+            requestItem.setCanReview("NOT");
             this.requestListService.saveRequestItem(requestItem);
             this.clientRequestListService.deleteClientRequestItem(item.getId());
         }
-
-        return "redirect:/request-list";
+        return "redirect:/history";
     }
 
 }

@@ -7,49 +7,45 @@
                     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                         <div class="sb-sidenav-menu">
                             <div class="nav">
-                                <a class="nav-link ${currentTab == 'dashboard' ? 'active' : ''}"
-                                    href="/admin/dashboard">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    Dashboard
-                                </a>
+
                                 <div class="sb-sidenav-menu-heading">Quản lý</div>
                                 <a class="nav-link ${currentTab == 'user' ? 'active' : ''}" href="/admin/user">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Người dùng
                                 </a>
                                 <a class="nav-link ${currentTab == 'product' ? 'active' : ''}" href="/admin/product">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-laptop"></i></div>
+                                    <div class="sb-nav-link-icon"></i></div>
                                     Sản phẩm
                                 </a>
                                 <a class="nav-link ${currentTab == 'project' ? 'active' : ''}" href="/admin/project">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-project-diagram"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Dự án
                                 </a>
                                 <a class="nav-link ${currentTab == 'requestList' ? 'active' : ''}"
-                                    href="/admin/requestList">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
+                                    href="/admin/request-list">
+                                    <div class="sb-nav-link-icon"></div>
                                     Danh sách yêu cầu
                                 </a>
                                 <a class="nav-link ${currentTab == 'review' ? 'active' : ''}" href="/admin/review">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Đánh giá
                                 </a>
                                 <a class="nav-link ${currentTab == 'service' ? 'active' : ''}" href="/admin/service">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Dịch vụ
                                 </a>
                                 <a class="nav-link ${currentTab == 'form' ? 'active' : ''}" href="/admin/form">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Form
                                 </a>
                                 <a class="nav-link ${currentTab == 'elevator-type' ? 'active' : ''}"
                                     href="/admin/elevator-type">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-elevator"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Loại thang máy
                                 </a>
                                 <a class="nav-link ${currentTab == 'manufacturer' ? 'active' : ''}"
                                     href="/admin/manufacturer">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-industry"></i></div>
+                                    <div class="sb-nav-link-icon"></div>
                                     Nhà sản xuất
                                 </a>
                             </div>

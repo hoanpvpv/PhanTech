@@ -51,7 +51,8 @@
                                             <form:form action="/admin/project/create" method="post"
                                                 modelAttribute="project" enctype="multipart/form-data"
                                                 class="needs-validation" novalidate="true">
-
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
                                                         <h5 class="border-bottom pb-2">Thông tin dự án</h5>
@@ -186,12 +187,17 @@
 
                         // Cấu hình cho hình ảnh responsive
                         image_advtab: true,
+                        // Cấu hình cho hình ảnh responsive
+                        image_advtab: true,
                         image_class_list: [
                             { title: 'Responsive', value: 'img-fluid' }
                         ],
                         image_dimensions: false,
                         automatic_uploads: true,
                         images_upload_url: '/admin/project/upload-image-project', // Endpoint để upload ảnh từ TinyMCE
+                        images_upload_headers: {
+                            '${_csrf.headerName}': '${_csrf.token}'
+                        },
                         file_picker_types: 'image',
 
                         // Áp dụng style responsive cho tất cả hình ảnh

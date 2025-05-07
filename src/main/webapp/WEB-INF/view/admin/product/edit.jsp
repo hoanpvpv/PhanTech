@@ -334,6 +334,9 @@
                         image_dimensions: false,
                         automatic_uploads: true,
                         images_upload_url: '/admin/product/upload-image-product', // Endpoint để upload ảnh từ TinyMCE
+                        images_upload_headers: {
+                            '${_csrf.headerName}': '${_csrf.token}'
+                        },
                         file_picker_types: 'image',
 
                         // Áp dụng style responsive cho tất cả hình ảnh

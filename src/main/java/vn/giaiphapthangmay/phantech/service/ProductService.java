@@ -1,7 +1,9 @@
 package vn.giaiphapthangmay.phantech.service;
 
+import java.util.stream.Collectors;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.giaiphapthangmay.phantech.domain.Product;
+import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.repository.ProductRepository;
 
 @Service
@@ -21,10 +24,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final UploadService uploadService;
+    private final ReviewService reviewService;
 
-    public ProductService(ProductRepository productRepository, UploadService uploadService) {
+    public ProductService(ProductRepository productRepository, UploadService uploadService,
+            ReviewService reviewService) {
         this.productRepository = productRepository;
         this.uploadService = uploadService;
+        this.reviewService = reviewService;
     }
 
     public Page<Product> getAllProducts(Pageable pageable) {
@@ -152,17 +158,12 @@ public class ProductService {
     }
 
     public Map<String, String> uploadImageForTinyMCE(MultipartFile file) throws IOException {
-        // Lưu file và lấy tên file
-        String savedFileName = uploadService.handleSaveUploadFile(file, "product");
-
-        // TinyMCE yêu cầu trả về JSON với thuộc tính "location" chứa URL của ảnh
-        Map<String, String> response = new HashMap<>();
-        response.put("location", "/images/product/" + savedFileName);
-
-        return response;
+        // Sử dụng phương thức từ UploadService
+        return uploadService.uploadImageForTinyMCE(file, "product");
     }
 
     public void saveProduct(Product product) {
         productRepository.save(product);
     }
+
 }

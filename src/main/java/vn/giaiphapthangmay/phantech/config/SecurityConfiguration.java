@@ -25,7 +25,7 @@ public class SecurityConfiguration {
 
         @Bean
         public PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder(); // Tạo bean BCryptPasswordEncoder để mã hóa mật khẩu
+                return new BCryptPasswordEncoder();
         }
 
         @Bean
@@ -70,6 +70,10 @@ public class SecurityConfiguration {
         @Bean
         SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 http
+                                .csrf(csrf -> csrf
+                                                .ignoringRequestMatchers("/admin/product/upload-image-product",
+                                                                "/admin/project/upload-image-project",
+                                                                "/admin/service/upload-image-service"))
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                                                 DispatcherType.INCLUDE)
@@ -78,7 +82,10 @@ public class SecurityConfiguration {
                                                 .hasRole("ADMIN")
                                                 .requestMatchers(
                                                                 "/", "/login", "/client/**", "/css/**", "/js/**",
-                                                                "/images/**", "/product/**", "/register")
+                                                                "/images/**", "/product/**",
+                                                                "/service/**", "/register",
+                                                                "/project/**",
+                                                                "/submit-form-contact")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .sessionManagement((sessionManagement) -> sessionManagement

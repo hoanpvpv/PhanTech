@@ -32,8 +32,7 @@ public class RequestListService {
     }
 
     public RequestList getRequestListById(long id) {
-        // Logic to get a request list by ID
-        return null; // Placeholder return statement
+        return requestListRepository.findById(id).orElse(null);
     }
 
     public void deleteRequestList(long id) {

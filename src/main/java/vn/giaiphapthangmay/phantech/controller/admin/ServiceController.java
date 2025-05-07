@@ -2,7 +2,9 @@ package vn.giaiphapthangmay.phantech.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,5 +85,12 @@ public class ServiceController {
     public String deleteService(@PathVariable long id) {
         serviceService.deleteService(id);
         return "redirect:/admin/service";
+    }
+
+    @PostMapping("/upload-image-service")
+    public ResponseEntity<Map<String, String>> uploadImageForTinyMCE(@RequestParam("file") MultipartFile file)
+            throws IOException {
+        Map<String, String> response = serviceService.uploadImageForTinyMCE(file);
+        return ResponseEntity.ok(response);
     }
 }

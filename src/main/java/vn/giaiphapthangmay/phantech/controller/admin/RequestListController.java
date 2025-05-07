@@ -47,7 +47,7 @@ public class RequestListController {
     public String getRequestListPage(Model model,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("create_at").descending());
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("createdAt").descending());
         Page<RequestList> requestListPage = requestListService.getAllRequestLists(pageable);
 
         model.addAttribute("requestLists", requestListPage.getContent());
@@ -86,8 +86,9 @@ public class RequestListController {
     public String allowToReview(@RequestParam("RequestItemId") long id) {
         RequestItem requestItem = requestListService.getRequestItemById(id);
         if (requestItem != null) {
-            requestItem.setCanReview(true);
+            requestItem.setCanReview("YES");
             requestListService.saveRequestItem(requestItem);
+            return "redirect:/admin/request-list/" + requestItem.getRequestList().getId();
         }
         return "redirect:/admin/request-list";
     }

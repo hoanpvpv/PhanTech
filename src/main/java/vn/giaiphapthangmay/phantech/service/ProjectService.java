@@ -1,10 +1,12 @@
 package vn.giaiphapthangmay.phantech.service;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import vn.giaiphapthangmay.phantech.domain.Product;
 import vn.giaiphapthangmay.phantech.domain.Project;
-
+import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.repository.ProjectRepository;
 import vn.giaiphapthangmay.phantech.repository.ServiceRepository;
 
@@ -37,8 +39,8 @@ public class ProjectService {
         this.serviceRepository = serviceRepository; // Thay đổi ở đây
     }
 
-    public Page<Project> getAllProjects(int page, int size) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
+    public Page<Project> getAllProjectsBy(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 8, Sort.by("date").descending());
         return projectRepository.findAll(pageable);
     }
 
@@ -132,8 +134,9 @@ public class ProjectService {
         return null;
     }
 
-    public List<Project> getAllProjectsByProductId(long productId) {
-        return projectRepository.findByProductId(productId);
+    public List<Project> getNewProjectsByProductId(long productId) {
+        Pageable pageable = PageRequest.of(0, 8, Sort.by("date").descending());
+        return projectRepository.findByProductId(productId, pageable).getContent();
     }
 
     public Project getProjectById(long id) {
@@ -145,9 +148,13 @@ public class ProjectService {
     }
 
     public Map<String, String> uploadImageForTinyMCE(MultipartFile file) throws IOException {
-        String imagePath = uploadService.handleSaveUploadFile(file, "project");
-        Map<String, String> response = new HashMap<>();
-        response.put("location", "/images/project/" + imagePath);
-        return response;
+        // Sử dụng phương thức từ UploadService
+        return this.uploadService.uploadImageForTinyMCE(file, "project");
+    }
+
+    public List<Project> getNewProjectsByServiceId(long id) {
+        Pageable pageable = PageRequest.of(0, 8, Sort.by("date").descending());
+        return projectRepository.findByServiceId(id, pageable).getContent();
+
     }
 }

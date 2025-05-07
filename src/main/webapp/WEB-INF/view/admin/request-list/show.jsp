@@ -1,0 +1,185 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+    <%@page contentType="text/html" pageEncoding="UTF-8" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                <!DOCTYPE html>
+                <html lang="vi">
+
+                <head>
+                    <meta charset="utf-8" />
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+                    <meta name="description" content="PhanTech - Quản lý yêu cầu" />
+                    <meta name="author" content="PhanTech" />
+                    <title>Quản lý yêu cầu - PhanTech</title>
+                    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+                        rel="stylesheet" />
+                    <link href="/css/styles.css" rel="stylesheet" />
+                    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+                        crossorigin="anonymous"></script>
+                </head>
+
+                <body class="sb-nav-fixed">
+                    <jsp:include page="../layout/header.jsp" />
+
+                    <div id="layoutSidenav">
+                        <jsp:include page="../layout/sidenav.jsp" />
+
+                        <div id="layoutSidenav_content">
+                            <main>
+                                <div class="container-fluid px-4">
+                                    <h1 class="mt-4">Quản lý yêu cầu</h1>
+                                    <ol class="breadcrumb mb-4">
+                                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Danh sách yêu cầu</li>
+                                    </ol>
+
+                                    <div class="card shadow-lg mb-4">
+                                        <div
+                                            class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                            <h4 class="mb-0"><i class="fas fa-list me-2"></i>Danh sách yêu cầu từ khách
+                                                hàng</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="requestListTable" class="table table-striped table-hover">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Khách hàng</th>
+                                                            <th>Thông tin liên hệ</th>
+                                                            <th>Ngày tạo</th>
+                                                            <th>Trạng thái</th>
+                                                            <th>Cập nhật gần nhất</th>
+                                                            <th width="180">Thao tác</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${requestLists}" var="request">
+                                                            <tr>
+                                                                <td>${request.id}</td>
+                                                                <td>
+                                                                    <strong>${request.fullNameInfo}</strong>
+                                                                    <c:if test="${not empty request.user}">
+                                                                        <br>
+                                                                        <small class="text-muted">Tài khoản:
+                                                                            ${request.user.email}</small>
+                                                                    </c:if>
+                                                                </td>
+                                                                <td>
+                                                                    <i class="fas fa-envelope me-1 text-primary"></i>
+                                                                    ${request.emailInfo}<br>
+                                                                    <i class="fas fa-phone me-1 text-success"></i>
+                                                                    ${request.phoneInfo}<br>
+                                                                    <i
+                                                                        class="fas fa-map-marker-alt me-1 text-danger"></i>
+                                                                    ${request.addressInfo}
+                                                                </td>
+                                                                <td>
+                                                                    ${request.createdAt}
+                                                                </td>
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${request.status == 'PENDING'}">
+                                                                            <span class="badge bg-warning text-dark">Chờ
+                                                                                xử lý</span>
+                                                                        </c:when>
+
+                                                                        <c:when test="${request.status == 'COMPLETED'}">
+                                                                            <span class="badge bg-success">Hoàn
+                                                                                thành</span>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <span
+                                                                                class="badge bg-secondary">${request.status}</span>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                                <td>
+                                                                    <c:if test="${not empty request.updateStatusdAt}">
+                                                                        ${request.updateStatusdAt}
+                                                                    </c:if>
+                                                                    <c:if test="${empty request.updateStatusdAt}">
+                                                                        <span class="text-muted">Chưa cập nhật</span>
+                                                                    </c:if>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="btn-group" role="group">
+                                                                        <a href="/admin/request-list/${request.id}"
+                                                                            class="btn btn-sm btn-info"
+                                                                            title="Chi tiết">
+                                                                            <i class="fas fa-eye"></i> Chi tiết
+                                                                        </a>
+
+                                                                    </div>
+
+
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Phân trang -->
+                                            <c:if test="${totalPages > 1}">
+                                                <nav aria-label="Page navigation" class="mt-4">
+                                                    <ul class="pagination justify-content-center">
+                                                        <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
+                                                            <a class="page-link"
+                                                                href="/admin/request-list?page=${currentPage - 1}"
+                                                                aria-label="Previous">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+
+                                                        <c:forEach begin="1" end="${totalPages}" var="i">
+                                                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                                                <a class="page-link"
+                                                                    href="/admin/request-list?page=${i}">${i}</a>
+                                                            </li>
+                                                        </c:forEach>
+
+                                                        <li
+                                                            class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+                                                            <a class="page-link"
+                                                                href="/admin/request-list?page=${currentPage + 1}"
+                                                                aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </main>
+
+
+                        </div>
+                    </div>
+
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+                    <script src="/js/scripts.js"></script>
+                    <script
+                        src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+                    <script>
+                        // Initialize DataTable
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const requestListTable = document.getElementById('requestListTable');
+                            if (requestListTable) {
+                                new simpleDatatables.DataTable(requestListTable, {
+                                    perPageSelect: [10, 20, 50, 100],
+                                    columns: [
+                                        // Disable sorting for actions column
+                                        { select: 6, sortable: false }
+                                    ]
+                                });
+                            }
+                        });
+                    </script>
+                </body>
+
+                </html>

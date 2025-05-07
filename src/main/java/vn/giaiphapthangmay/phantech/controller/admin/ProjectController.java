@@ -26,30 +26,28 @@ import vn.giaiphapthangmay.phantech.domain.Service;
 import vn.giaiphapthangmay.phantech.repository.ServiceRepository;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
+import vn.giaiphapthangmay.phantech.service.ServiceService;
 
 @Controller
 @RequestMapping("/admin/project")
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final ServiceRepository serviceRepository;
+    private final ServiceService serviceService;
     private final ProductService productService;
 
-    public ProjectController(ProjectService projectService, ServiceRepository serviceRepository,
+    public ProjectController(ProjectService projectService, ServiceService serviceService,
             ProductService productService) {
         this.projectService = projectService;
-        this.serviceRepository = serviceRepository;
+        this.serviceService = serviceService;
         this.productService = productService;
 
     }
 
     @GetMapping("")
     public String getProjectPage(Model model,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
-        Page<Project> projectPage = projectService.getAllProjects(page, size);
-
+            @RequestParam(defaultValue = "1") int page) {
+        Page<Project> projectPage = projectService.getAllProjectsBy(page);
         model.addAttribute("projects", projectPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", projectPage.getTotalPages());
@@ -61,7 +59,7 @@ public class ProjectController {
     @GetMapping("/create")
     public String getCreateProjectPage(Model model) {
         model.addAttribute("project", new Project());
-        List<Service> services = serviceRepository.findAll();
+        List<Service> services = this.serviceService.getAllServices();
         model.addAttribute("services", services);
         return "admin/project/create";
     }
@@ -86,7 +84,7 @@ public class ProjectController {
             return "redirect:/admin/project";
         }
         model.addAttribute("project", project);
-        List<Service> services = serviceRepository.findAll();
+        List<Service> services = this.serviceService.getAllServices();
         model.addAttribute("services", services);
 
         return "admin/project/edit";

@@ -2,6 +2,7 @@ package vn.giaiphapthangmay.phantech.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,5 +36,10 @@ public class ServiceService {
 
     public void deleteService(long id) {
         serviceRepository.deleteById(id);
+    }
+
+    public Map<String, String> uploadImageForTinyMCE(MultipartFile file) throws IOException {
+        // Sử dụng phương thức từ UploadService
+        return uploadService.uploadImageForTinyMCE(file, "public");
     }
 }

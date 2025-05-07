@@ -202,6 +202,9 @@
                                                                                         action="/admin/elevator-type/edit/${elevatorType.id}"
                                                                                         method="post"
                                                                                         enctype="multipart/form-data">
+                                                                                        <input type="hidden"
+                                                                                            name="${_csrf.parameterName}"
+                                                                                            value="${_csrf.token}" />
                                                                                         <div class="row mb-3">
                                                                                             <div class="col-md-12">
                                                                                                 <div
@@ -350,6 +353,7 @@
                                     <div class="modal-body">
                                         <form action="/admin/elevator-type/create" method="post"
                                             enctype="multipart/form-data">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
                                                     <div class="form-floating mb-3">

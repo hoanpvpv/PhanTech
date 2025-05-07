@@ -1860,3 +1860,124 @@ main {
         height: 180px;
     }
 }
+
+.section-title {
+    position: relative;
+    color: #343a40;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.section-divider {
+    height: 3px;
+    width: 60px;
+    background-color: #0d6efd;
+    margin-bottom: 30px;
+}
+
+.team-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 5px solid #f8f9fa;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.team-card:hover .team-img {
+    transform: scale(1.05);
+}
+
+.team-social {
+    margin-top: 15px;
+}
+
+.social-icon {
+    display: inline-flex;
+    width: 35px;
+    height: 35px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #0d6efd;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    margin-left: -1.5px;
+    background-color: #e9ecef;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.timeline-badge {
+    position: absolute;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    margin-left: -35px;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    font-weight: bold;
+    z-index: 100;
+    border: 3px solid white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-content {
+    position: relative;
+    width: 45%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    float: right;
+    margin-left: 55%;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    float: left;
+    text-align: right;
+}
+
+.testimonial-content {
+    position: relative;
+}
+
+.testimonial-content:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #f8f9fa transparent;
+}

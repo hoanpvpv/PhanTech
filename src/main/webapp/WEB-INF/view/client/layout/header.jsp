@@ -22,37 +22,16 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/about">Giới thiệu</a>
                             </li>
-                            <!-- Dropdown Sản phẩm -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Sản phẩm
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-                                    <li><a class="dropdown-item" href="products.html">Thang máy gia đình</a></li>
-                                    <li><a class="dropdown-item" href="products.html">Thang máy chở khách</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="products.html">Thang máy kính</a></li>
-                                    <li><a class="dropdown-item" href="products.html">Thang máy thủy lực</a></li>
-                                    <li><a class="dropdown-item" href="products.html">Thang máy thủy lực</a></li>
-                                    <li><a class="dropdown-item" href="products.html">Thang máy vận
-                                            chuyển hàng hóa</a></li>
-                                </ul>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/product">Sản phẩm</a>
                             </li>
 
-                            <!-- Dropdown Dịch vụ -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dịch vụ
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                                    <li><a class="dropdown-item" href="installation.html">Lắp đặt</a></li>
-                                    <li><a class="dropdown-item" href="maintenance.html">Bảo trì</a></li>
-                                    <li><a class="dropdown-item" href="repair.html">Sửa chữa</a></li>
-                                    <li><a class="dropdown-item" href="upgrade.html">Nâng cấp</a></li>
-                                    <li><a class="dropdown-item" href="advisory.html">Tư vấn kỹ thuật</a></li>
-                                </ul>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#service">Dịch vụ</a>
+                            </li>
+
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/project">Dự án</a>
@@ -80,7 +59,7 @@
                                         <li>
                                             <hr class="dropdown-divider" />
                                         </li>
-                                        <li><a class="dropdown-item" href="/request-history">Lịch sử yêu cầu</a></li>
+                                        <li><a class="dropdown-item" href="/history">Lịch sử yêu cầu</a></li>
                                         <li>
                                             <hr class="dropdown-divider" />
                                         </li>
@@ -108,3 +87,7 @@
                     </div>
                 </div>
             </nav>
+            <!--Start of Fchat.vn-->
+            <script type="text/javascript"
+                src="https://cdn.fchat.vn/assets/embed/webchat.js?id=681b3dfb3795f4486905baa6" async="async"></script>
+            <!--End of Fchat.vn-->
