@@ -81,8 +81,9 @@ public class ProductController {
             @RequestParam("imageFile4") MultipartFile imageFile4,
             @RequestParam("imageFile5") MultipartFile imageFile5) throws IOException {
 
-        productService.createProduct(product, imageFile1, imageFile2, imageFile3, imageFile4, imageFile5);
-        return "redirect:/admin/product";
+        Product newProduct = this.productService.createProduct(product, imageFile1, imageFile2, imageFile3, imageFile4,
+                imageFile5);
+        return "redirect:/admin/product/edit/" + newProduct.getId();
     }
 
     @GetMapping("/edit/{id}")

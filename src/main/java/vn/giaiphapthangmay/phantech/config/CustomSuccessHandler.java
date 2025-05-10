@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -21,9 +22,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
 import vn.giaiphapthangmay.phantech.domain.User;
 import vn.giaiphapthangmay.phantech.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
-
+    private static final Logger log = LoggerFactory.getLogger(CustomSuccessHandler.class);
     @Autowired
     private UserService userService;
 
@@ -61,18 +64,18 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-        String email = authentication.getName(); // Lấy tên người dùng từ đối tượng Authentication
-        User user = this.userService.getUserByEmail(email); // Tìm người dùng trong cơ sở dữ liệu
+        String email = authentication.getName();
+        User user = this.userService.getUserByEmail(email);
         if (user != null) {
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("id", user.getId());
-            session.setAttribute("email", user.getEmail());// Lưu người dùng vào session
+            session.setAttribute("email", user.getEmail());
             long sum = user.getClientRequestList() == null ? 0
-                    : user.getClientRequestList().getClientRequestItems().size(); // Lấy tổng số
+                    : user.getClientRequestList().getClientRequestItems().size();
 
-            session.setAttribute("sum", sum); // Lưu tổng số lượng sản phẩm trong giỏ hàng vào session
+            session.setAttribute("sum", sum);
         } else {
-            session.removeAttribute("user"); // Nếu không tìm thấy người dùng, xóa thuộc tính "user" khỏi session
+            session.removeAttribute("user");
         }
     }
 
@@ -82,7 +85,26 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     @Transactional(readOnly = true)
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException {
+
+        // Ghi log tường minh
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
+            log.info("\n=== DANG NHAP THANH CONG ===\n" +
+                    "Tai Khoan    : {}\n" +
+                    "Quyen Han    : {}\n" +
+                    "IP            : {}\n" +
+                    "Session ID    : {}\n",
+                    userDetails.getUsername(),
+                    userDetails.getAuthorities(),
+                    request.getRemoteAddr(),
+                    request.getSession().getId());
+        } else {
+            log.info("Dang Nhap Thanh Cong Voi principal: {}", principal);
+        }
+
+        // Xử lý redirect và xóa attribute cũ như mặc định
         handle(request, response, authentication);
         clearAuthenticationAttributes(request, authentication);
     }
+
 }

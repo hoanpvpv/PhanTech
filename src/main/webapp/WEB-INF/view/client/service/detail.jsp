@@ -34,7 +34,15 @@
                                     class="${i <= service.rating ? 'fas' : 'far'} fa-star ${i <= service.rating ? 'text-warning' : 'text-light'}"></i>
                             </c:forEach>
                             <span class="ms-2">${service.rating}/5.0</span>
+                            <span class="text-muted ms-2" style="color: white;">(${service.reviews.size()} đánh
+                                giá)</span>
                         </div>
+                        <form action="/add-service-to-request-list/${service.id}" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-primary rounded-pill">Thêm vào danh
+                                sách yêu cầu</button>
+                        </form>
+
                     </div>
 
 
@@ -59,7 +67,7 @@
                     <!-- Projects Section -->
                     <section class="bg-light py-5">
 
-                        <h2 class="text-center text-primary mb-4">Các dự án sử dụng dịch vụ này</h2>
+                        <h2 class="text-center text-primary mb-4">Một số dự án sử dụng dịch vụ</h2>
                         <div class="row g-4 justify-content-center">
                             <c:if test="${empty projects}">
                                 <div class="col-12 text-center">
@@ -148,6 +156,45 @@
 
                                             <!-- Nội dung đánh giá -->
                                             <p class="mb-0">${review.content}</p>
+
+                                            <!-- Hình ảnh đánh giá -->
+                                            <div class="review-images mt-2">
+                                                <div class="row g-2">
+                                                    <c:if test="${not empty review.image1}">
+                                                        <div class="col-auto">
+                                                            <a href="/images/public/${review.image1}"
+                                                                data-lightbox="review-${review.id}"
+                                                                data-title="${review.user.fullName} - Hình ảnh 1">
+                                                                <img src="/images/public/${review.image1}"
+                                                                    alt="Ảnh đánh giá" class="img-thumbnail"
+                                                                    style="height:60px; width:auto;">
+                                                            </a>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty review.image2}">
+                                                        <div class="col-auto">
+                                                            <a href="/images/public/${review.image2}"
+                                                                data-lightbox="review-${review.id}"
+                                                                data-title="${review.user.fullName} - Hình ảnh 2">
+                                                                <img src="/images/public/${review.image2}"
+                                                                    alt="Ảnh đánh giá" class="img-thumbnail"
+                                                                    style="height:60px; width:auto;">
+                                                            </a>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty review.image3}">
+                                                        <div class="col-auto">
+                                                            <a href="/images/public/${review.image3}"
+                                                                data-lightbox="review-${review.id}"
+                                                                data-title="${review.user.fullName} - Hình ảnh 3">
+                                                                <img src="/images/public/${review.image3}"
+                                                                    alt="Ảnh đánh giá" class="img-thumbnail"
+                                                                    style="height:60px; width:auto;">
+                                                            </a>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -156,34 +203,6 @@
 
 
                     </section>
-
-                    <!-- Các dịch vụ khác -->
-                    <section class="bg-light py-5">
-                        <div class="container">
-                            <h2 class="text-center text-primary mb-4">Dịch vụ khác</h2>
-                            <div class="row g-4">
-                                <c:forEach items="${services}" var="otherService">
-                                    <c:if test="${otherService.id != service.id}">
-                                        <div class="col-lg-2 col-md-4 col-sm-6 text-center service-item">
-                                            <a href="/service/${otherService.id}" class="text-decoration-none">
-                                                <div class="service-card shadow-sm h-100 bg-white rounded">
-                                                    <div class="service-img-wrapper p-3">
-                                                        <img src="/images/public/${otherService.image}"
-                                                            alt="${otherService.name}" class="img-fluid"
-                                                            style="height: 120px; object-fit: contain;">
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <h6 class="service-title">${otherService.name}</h6>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </section>
-
                     <jsp:include page="../layout/footer.jsp" />
 
                     <!-- JavaScript để responsive các hình ảnh trong nội dung chi tiết dịch vụ -->

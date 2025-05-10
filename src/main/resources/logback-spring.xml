@@ -1,0 +1,23 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Lọc các log không mong muốn -->
+    <logger name="org.springframework.security.web.FilterChainProxy" level="WARN" />
+    <logger name="org.springframework.security.web.context" level="WARN" />
+    <logger name="org.springframework.security.web.authentication.rememberme" level="WARN" />
+
+    <!-- Không log request đến tài nguyên tĩnh -->
+    <logger name="org.springframework.web.servlet.resource" level="WARN" />
+
+    <!-- Log quan trọng -->
+    <logger name="vn.giaiphapthangmay.phantech" level="INFO" />
+    <logger name="org.springframework.security.authentication" level="INFO" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

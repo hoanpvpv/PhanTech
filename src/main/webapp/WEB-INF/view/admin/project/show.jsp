@@ -322,31 +322,27 @@
                     crossorigin="anonymous"></script>
                 <script>
                     // Initialize DataTable
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const projectsTable = document.getElementById('projectsTable');
-                        if (projectsTable) {
-                            new simpleDatatables.DataTable(projectsTable);
-                        }
 
-                        // Xử lý hình ảnh trong nội dung TinyMCE để đảm bảo responsive
-                        document.querySelectorAll('.modal-body div img').forEach(function (img) {
-                            img.classList.add('img-fluid');
-                            img.removeAttribute('width');
-                            img.removeAttribute('height');
-                        });
 
-                        // Xử lý khi modal mở
-                        const viewModals = document.querySelectorAll('[id^="viewModal"]');
-                        viewModals.forEach(function (modal) {
-                            modal.addEventListener('shown.bs.modal', function () {
-                                const images = this.querySelectorAll('.modal-body div img');
-                                images.forEach(function (img) {
-                                    img.classList.add('img-fluid');
-                                    img.removeAttribute('width');
-                                    img.removeAttribute('height');
-                                });
+                    // Xử lý hình ảnh trong nội dung TinyMCE để đảm bảo responsive
+                    document.querySelectorAll('.modal-body div img').forEach(function (img) {
+                        img.classList.add('img-fluid');
+                        img.removeAttribute('width');
+                        img.removeAttribute('height');
+                    });
+
+                    // Xử lý khi modal mở
+                    const viewModals = document.querySelectorAll('[id^="viewModal"]');
+                    viewModals.forEach(function (modal) {
+                        modal.addEventListener('shown.bs.modal', function () {
+                            const images = this.querySelectorAll('.modal-body div img');
+                            images.forEach(function (img) {
+                                img.classList.add('img-fluid');
+                                img.removeAttribute('width');
+                                img.removeAttribute('height');
                             });
                         });
+                    });
                     });
                 </script>
             </body>

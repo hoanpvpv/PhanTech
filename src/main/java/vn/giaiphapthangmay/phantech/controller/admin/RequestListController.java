@@ -79,7 +79,7 @@ public class RequestListController {
             requestList.setUpdateStatusdAt(LocalDateTime.now());
             requestListService.saveRequestList(requestList);
         }
-        return "redirect:/admin/request-list";
+        return "redirect:/admin/request-list/" + id;
     }
 
     @PostMapping("/allow-to-review")

@@ -423,10 +423,6 @@
                 <script>
                     // Initialize DataTable
                     document.addEventListener('DOMContentLoaded', function () {
-                        const productsTable = document.getElementById('productsTable');
-                        if (productsTable) {
-                            new simpleDatatables.DataTable(productsTable);
-                        }
 
                         // Xử lý hình ảnh trong nội dung TinyMCE để đảm bảo responsive
                         document.querySelectorAll('.description-content img').forEach(function (img) {

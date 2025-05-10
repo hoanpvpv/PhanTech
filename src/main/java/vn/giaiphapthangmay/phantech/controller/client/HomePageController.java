@@ -26,6 +26,7 @@ import vn.giaiphapthangmay.phantech.domain.dto.RegisterDTO;
 import vn.giaiphapthangmay.phantech.repository.ElevatorTypeRepository;
 import vn.giaiphapthangmay.phantech.repository.FormRepository;
 import vn.giaiphapthangmay.phantech.service.ClientRequestListService;
+import vn.giaiphapthangmay.phantech.service.ElevatorTypeService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
 import vn.giaiphapthangmay.phantech.service.ServiceService;
@@ -44,9 +45,9 @@ public class HomePageController {
     private final ClientRequestListService clientRequestListService;
     private final FormRepository formRepository;
     private final ServiceService serviceService;
-    private final ElevatorTypeRepository elevatorTypeRepository;
+    private final ElevatorTypeService elevatorTypeService;
 
-    public HomePageController(ElevatorTypeRepository elevatorTypeRepository, UserService userService,
+    public HomePageController(ElevatorTypeService elevatorTypeService, UserService userService,
             PasswordEncoder passwordEncoder,
             ProductService productService, ProjectService projectService,
             ClientRequestListService clientRequestListService, FormRepository formRepository,
@@ -58,7 +59,7 @@ public class HomePageController {
         this.clientRequestListService = clientRequestListService;
         this.formRepository = formRepository;
         this.serviceService = serviceService;
-        this.elevatorTypeRepository = elevatorTypeRepository;
+        this.elevatorTypeService = elevatorTypeService;
     }
 
     @GetMapping("/register")
@@ -100,7 +101,7 @@ public class HomePageController {
         model.addAttribute("projects", projects);
         List<vn.giaiphapthangmay.phantech.domain.Service> services = serviceService.getAllServices();
         model.addAttribute("services", services);
-        List<ElevatorType> elevatorTypes = this.elevatorTypeRepository.findAll();
+        List<ElevatorType> elevatorTypes = this.elevatorTypeService.getAllElevatorType();
         model.addAttribute("elevatorTypes", elevatorTypes);
         return "client/auth/index"; // Trả về trang chính
     }

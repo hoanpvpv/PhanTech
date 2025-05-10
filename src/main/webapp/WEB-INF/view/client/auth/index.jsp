@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Top 8 sản phẩm thang máy được yêu cầu tư vấn nhiều nhất -->
-                <h2 class="text-center text-primary mb-4">Top 8 Sản Phẩm Được Yêu Cầu Tư Vấn Nhiều Nhất</h2>
+                <h2 class="text-center text-primary mb-4">Một số sản phẩm được đánh giá cao nhất</h2>
 
                 <div class="container">
                     <div id="top-products" class="my-5"></div>
@@ -72,7 +72,7 @@
                                             <c:if test="${product.rating % 1 != 0}">
                                                 <i class="fas fa-star-half-alt"></i>
                                             </c:if>
-                                            <!-- <span>(${product.reviews.size()})</span> -->
+                                            <span>(${product.reviews.size()})</span>
                                         </div>
                                         <h5 class="ec-title">${product.name}</h5>
                                         <div class="ec-category">${product.elevatorType.name}</div>
@@ -113,7 +113,7 @@
 
                 </div>
                 <!-- 8 dự án đã làm -->
-                <h2 class="text-center text-primary mb-4">Dự Án Tiêu Biểu Đã Thực Hiện</h2>
+                <h2 class="text-center text-primary mb-4">Các dự án mới nhất của chúng tôi</h2>
                 <div id="completed-projects" class="container-fluid my-5 bg-light py-5">
 
                     <div class="row d-flex flex-wrap g-3 justify-content-center">

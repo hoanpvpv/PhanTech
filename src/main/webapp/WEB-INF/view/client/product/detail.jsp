@@ -31,14 +31,8 @@
                     <div style="margin-top: 76px;">
 
                         <div class="container mt-5 mb-5">
-                            <!-- Breadcrumb -->
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                                    <li class="breadcrumb-item"><a href="/products">Sản phẩm</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">${product.name}</li>
-                                </ol>
-                            </nav>
+
+
 
                             <div class="row">
                                 <!-- Phần Gallery -->
@@ -173,15 +167,17 @@
 
                                     <!-- CTA Buttons -->
                                     <div class="product-actions d-flex gap-2 flex-wrap mb-4">
-                                        <button class="btn btn-primary btn-lg flex-fill">
-                                            <i class="fas fa-phone-alt me-2"></i>Liên hệ tư vấn
-                                        </button>
-                                        <button class="btn btn-outline-primary btn-lg flex-fill">
-                                            <i class="fas fa-clipboard-list me-2"></i>Thêm vào yêu cầu báo giá
-                                        </button>
-                                        <button class="btn btn-outline-secondary btn-lg flex-fill">
-                                            <i class="fas fa-file-download me-2"></i>Tải catalog
-                                        </button>
+                                        <a href="/contact">
+                                            <button class="btn btn-primary btn-lg flex-fill">
+                                                <i class="fas fa-phone-alt me-2"></i>Liên hệ tư vấn
+                                            </button>
+                                        </a>
+                                        <form action="/add-product-to-request-list/${product.id}" method="post">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                            <button class="btn btn-primary btn-lg flex-fill">Thêm vào danh
+                                                sách yêu cầu</button>
+                                        </form>
+
                                     </div>
 
                                     <!-- Bảo hành -->

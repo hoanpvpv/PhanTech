@@ -28,12 +28,13 @@
                     <jsp:include page="../layout/header.jsp" />
 
                     <!-- Page Header -->
-                    <div class="container-fluid bg-light py-5">
-                        <div class="container">
-                            <h1 class="text-center">Danh Sách Yêu Cầu</h1>
-                            <p class="text-center text-muted">Quản lý sản phẩm và dịch vụ của bạn</p>
-                        </div>
+
+
+                    <div class="banner">
+                        <h1 class="text-center">Danh Sách Yêu Cầu</h1>
+                        <p class="text-center text-muted">Quản lý sản phẩm và dịch vụ của bạn</p>
                     </div>
+
 
                     <div class="container my-5">
                         <!-- Thông báo nếu có -->

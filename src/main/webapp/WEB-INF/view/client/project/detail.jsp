@@ -27,16 +27,7 @@
                 <body>
                     <jsp:include page="../layout/header.jsp" />
 
-                    <!-- Breadcrumb -->
-                    <div class="container mt-4">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                                <li class="breadcrumb-item"><a href="/project">Dự án</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">${project.name}</li>
-                            </ol>
-                        </nav>
-                    </div>
+
 
                     <!-- Project Details -->
                     <div class="container my-5">

@@ -29,11 +29,7 @@
                             <main>
                                 <div class="container-fluid px-4">
                                     <h1 class="mt-4">Chi tiết đánh giá #${review.id}</h1>
-                                    <ol class="breadcrumb mb-4">
-                                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="/admin/review">Danh sách đánh giá</a></li>
-                                        <li class="breadcrumb-item active">Chi tiết đánh giá #${review.id}</li>
-                                    </ol>
+
 
                                     <div class="row">
                                         <div class="col-md-8 mb-4">

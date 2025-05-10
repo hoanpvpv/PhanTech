@@ -30,11 +30,7 @@
                         <main>
                             <div class="container-fluid px-4">
                                 <h1 class="mt-4">Chỉnh Sửa Dịch Vụ</h1>
-                                <ol class="breadcrumb mb-4">
-                                    <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="/admin/service">Dịch vụ</a></li>
-                                    <li class="breadcrumb-item active">Chỉnh sửa</li>
-                                </ol>
+
                                 <div class="card mb-4">
                                     <div class="card-header bg-warning">
                                         <i class="fas fa-edit me-1"></i>

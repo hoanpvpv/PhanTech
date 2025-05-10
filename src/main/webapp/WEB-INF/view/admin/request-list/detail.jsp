@@ -29,12 +29,7 @@
                             <main>
                                 <div class="container-fluid px-4">
                                     <h1 class="mt-4">Chi tiết yêu cầu #${requestList.id}</h1>
-                                    <ol class="breadcrumb mb-4">
-                                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="/admin/request-list">Danh sách yêu cầu</a>
-                                        </li>
-                                        <li class="breadcrumb-item active">Chi tiết yêu cầu #${requestList.id}</li>
-                                    </ol>
+
 
                                     <div class="row mb-4">
                                         <div class="col-md-6">
@@ -353,21 +348,7 @@
                     <script src="/js/scripts.js"></script>
                     <script
                         src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
-                    <script>
-                        // Initialize DataTable
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const requestItemsTable = document.getElementById('requestItemsTable');
-                            if (requestItemsTable) {
-                                new simpleDatatables.DataTable(requestItemsTable, {
-                                    perPage: 10,
-                                    columns: [
-                                        // Disable sorting for action column
-                                        { select: 5, sortable: false }
-                                    ]
-                                });
-                            }
-                        });
-                    </script>
+
                 </body>
 
                 </html>

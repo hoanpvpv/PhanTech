@@ -9,9 +9,9 @@
                     <meta charset="utf-8" />
                     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                    <meta name="description" content="PhanTech - Quản lý form liên hệ" />
+                    <meta name="description" content="PhanTech - " />
                     <meta name="author" content="PhanTech" />
-                    <title>Quản lý form liên hệ - PhanTech</title>
+                    <title> - PhanTech</title>
                     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
                         rel="stylesheet" />
                     <link href="/css/styles.css" rel="stylesheet" />
@@ -26,92 +26,96 @@
                         <jsp:include page="../layout/sidenav.jsp" />
 
                         <div id="layoutSidenav_content">
-                            <main>
-                                <div class="container-fluid px-4">
-                                    <h1 class="mt-4">Quản lý form liên hệ</h1>
-                                    <ol class="breadcrumb mb-4">
-                                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Danh sách form liên hệ</li>
-                                    </ol>
-
-                                    <div class="card shadow-lg mb-4">
-                                        <div
-                                            class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                                            <h4 class="mb-0"><i class="fas fa-envelope me-2"></i>Danh sách form liên hệ
-                                                từ khách hàng</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table id="formTable" class="table table-striped table-hover">
-                                                    <thead class="table-dark">
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Họ tên</th>
-                                                            <th>Thông tin liên hệ</th>
-                                                            <th>Tin nhắn</th>
-                                                            <th>Ngày gửi</th>
-                                                            <th>Trạng thái</th>
-                                                            <th width="120">Thao tác</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach items="${forms}" var="form">
-                                                            <tr class="${form.read ? '' : 'table-warning'}">
-                                                                <td>${form.id}</td>
-                                                                <td>
-                                                                    <strong>${form.name}</strong>
-                                                                </td>
-                                                                <td>
-                                                                    <i class="fas fa-envelope me-1 text-primary"></i>
-                                                                    ${form.email}<br>
-                                                                    <i class="fas fa-phone me-1 text-success"></i>
-                                                                    ${form.phone}<br>
-                                                                    <c:if test="${not empty form.address}">
-                                                                        <i
-                                                                            class="fas fa-map-marker-alt me-1 text-danger"></i>
-                                                                        ${form.address}
-                                                                    </c:if>
-                                                                </td>
-                                                                <td>
-                                                                    <span class="text-truncate d-inline-block"
-                                                                        style="max-width: 150px;">
-                                                                        ${form.message}
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    ${form.createdAt}
-                                                                </td>
-                                                                <td>
-                                                                    <c:choose>
-                                                                        <c:when test="${form.read}">
-                                                                            <span class="badge bg-success">Đã đọc</span>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <span
-                                                                                class="badge bg-warning text-dark">Chưa
-                                                                                đọc</span>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="btn-group" role="group">
-                                                                        <a href="/admin/form/${form.id}"
-                                                                            class="btn btn-sm btn-info"
-                                                                            title="Chi tiết">
-                                                                            <i class="fas fa-eye"></i> Xem
-                                                                        </a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
+                            <div class="container mt-5 pt-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="container-fluid px-4">
+                                            <div class="card shadow-lg">
+                                                <div
+                                                    class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                                    <h4 class="mb-0"><i class="fas fa-envelope me-2"></i>Danh sách form
+                                                        liên
+                                                        hệ
+                                                        từ khách hàng</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="formTable" class="table table-striped table-hover">
+                                                            <thead class="table-dark">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Họ tên</th>
+                                                                    <th>Thông tin liên hệ</th>
+                                                                    <th>Tin nhắn</th>
+                                                                    <th>Ngày gửi</th>
+                                                                    <th>Trạng thái</th>
+                                                                    <th width="120">Thao tác</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <c:forEach items="${forms}" var="form">
+                                                                    <tr class="${form.read ? '' : 'table-warning'}">
+                                                                        <td>${form.id}</td>
+                                                                        <td>
+                                                                            <strong>${form.name}</strong>
+                                                                        </td>
+                                                                        <td>
+                                                                            <i
+                                                                                class="fas fa-envelope me-1 text-primary"></i>
+                                                                            ${form.email}<br>
+                                                                            <i
+                                                                                class="fas fa-phone me-1 text-success"></i>
+                                                                            ${form.phone}<br>
+                                                                            <c:if test="${not empty form.address}">
+                                                                                <i
+                                                                                    class="fas fa-map-marker-alt me-1 text-danger"></i>
+                                                                                ${form.address}
+                                                                            </c:if>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="text-truncate d-inline-block"
+                                                                                style="max-width: 150px;">
+                                                                                ${form.message}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            ${form.createdAt}
+                                                                        </td>
+                                                                        <td>
+                                                                            <c:choose>
+                                                                                <c:when test="${form.read}">
+                                                                                    <span class="badge bg-success">Đã
+                                                                                        đọc</span>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <span
+                                                                                        class="badge bg-warning text-dark">Chưa
+                                                                                        đọc</span>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="btn-group" role="group">
+                                                                                <a href="/admin/form/${form.id}"
+                                                                                    class="btn btn-sm btn-info"
+                                                                                    title="Chi tiết">
+                                                                                    <i class="fas fa-eye"></i> Xem
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </main>
+                            </div>
                         </div>
+
                     </div>
 
                     <!-- Modal Xác nhận xóa -->
@@ -147,23 +151,7 @@
                     <script src="/js/scripts.js"></script>
                     <script
                         src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
-                    <script>
-                        // Initialize DataTable
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const formTable = document.getElementById('formTable');
-                            if (formTable) {
-                                new simpleDatatables.DataTable(formTable, {
-                                    perPageSelect: [10, 20, 50, 100],
-                                    columns: [
-                                        // Disable sorting for actions column
-                                        { select: 6, sortable: false }
-                                    ]
-                                });
-                            }
-                        });
 
-
-                    </script>
                 </body>
 
                 </html>

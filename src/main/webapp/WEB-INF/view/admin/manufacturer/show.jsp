@@ -349,6 +349,7 @@
                                 <div class="modal-body">
                                     <form action="/admin/manufacturer/create" method="post"
                                         enctype="multipart/form-data">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         <div class="row mb-3">
                                             <div class="col-md-12">
                                                 <div class="form-floating mb-3">
@@ -403,10 +404,7 @@
                 <script>
                     // Initialize DataTable
                     document.addEventListener('DOMContentLoaded', function () {
-                        const manufacturersTable = document.getElementById('manufacturersTable');
-                        if (manufacturersTable) {
-                            new simpleDatatables.DataTable(manufacturersTable);
-                        }
+
 
                         // Reset form khi đóng modal tạo mới
                         const createModal = document.getElementById('createManufacturerModal');
