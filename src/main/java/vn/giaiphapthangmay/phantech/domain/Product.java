@@ -27,6 +27,19 @@ public class Product {
     private String powerSupply;
     private double warranty;
     private String shortDescription;
+    private long reviewCount;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(long reviewCount) {
+        this.reviewCount = reviewCount;
+    }
 
     public String getShortDescription() {
         return shortDescription;

@@ -14,7 +14,6 @@
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
             </head>
             <style>
                 /* Đảm bảo hình ảnh trong nội dung từ TinyMCE hiển thị responsive */
@@ -35,10 +34,8 @@
 
             <body class="sb-nav-fixed">
                 <jsp:include page="../layout/header.jsp" />
-
                 <div id="layoutSidenav">
                     <jsp:include page="../layout/sidenav.jsp" />
-
                     <div id="layoutSidenav_content">
                         <div class="container mt-5 pt-3">
                             <div class="row">
@@ -50,6 +47,92 @@
                                             <a href="/admin/project/create" class="btn btn-success">
                                                 <i class="fas fa-plus me-1"></i> Tạo Dự Án mới
                                             </a>
+                                        </div>
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Bộ lọc tìm kiếm</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="get" action="/admin/project" id="filterForm">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3 row">
+                                                                <div class="col-md-6">
+                                                                    <label for="name" class="form-label">Tên dự
+                                                                        án</label>
+                                                                    <input type="text" class="form-control" id="name"
+                                                                        name="name" value="${name}"
+                                                                        placeholder="Nhập tên dự án...">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="address" class="form-label">Địa
+                                                                        chỉ</label>
+                                                                    <input type="text" class="form-control" id="address"
+                                                                        name="address" value="${address}"
+                                                                        placeholder="Nhập địa chỉ...">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3 row">
+                                                                <div class="col-md-6">
+                                                                    <label for="productName" class="form-label">Sản phẩm
+                                                                        sử dụng</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="productName" name="productName"
+                                                                        value="${productName}"
+                                                                        placeholder="Nhập tên sản phẩm...">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="serviceId" class="form-label">Dịch
+                                                                        vụ</label>
+                                                                    <select class="form-control" id="serviceId"
+                                                                        name="serviceId">
+                                                                        <option value="">-- Chọn dịch vụ --</option>
+                                                                        <c:forEach items="${services}" var="service">
+                                                                            <option value="${service.id}"
+                                                                                ${serviceId==service.id ? 'selected'
+                                                                                : '' }>${service.name}</option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3 row">
+                                                                <div class="col-md-6">
+                                                                    <label for="fromDate" class="form-label">Từ
+                                                                        ngày</label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="fromDate" name="fromDate"
+                                                                        value="${fromDate}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="toDate" class="form-label">Đến
+                                                                        ngày</label>
+                                                                    <input type="date" class="form-control" id="toDate"
+                                                                        name="toDate" value="${toDate}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div
+                                                                class="d-flex justify-content-end align-items-end h-100">
+                                                                <button type="submit" class="btn btn-primary me-2">
+                                                                    <i class="fas fa-search"></i> Tìm kiếm
+                                                                </button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    onclick="resetForm()">
+                                                                    <i class="fas fa-sync-alt"></i> Làm mới
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="sort" value="${sort}" id="sortInput">
+                                                </form>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -104,7 +187,6 @@
                                                                             <i class="fas fa-trash"></i>
                                                                         </button>
                                                                     </div>
-
                                                                     <!-- Modal xem chi tiết -->
                                                                     <div class="modal fade" id="viewModal${project.id}"
                                                                         tabindex="-1"
@@ -141,8 +223,7 @@
                                                                                                     </tr>
                                                                                                     <tr>
                                                                                                         <th>Ngày hoàn
-                                                                                                            thành:
-                                                                                                        </th>
+                                                                                                            thành:</th>
                                                                                                         <td>${project.date}
                                                                                                         </td>
                                                                                                     </tr>
@@ -171,9 +252,7 @@
                                                                                                             <c:if
                                                                                                                 test="${project.product != null}">
                                                                                                                 <a
-                                                                                                                    href="/admin/product/edit/${project.product.id}">
-                                                                                                                    ${project.product.name}
-                                                                                                                </a>
+                                                                                                                    href="/admin/product/edit/${project.product.id}">${project.product.name}</a>
                                                                                                             </c:if>
                                                                                                             <c:if
                                                                                                                 test="${project.product == null}">
@@ -188,9 +267,7 @@
                                                                                                             <c:if
                                                                                                                 test="${project.service != null}">
                                                                                                                 <a
-                                                                                                                    href="/admin/service/edit/${project.service.id}">
-                                                                                                                    ${project.service.name}
-                                                                                                                </a>
+                                                                                                                    href="/admin/service/edit/${project.service.id}">${project.service.name}</a>
                                                                                                             </c:if>
                                                                                                             <c:if
                                                                                                                 test="${project.service == null}">
@@ -212,7 +289,6 @@
                                                                                                 </c:if>
                                                                                             </div>
                                                                                         </div>
-
                                                                                         <div class="row mb-3">
                                                                                             <div class="col-12">
                                                                                                 <h5
@@ -239,7 +315,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
                                                                     <!-- Modal xác nhận xóa -->
                                                                     <div class="modal fade"
                                                                         id="deleteModal${project.id}" tabindex="-1"
@@ -250,8 +325,7 @@
                                                                                 <div class="modal-header">
                                                                                     <h5 class="modal-title"
                                                                                         id="deleteModalLabel${project.id}">
-                                                                                        Xác nhận xóa
-                                                                                    </h5>
+                                                                                        Xác nhận xóa</h5>
                                                                                     <button type="button"
                                                                                         class="btn-close"
                                                                                         data-bs-dismiss="modal"
@@ -285,34 +359,41 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Phân trang -->
-                        <c:if test="${totalPages > 1}">
-                            <nav aria-label="Project pagination" class="mt-4">
-                                <ul class="pagination justify-content-center">
+                        <!-- Phân trang: Hiển thị ngay cả khi totalPages <= 1 -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav>
+                                <ul class="pagination">
+                                    <!-- Nút Previous -->
                                     <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
-                                        <a class="page-link" href="/admin/project?page=${currentPage - 1}"
+                                        <a class="page-link" href="#" onclick="gotoPage(${currentPage - 1})"
                                             aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
+                                            <span aria-hidden="true">«</span>
                                         </a>
                                     </li>
+                                    <!-- Các số trang -->
                                     <c:forEach begin="1" end="${totalPages}" var="i">
-                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="/admin/project?page=${i}">${i}</a>
-                                        </li>
+                                        <c:if test="${i >= currentPage - 2 && i <= currentPage + 2}">
+                                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                                <a class="page-link" href="#" onclick="gotoPage(${i})">${i}</a>
+                                            </li>
+                                        </c:if>
                                     </c:forEach>
+                                    <!-- Nút Next -->
                                     <li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
-                                        <a class="page-link" href="/admin/project?page=${currentPage + 1}"
+                                        <a class="page-link" href="#" onclick="gotoPage(${currentPage + 1})"
                                             aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
+                                            <span aria-hidden="true">»</span>
                                         </a>
                                     </li>
                                 </ul>
                             </nav>
-                        </c:if>
+                        </div>
+                        <div class="text-center text-muted small">
+                            Hiển thị ${(currentPage-1)*10 + 1} đến ${Math.min(currentPage*10, totalItems)} trong tổng số
+                            ${totalItems} dự án
+                        </div>
                     </div>
                 </div>
-
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
                     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -321,16 +402,13 @@
                 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
                     crossorigin="anonymous"></script>
                 <script>
-                    // Initialize DataTable
-
-
+                    // Initialize DataTable (nếu cần)
                     // Xử lý hình ảnh trong nội dung TinyMCE để đảm bảo responsive
                     document.querySelectorAll('.modal-body div img').forEach(function (img) {
                         img.classList.add('img-fluid');
                         img.removeAttribute('width');
                         img.removeAttribute('height');
                     });
-
                     // Xử lý khi modal mở
                     const viewModals = document.querySelectorAll('[id^="viewModal"]');
                     viewModals.forEach(function (modal) {
@@ -343,7 +421,36 @@
                             });
                         });
                     });
-                    });
+                    function resetForm() {
+                        document.getElementById('name').value = '';
+                        document.getElementById('address').value = '';
+                        document.getElementById('productName').value = '';
+                        document.getElementById('serviceId').value = '';
+                        document.getElementById('fromDate').value = '';
+                        document.getElementById('toDate').value = '';
+                        document.getElementById('sortInput').value = 'date';
+                        document.getElementById('filterForm').submit();
+                    }
+                    function gotoPage(page) {
+                        // Tạo URL với tất cả tham số hiện tại
+                        let url = '/admin/project?page=' + page;
+                        // Thêm các tham số lọc nếu có
+                        const name = document.getElementById('name').value;
+                        const address = document.getElementById('address').value;
+                        const productName = document.getElementById('productName').value;
+                        const serviceId = document.getElementById('serviceId').value;
+                        const fromDate = document.getElementById('fromDate').value;
+                        const toDate = document.getElementById('toDate').value;
+                        const sort = document.getElementById('sortInput').value;
+                        if (name) url += '&name=' + encodeURIComponent(name);
+                        if (address) url += '&address=' + encodeURIComponent(address);
+                        if (productName) url += '&productName=' + encodeURIComponent(productName);
+                        if (serviceId) url += '&serviceId=' + encodeURIComponent(serviceId);
+                        if (fromDate) url += '&fromDate=' + encodeURIComponent(fromDate);
+                        if (toDate) url += '&toDate=' + encodeURIComponent(toDate);
+                        if (sort) url += '&sort=' + encodeURIComponent(sort);
+                        window.location.href = url;
+                    }
                 </script>
             </body>
 

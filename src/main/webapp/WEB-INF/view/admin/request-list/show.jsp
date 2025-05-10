@@ -37,6 +37,57 @@
                                                     hàng</h4>
                                             </div>
                                             <div class="card-body">
+                                                <!-- Thêm vào dưới phần card-header, ngay trước card-body -->
+                                                <div class="card-header bg-light">
+                                                    <form method="get" action="/admin/request-list" id="filterForm"
+                                                        class="mb-0">
+                                                        <div class="row g-2">
+                                                            <div class="col-md-3">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">Từ ngày</span>
+                                                                    <input type="datetime-local" class="form-control"
+                                                                        name="fromDate" value="${fromDate}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">Đến ngày</span>
+                                                                    <input type="datetime-local" class="form-control"
+                                                                        name="toDate" value="${toDate}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <select class="form-select" name="status">
+                                                                    <option value="">-- Trạng thái --</option>
+                                                                    <option value="PENDING" ${status=='PENDING'
+                                                                        ? 'selected' : '' }>Chờ xử lý</option>
+                                                                    <option value="COMPLETED" ${status=='COMPLETED'
+                                                                        ? 'selected' : '' }>Hoàn thành</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">Email</span>
+                                                                    <input type="text" class="form-control"
+                                                                        name="userEmail" placeholder="Email người dùng"
+                                                                        value="${userEmail}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <div class="d-flex">
+                                                                    <button type="submit" class="btn btn-primary me-1">
+                                                                        <i class="fas fa-search"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-secondary"
+                                                                        onclick="resetForm()">
+                                                                        <i class="fas fa-sync-alt"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                                 <div class="table-responsive">
                                                     <table id="requestListTable"
                                                         class="table table-striped table-hover">
@@ -52,7 +103,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <c:forEach items="${requestLists}" var="request">
+                                                            <c:forEach items="${requests}" var="request">
                                                                 <tr>
                                                                     <td>${request.id}</td>
                                                                     <td>
@@ -74,7 +125,11 @@
                                                                         ${request.addressInfo}
                                                                     </td>
                                                                     <td>
-                                                                        ${request.createdAt}
+                                                                        <fmt:parseDate value="${request.createdAt}"
+                                                                            pattern="yyyy-MM-dd'T'HH:mm:ss"
+                                                                            var="parsedDate" type="both" />
+                                                                        <fmt:formatDate value="${parsedDate}"
+                                                                            pattern="dd/MM/yyyy HH:mm" />
                                                                     </td>
                                                                     <td>
                                                                         <c:choose>
@@ -96,10 +151,18 @@
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </td>
+
+
+
                                                                     <td>
                                                                         <c:if
                                                                             test="${not empty request.updateStatusdAt}">
-                                                                            ${request.updateStatusdAt}
+                                                                            <fmt:parseDate
+                                                                                value="${request.updateStatusdAt}"
+                                                                                pattern="yyyy-MM-dd'T'HH:mm:ss"
+                                                                                var="parsedUpdateDate" type="both" />
+                                                                            <fmt:formatDate value="${parsedUpdateDate}"
+                                                                                pattern="dd/MM/yyyy HH:mm" />
                                                                         </c:if>
                                                                         <c:if test="${empty request.updateStatusdAt}">
                                                                             <span class="text-muted">Chưa cập
@@ -120,17 +183,23 @@
                                                                     </td>
                                                                 </tr>
                                                             </c:forEach>
+                                                            <c:if test="${totalElements == 0}">
+                                                                <tr>
+                                                                    <td colspan="7" class="text-center">Không tìm thấy
+                                                                        yêu cầu nào</td>
+                                                                </tr>
+                                                            </c:if>
                                                         </tbody>
                                                     </table>
                                                 </div>
 
-                                                <!-- Phân trang -->
+                                                <!-- Cập nhật phân trang để giữ các tham số tìm kiếm -->
                                                 <c:if test="${totalPages > 1}">
                                                     <nav aria-label="Page navigation" class="mt-4">
                                                         <ul class="pagination justify-content-center">
                                                             <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
                                                                 <a class="page-link"
-                                                                    href="/admin/request-list?page=${currentPage - 1}"
+                                                                    href="/admin/request-list?page=${currentPage - 1}${fromDate != null ? '&fromDate='.concat(fromDate) : ''}${toDate != null ? '&toDate='.concat(toDate) : ''}${status != null && !status.isEmpty() ? '&status='.concat(status) : ''}${userEmail != null && !userEmail.isEmpty() ? '&userEmail='.concat(userEmail) : ''}"
                                                                     aria-label="Previous">
                                                                     <span aria-hidden="true">&laquo;</span>
                                                                 </a>
@@ -140,14 +209,14 @@
                                                                 <li
                                                                     class="page-item ${currentPage == i ? 'active' : ''}">
                                                                     <a class="page-link"
-                                                                        href="/admin/request-list?page=${i}">${i}</a>
+                                                                        href="/admin/request-list?page=${i}${fromDate != null ? '&fromDate='.concat(fromDate) : ''}${toDate != null ? '&toDate='.concat(toDate) : ''}${status != null && !status.isEmpty() ? '&status='.concat(status) : ''}${userEmail != null && !userEmail.isEmpty() ? '&userEmail='.concat(userEmail) : ''}">${i}</a>
                                                                 </li>
                                                             </c:forEach>
 
                                                             <li
                                                                 class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
                                                                 <a class="page-link"
-                                                                    href="/admin/request-list?page=${currentPage + 1}"
+                                                                    href="/admin/request-list?page=${currentPage + 1}${fromDate != null ? '&fromDate='.concat(fromDate) : ''}${toDate != null ? '&toDate='.concat(toDate) : ''}${status != null && !status.isEmpty() ? '&status='.concat(status) : ''}${userEmail != null && !userEmail.isEmpty() ? '&userEmail='.concat(userEmail) : ''}"
                                                                     aria-label="Next">
                                                                     <span aria-hidden="true">&raquo;</span>
                                                                 </a>
@@ -173,3 +242,36 @@
                 </body>
 
                 </html>
+                <!-- Thêm script xử lý form lọc vào cuối trang -->
+                <script>
+                    function resetForm() {
+                        document.getElementById('filterForm').reset();
+                        window.location.href = "/admin/request-list";
+                    }
+
+                    // Format hiển thị ngày giờ
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Nếu có giá trị ngày giờ từ controller
+                        const fromDateInput = document.querySelector('input[name="fromDate"]');
+                        const toDateInput = document.querySelector('input[name="toDate"]');
+
+                        // Xử lý format datetime từ LocalDateTime thành định dạng HTML datetime-local
+                        if (fromDateInput.value) {
+                            try {
+                                const date = new Date(fromDateInput.value);
+                                fromDateInput.value = date.toISOString().slice(0, 16);
+                            } catch (e) {
+                                console.error("Lỗi chuyển đổi fromDate:", e);
+                            }
+                        }
+
+                        if (toDateInput.value) {
+                            try {
+                                const date = new Date(toDateInput.value);
+                                toDateInput.value = date.toISOString().slice(0, 16);
+                            } catch (e) {
+                                console.error("Lỗi chuyển đổi toDate:", e);
+                            }
+                        }
+                    });
+                </script>

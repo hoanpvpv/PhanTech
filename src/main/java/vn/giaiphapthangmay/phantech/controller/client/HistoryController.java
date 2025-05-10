@@ -148,6 +148,7 @@ public class HistoryController {
                     double newRating = Math.round(((sum + rating) / (reviews.size() + 1)) * 10.0) / 10.0;
                     product.setRating(newRating);
                 }
+                product.setReviewCount(product.getReviewCount() + 1);
                 this.productService.saveProduct(product);
 
             } else if (serviceId != 0) {
@@ -171,6 +172,7 @@ public class HistoryController {
                     double newRating = Math.round(((sum + rating) / (reviews.size() + 1)) * 10.0) / 10.0;
                     service.setRating(newRating);
                 }
+                service.setReviewCount(service.getReviewCount() + 1);
                 this.serviceService.saveService(service);
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage",

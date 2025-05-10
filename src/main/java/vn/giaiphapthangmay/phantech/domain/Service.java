@@ -21,6 +21,15 @@ public class Service {
     private String detailDesc;
     private String image;
     private double rating;
+    private long reviewCount;
+
+    public long getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(long reviewCount) {
+        this.reviewCount = reviewCount;
+    }
 
     public double getRating() {
         return rating;

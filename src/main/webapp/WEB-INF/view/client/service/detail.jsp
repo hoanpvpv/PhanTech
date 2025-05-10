@@ -34,7 +34,7 @@
                                     class="${i <= service.rating ? 'fas' : 'far'} fa-star ${i <= service.rating ? 'text-warning' : 'text-light'}"></i>
                             </c:forEach>
                             <span class="ms-2">${service.rating}/5.0</span>
-                            <span class="text-muted ms-2" style="color: white;">(${service.reviews.size()} đánh
+                            <span class="text-muted ms-2" style="color: white;">(${service.reviewCount} đánh
                                 giá)</span>
                         </div>
                         <form action="/add-service-to-request-list/${service.id}" method="post">

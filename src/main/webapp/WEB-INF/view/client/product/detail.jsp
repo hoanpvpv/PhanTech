@@ -112,7 +112,7 @@
                                         <c:if test="${product.rating % 1 != 0}">
                                             <i class="fas fa-star-half-alt text-warning"></i>
                                         </c:if>
-                                        <span class="text-muted ms-2">(${product.reviews.size()} đánh giá)</span>
+                                        <span class="text-muted ms-2">(${product.reviewCount} đánh giá)</span>
 
                                         <!-- Nhà sản xuất -->
                                         <span class="badge bg-primary ms-3">${product.manufacturer.name}</span>

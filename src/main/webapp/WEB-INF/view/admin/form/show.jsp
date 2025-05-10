@@ -38,6 +38,34 @@
                                                         hệ
                                                         từ khách hàng</h4>
                                                 </div>
+                                                <div class="card-header bg-light">
+                                                    <form action="/admin/form" method="get"
+                                                        class="row g-3 align-items-center">
+                                                        <div class="col-md-4">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">Từ ngày</span>
+                                                                <input type="date" class="form-control" name="fromDate"
+                                                                    value="${fromDate}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">Đến ngày</span>
+                                                                <input type="date" class="form-control" name="toDate"
+                                                                    value="${toDate}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="fas fa-filter me-1"></i> Lọc
+                                                            </button>
+                                                            <a href="/admin/form"
+                                                                class="btn btn-outline-secondary ms-1">
+                                                                <i class="fas fa-sync-alt me-1"></i> Đặt lại
+                                                            </a>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                                 <div class="card-body">
                                                     <div class="table-responsive">
                                                         <table id="formTable" class="table table-striped table-hover">
@@ -53,7 +81,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <c:forEach items="${forms}" var="form">
+                                                                <c:forEach items="${formPage}" var="form">
                                                                     <tr class="${form.read ? '' : 'table-warning'}">
                                                                         <td>${form.id}</td>
                                                                         <td>
@@ -107,6 +135,48 @@
                                                                 </c:forEach>
                                                             </tbody>
                                                         </table>
+                                                    </div>
+                                                    <!-- Phân trang -->
+                                                    <!-- Cập nhật phân trang để lọc theo khoảng ngày -->
+                                                    <c:if test="${totalPages > 1}">
+                                                        <nav aria-label="Page navigation" class="mt-4">
+                                                            <ul class="pagination justify-content-center">
+                                                                <!-- Nút Previous -->
+                                                                <li
+                                                                    class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
+                                                                    <a class="page-link"
+                                                                        href="/admin/form?page=${currentPage - 1}${fromDate != null ? '&fromDate='.concat(fromDate) : ''}${toDate != null ? '&toDate='.concat(toDate) : ''}"
+                                                                        aria-label="Previous">
+                                                                        <span aria-hidden="true">&laquo;</span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <!-- Các số trang -->
+                                                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                                                    <li
+                                                                        class="page-item ${currentPage == i ? 'active' : ''}">
+                                                                        <a class="page-link"
+                                                                            href="/admin/form?page=${i}${fromDate != null ? '&fromDate='.concat(fromDate) : ''}${toDate != null ? '&toDate='.concat(toDate) : ''}">${i}</a>
+                                                                    </li>
+                                                                </c:forEach>
+
+                                                                <!-- Nút Next -->
+                                                                <li
+                                                                    class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+                                                                    <a class="page-link"
+                                                                        href="/admin/form?page=${currentPage + 1}${fromDate != null ? '&fromDate='.concat(fromDate) : ''}${toDate != null ? '&toDate='.concat(toDate) : ''}"
+                                                                        aria-label="Next">
+                                                                        <span aria-hidden="true">&raquo;</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </c:if>
+                                                    <div class="d-flex justify-content-center text-muted">
+                                                        <small>Hiển thị ${(currentPage-1)*10 + 1} đến
+                                                            ${Math.min(currentPage*10, totalItems)} trong tổng số
+                                                            ${totalItems}
+                                                            form</small>
                                                     </div>
                                                 </div>
                                             </div>

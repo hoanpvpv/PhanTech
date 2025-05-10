@@ -42,4 +42,5 @@ public class ServiceService {
         // Sử dụng phương thức từ UploadService
         return uploadService.uploadImageForTinyMCE(file, "public");
     }
+
 }

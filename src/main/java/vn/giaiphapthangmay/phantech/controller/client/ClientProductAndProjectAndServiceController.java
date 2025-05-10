@@ -16,22 +16,20 @@ import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
 import vn.giaiphapthangmay.phantech.service.ReviewService;
 import vn.giaiphapthangmay.phantech.service.ServiceService;
-import vn.giaiphapthangmay.phantech.service.UserService;
 import org.springframework.ui.Model;
 
 @Controller
 public class ClientProductAndProjectAndServiceController {
     private final ProductService productService;
     private final ProjectService projectService;
-    private final UserService userService;
+
     private final ReviewService reviewService;
     private final ServiceService serviceService;
 
     public ClientProductAndProjectAndServiceController(ServiceService serviceService, ReviewService reviewService,
-            UserService userService,
             PasswordEncoder passwordEncoder,
             ProductService productService, ProjectService projectService) {
-        this.userService = userService;
+
         this.projectService = projectService;
         this.productService = productService;
         this.reviewService = reviewService;
@@ -47,22 +45,7 @@ public class ClientProductAndProjectAndServiceController {
         model.addAttribute("product", product);
         model.addAttribute("projects", projects);
         model.addAttribute("reviews", reviews);
-        return "client/product/detail"; // Trả về trang chi tiết sản phẩm
-    }
-
-    @GetMapping("/project")
-    public String getListProject(Model model) {
-        List<Project> projects = projectService.getAllProjects();
-        model.addAttribute("projects", projects);
-        return "client/project/show";
-    }
-
-    @GetMapping("/project/{id}")
-    public String getProjectDetail(@PathVariable("id") long id, Model model) {
-        Project project = projectService.getProjectById(id);
-        model.addAttribute("project", project);
-        return "client/project/detail";
-
+        return "client/product/detail";
     }
 
     @GetMapping("/service/{id}")

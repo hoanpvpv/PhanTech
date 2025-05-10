@@ -2,6 +2,7 @@ package vn.giaiphapthangmay.phantech.service;
 
 import java.util.stream.Collectors;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,11 +11,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.autoconfigure.rsocket.RSocketProperties.Server.Spec;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.criteria.Predicate;
 import vn.giaiphapthangmay.phantech.domain.Product;
 import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.repository.ProductRepository;
@@ -158,7 +164,6 @@ public class ProductService {
     }
 
     public Map<String, String> uploadImageForTinyMCE(MultipartFile file) throws IOException {
-        // Sử dụng phương thức từ UploadService
         return uploadService.uploadImageForTinyMCE(file, "product");
     }
 
@@ -166,4 +171,105 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public Specification<Product> buildAdvancedFilterSpecification(
+            String name,
+            List<Long> elevatorTypeIds,
+            List<Long> manufacturerIds,
+            Long minPrice,
+            Long maxPrice,
+            Double minSpeed,
+            Double maxSpeed,
+            Long minLoadCapacity,
+            Long maxLoadCapacity) {
+
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            // 1. Lọc theo tên sản phẩm
+            if (name != null && !name.isEmpty()) {
+                predicates.add(criteriaBuilder.like(
+                        criteriaBuilder.lower(root.get("name")),
+                        "%" + name.toLowerCase() + "%"));
+            }
+
+            // 2. Lọc theo loại thang máy (có thể chọn nhiều)
+            if (elevatorTypeIds != null && !elevatorTypeIds.isEmpty()) {
+                predicates.add(root.get("elevatorType").get("id").in(elevatorTypeIds));
+            }
+
+            // 3. Lọc theo nhà sản xuất (có thể chọn nhiều)
+            if (manufacturerIds != null && !manufacturerIds.isEmpty()) {
+                predicates.add(root.get("manufacturer").get("id").in(manufacturerIds));
+            }
+
+            // 4. Lọc theo khoảng giá
+            if (minPrice != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+            }
+            if (maxPrice != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            }
+
+            // 5. Lọc theo khoảng tốc độ
+            if (minSpeed != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("speed"), minSpeed));
+            }
+            if (maxSpeed != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("speed"), maxSpeed));
+            }
+
+            // 6. Lọc theo khoảng tải trọng
+            if (minLoadCapacity != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("loadCapacity"), minLoadCapacity));
+            }
+            if (maxLoadCapacity != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("loadCapacity"), maxLoadCapacity));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+    public Page<Product> getPageProductForClient(
+            String name,
+            List<Long> elevatorTypeIds,
+            List<Long> manufacturerIds,
+            Long minPrice,
+            Long maxPrice,
+            Double minSpeed,
+            Double maxSpeed,
+            Long minLoadCapacity,
+            Long maxLoadCapacity,
+            String sortBy,
+            String sortDirection,
+            int page) {
+
+        Sort sort;
+
+        switch (sortBy) {
+            case "price":
+                sort = "asc".equalsIgnoreCase(sortDirection)
+                        ? Sort.by("price").ascending()
+                        : Sort.by("price").descending();
+                break;
+            case "rating":
+                sort = Sort.by("rating").descending(); // Điểm đánh giá cao nhất luôn giảm dần
+                break;
+            case "reviewCount":
+                sort = Sort.by("reviewCount").descending(); // Điểm đánh giá cao nhất luôn giảm dần
+                break;
+            case "name":
+                sort = Sort.by("name").ascending();
+                break;
+            default:
+                sort = Sort.by("id").descending(); // Mặc định sắp xếp theo ID mới nhất
+        }
+        Pageable pageable = PageRequest.of(page - 1, 9, sort);
+
+        // Thực hiện truy vấn với specification và phân trang
+        return productRepository.findAll(
+                buildAdvancedFilterSpecification(name, elevatorTypeIds, manufacturerIds,
+                        minPrice, maxPrice, minSpeed, maxSpeed, minLoadCapacity, maxLoadCapacity),
+                pageable);
+    }
 }

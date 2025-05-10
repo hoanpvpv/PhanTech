@@ -1,38 +1,22 @@
 package vn.giaiphapthangmay.phantech.controller.admin;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import vn.giaiphapthangmay.phantech.domain.ElevatorType;
-import vn.giaiphapthangmay.phantech.domain.Manufacturer;
-import vn.giaiphapthangmay.phantech.domain.Product;
-import vn.giaiphapthangmay.phantech.domain.Service;
 import vn.giaiphapthangmay.phantech.domain.RequestItem;
 import vn.giaiphapthangmay.phantech.domain.RequestList;
-import vn.giaiphapthangmay.phantech.repository.ElevatorTypeRepository;
-import vn.giaiphapthangmay.phantech.repository.ManufacturerRepository;
-import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.RequestListService;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/admin/request-list")
@@ -44,16 +28,29 @@ public class RequestListController {
     }
 
     @GetMapping("")
-    public String getRequestListPage(Model model,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("createdAt").descending());
-        Page<RequestList> requestListPage = requestListService.getAllRequestLists(pageable);
+    public String getRequestLists(
+            Model model,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String userEmail,
+            @RequestParam(defaultValue = "1") int page) {
 
-        model.addAttribute("requestLists", requestListPage.getContent());
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+
+        Page<RequestList> requests = requestListService.findRequestListsByFilters(
+                fromDate, toDate, status, userEmail, pageable);
+
+        model.addAttribute("requests", requests.getContent());
+        model.addAttribute("fromDate", fromDate);
+        model.addAttribute("toDate", toDate);
+        model.addAttribute("status", status);
+        model.addAttribute("userEmail", userEmail);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", requestListPage.getTotalPages());
-        model.addAttribute("totalItems", requestListPage.getTotalElements());
+        model.addAttribute("totalPages", requests.getTotalPages());
+        model.addAttribute("totalItems", requests.getTotalElements());
+        model.addAttribute("totalElements", requests.getTotalElements());
+        System.out.println("Total elements: " + requests.getTotalElements());
         return "admin/request-list/show";
     }
 
@@ -72,24 +69,14 @@ public class RequestListController {
     @PostMapping("/update-status")
     public String updateStateOfRequestList(@RequestParam("requestListId") long id,
             @RequestParam("status") String status, @RequestParam("message") String message) {
-        RequestList requestList = requestListService.getRequestListById(id);
-        if (requestList != null) {
-            requestList.setStatus(status);
-            requestList.setMessage(message);
-            requestList.setUpdateStatusdAt(LocalDateTime.now());
-            requestListService.saveRequestList(requestList);
-        }
+        this.requestListService.updateStatusOfRequestList(id, status, message);
         return "redirect:/admin/request-list/" + id;
     }
 
     @PostMapping("/allow-to-review")
     public String allowToReview(@RequestParam("RequestItemId") long id) {
-        RequestItem requestItem = requestListService.getRequestItemById(id);
-        if (requestItem != null) {
-            requestItem.setCanReview("YES");
-            requestListService.saveRequestItem(requestItem);
-            return "redirect:/admin/request-list/" + requestItem.getRequestList().getId();
-        }
-        return "redirect:/admin/request-list";
+        this.requestListService.allowToReview(id);
+        long requestListId = this.requestListService.getRequestItemById(id).getRequestList().getId();
+        return "redirect:/admin/request-list/" + requestListId;
     }
 }
