@@ -46,16 +46,19 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public String getProductPage(Model model,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id").descending());
-        Page<Product> productPage = productService.getAllProducts(pageable);
+    public String getListProduct(
+            Model model,
+            @RequestParam(required = false) String name,
+            @RequestParam(defaultValue = "1") int page) {
 
-        model.addAttribute("products", productPage.getContent());
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("id").descending());
+        Page<Product> products = productService.getPageProductForAdmin(name, pageable);
+
+        model.addAttribute("name", name);
+        model.addAttribute("products", products.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("totalItems", productPage.getTotalElements());
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("totalItems", products.getTotalElements());
 
         return "admin/product/show";
     }

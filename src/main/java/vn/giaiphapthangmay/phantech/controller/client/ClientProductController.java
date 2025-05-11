@@ -7,15 +7,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.giaiphapthangmay.phantech.domain.ElevatorType;
 import vn.giaiphapthangmay.phantech.domain.Manufacturer;
 import vn.giaiphapthangmay.phantech.domain.Product;
+import vn.giaiphapthangmay.phantech.domain.Project;
+import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.service.ElevatorTypeService;
 import vn.giaiphapthangmay.phantech.service.ManufacturerService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
+import vn.giaiphapthangmay.phantech.service.ProjectService;
+import vn.giaiphapthangmay.phantech.service.ReviewService;
 
 @Controller
 @RequestMapping("/product")
@@ -23,13 +28,18 @@ public class ClientProductController {
     private final ProductService productService;
     private final ElevatorTypeService elevatorTypeService;
     private final ManufacturerService manufacturerService;
+    private final ProjectService projectService;
+    private final ReviewService reviewService;
 
     public ClientProductController(ProductService productService,
             ElevatorTypeService elevatorTypeService,
-            ManufacturerService manufacturerService) {
+            ManufacturerService manufacturerService, ProjectService projectService,
+            ReviewService reviewService) {
         this.productService = productService;
         this.elevatorTypeService = elevatorTypeService;
         this.manufacturerService = manufacturerService;
+        this.projectService = projectService;
+        this.reviewService = reviewService;
 
     }
 
@@ -81,4 +91,14 @@ public class ClientProductController {
         return "client/product/show";
     }
 
+    @GetMapping("/{id}")
+    public String getProductDetail(@PathVariable("id") long id, Model model) {
+        Product product = productService.getProductById(id).get();
+        List<Project> projects = projectService.getNewProjectsByProductId(id);
+        List<Review> reviews = reviewService.getNewReviewsOfProduct(id);
+        model.addAttribute("product", product);
+        model.addAttribute("projects", projects);
+        model.addAttribute("reviews", reviews);
+        return "client/product/detail";
+    }
 }

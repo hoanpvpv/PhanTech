@@ -1,8 +1,9 @@
 package vn.giaiphapthangmay.phantech.repository;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
     User save(User newUser);
+
+    Page<User> findByEmailContaining(String email, Pageable pageable);
+
+    Page<User> findAll(Pageable pageable);
 }

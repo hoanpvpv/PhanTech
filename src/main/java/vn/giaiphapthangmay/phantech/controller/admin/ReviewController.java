@@ -1,8 +1,11 @@
 package vn.giaiphapthangmay.phantech.controller.admin;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +28,34 @@ public class ReviewController {
     }
 
     @GetMapping("")
-    public String getReviewPage(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-        List<Review> reviews = reviewService.getPageReviews(page);
-        model.addAttribute("reviews", reviews);
+    public String getListReview(
+            Model model,
+            @RequestParam(required = false) String productName,
+            @RequestParam(required = false) String serviceName,
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "createdAt") String sort,
+            @RequestParam(defaultValue = "desc") String direction) {
+
+        Page<Review> reviews = reviewService.findReviews(
+                productName, serviceName, rating, fromDate, toDate,
+                page - 1, 20, sort, direction);
+
+        model.addAttribute("reviews", reviews.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", reviews.getTotalPages());
+        model.addAttribute("totalItems", reviews.getTotalElements());
+
+        model.addAttribute("productName", productName);
+        model.addAttribute("serviceName", serviceName);
+        model.addAttribute("rating", rating);
+        model.addAttribute("fromDate", fromDate);
+        model.addAttribute("toDate", toDate);
+        model.addAttribute("sort", sort);
+        model.addAttribute("direction", direction);
+
         return "admin/review/show";
     }
 

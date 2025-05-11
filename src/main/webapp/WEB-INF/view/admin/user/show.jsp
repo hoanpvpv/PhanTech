@@ -35,6 +35,27 @@
                                                 <h4 class="mb-0">Danh Sách Người Dùng</h4>
                                             </div>
                                             <div class="card-body">
+                                                <!-- Form tìm kiếm -->
+                                                <div class="mb-4">
+                                                    <form action="/admin/user" method="get" class="row g-3">
+                                                        <div class="col-md-6">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control"
+                                                                    id="emailKeyword" name="email"
+                                                                    value="${emailKeyword}"
+                                                                    placeholder="Tìm kiếm theo email...">
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    <i class="fas fa-search me-1"></i> Tìm kiếm
+                                                                </button>
+                                                                <a href="/admin/user" class="btn btn-secondary">
+                                                                    <i class="fas fa-undo me-1"></i> Đặt lại
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+
                                                 <div class="table-responsive">
                                                     <table id="usersTable" class="table table-striped table-hover">
                                                         <thead class="table-dark">
@@ -241,6 +262,48 @@
                                                             </c:forEach>
                                                         </tbody>
                                                     </table>
+                                                    <!-- Phân trang -->
+                                                    <c:if test="${totalPages > 1}">
+                                                        <nav aria-label="Page navigation" class="mt-4">
+                                                            <ul class="pagination justify-content-center">
+                                                                <!-- Nút Previous -->
+                                                                <li
+                                                                    class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
+                                                                    <a class="page-link"
+                                                                        href="/admin/user?page=${currentPage - 1}${not empty email ? '&email='.concat(email) : ''}"
+                                                                        aria-label="Previous">
+                                                                        <span aria-hidden="true">&laquo;</span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <!-- Các số trang -->
+                                                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                                                    <li
+                                                                        class="page-item ${currentPage == i ? 'active' : ''}">
+                                                                        <a class="page-link"
+                                                                            href="/admin/user?page=${i}${not empty email ? '&email='.concat(email) : ''}">${i}</a>
+                                                                    </li>
+                                                                </c:forEach>
+
+                                                                <!-- Nút Next -->
+                                                                <li
+                                                                    class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+                                                                    <a class="page-link"
+                                                                        href="/admin/user?page=${currentPage + 1}${not empty email ? '&email='.concat(email) : ''}"
+                                                                        aria-label="Next">
+                                                                        <span aria-hidden="true">&raquo;</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+
+                                                        <!-- Thông tin phân trang -->
+                                                        <div class="text-center text-muted">
+                                                            Hiển thị ${(currentPage-1)*10 + 1} đến
+                                                            ${Math.min(currentPage*10, totalItems)}
+                                                            trong tổng số ${totalItems} người dùng
+                                                        </div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>

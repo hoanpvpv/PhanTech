@@ -4,14 +4,11 @@ import java.util.stream.Collectors;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.boot.autoconfigure.rsocket.RSocketProperties.Server.Spec;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.criteria.Predicate;
 import vn.giaiphapthangmay.phantech.domain.Product;
-import vn.giaiphapthangmay.phantech.domain.Review;
+
 import vn.giaiphapthangmay.phantech.repository.ProductRepository;
 
 @Service
@@ -30,13 +27,11 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final UploadService uploadService;
-    private final ReviewService reviewService;
 
-    public ProductService(ProductRepository productRepository, UploadService uploadService,
-            ReviewService reviewService) {
+    public ProductService(ProductRepository productRepository, UploadService uploadService) {
         this.productRepository = productRepository;
         this.uploadService = uploadService;
-        this.reviewService = reviewService;
+
     }
 
     public Page<Product> getAllProducts(Pageable pageable) {
@@ -270,6 +265,15 @@ public class ProductService {
         return productRepository.findAll(
                 buildAdvancedFilterSpecification(name, elevatorTypeIds, manufacturerIds,
                         minPrice, maxPrice, minSpeed, maxSpeed, minLoadCapacity, maxLoadCapacity),
+                pageable);
+    }
+
+    public Page<Product> getPageProductForAdmin(
+            String name,
+            Pageable pageable) {
+        return productRepository.findAll(
+                buildAdvancedFilterSpecification(name, null, null,
+                        null, null, null, null, null, null),
                 pageable);
     }
 }

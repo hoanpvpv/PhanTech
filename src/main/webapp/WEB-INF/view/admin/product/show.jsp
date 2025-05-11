@@ -58,6 +58,32 @@
                                             </a>
                                         </div>
                                         <div class="card-body">
+                                            <div class="mb-4">
+                                                <form action="/admin/product" method="get" class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="name"
+                                                                name="name" value="${name}"
+                                                                placeholder="Nhập tên sản phẩm cần tìm...">
+                                                            <button class="btn btn-primary" type="submit">
+                                                                <i class="fas fa-search me-1"></i> Tìm kiếm
+                                                            </button>
+                                                            <a href="/admin/product" class="btn btn-secondary">
+                                                                <i class="fas fa-undo me-1"></i> Đặt lại
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Hiển thị thông tin kết quả tìm kiếm nếu có -->
+                                            <c:if test="${not empty name}">
+                                                <div class="alert alert-info mb-3">
+                                                    <i class="fas fa-search me-2"></i> Kết quả tìm kiếm cho
+                                                    <strong>"${name}"</strong>: Tìm thấy ${totalItems} sản
+                                                    phẩm
+                                                </div>
+                                            </c:if>
                                             <div class="table-responsive">
                                                 <table id="productsTable" class="table table-striped table-hover">
                                                     <thead class="table-dark">
@@ -387,22 +413,26 @@
                         </div>
 
                         <!-- Phân trang -->
+                        <!-- Phân trang -->
                         <c:if test="${totalPages > 1}">
                             <nav aria-label="Product pagination" class="mt-4">
                                 <ul class="pagination justify-content-center">
                                     <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
-                                        <a class="page-link" href="/admin/product?page=${currentPage - 1}"
+                                        <a class="page-link"
+                                            href="/admin/product?page=${currentPage - 1}${not empty name ? '&name='.concat(name) : ''}"
                                             aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
                                     <c:forEach begin="1" end="${totalPages}" var="i">
                                         <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="/admin/product?page=${i}">${i}</a>
+                                            <a class="page-link"
+                                                href="/admin/product?page=${i}${not empty name ? '&name='.concat(name) : ''}">${i}</a>
                                         </li>
                                     </c:forEach>
                                     <li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
-                                        <a class="page-link" href="/admin/product?page=${currentPage + 1}"
+                                        <a class="page-link"
+                                            href="/admin/product?page=${currentPage + 1}${not empty name ? '&name='.concat(name) : ''}"
                                             aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>

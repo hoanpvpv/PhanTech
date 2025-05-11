@@ -1,9 +1,14 @@
 package vn.giaiphapthangmay.phantech.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.criteria.Predicate;
 import vn.giaiphapthangmay.phantech.domain.ClientRequestItem;
 import vn.giaiphapthangmay.phantech.domain.ClientRequestList;
 import vn.giaiphapthangmay.phantech.repository.ClientRequestItemRepository;
@@ -35,4 +40,5 @@ public class ClientRequestListService {
     public void deleteClientRequestItem(long id) {
         clientRequestItemRepository.deleteById(id);
     }
+
 }

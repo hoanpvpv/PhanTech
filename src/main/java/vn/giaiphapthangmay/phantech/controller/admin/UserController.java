@@ -2,6 +2,11 @@ package vn.giaiphapthangmay.phantech.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +29,18 @@ public class UserController {
     }
 
     @GetMapping("")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
+    public String getUserPage(Model model, @RequestParam(required = false) String email,
+            @RequestParam(defaultValue = "1") int page) {
+
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+        Page<User> users = this.userService.getListUserForAdmin(email, pageable);
         List<Role> roles = this.userService.getAllRoles();
         model.addAttribute("roles", roles);
-        model.addAttribute("users", users);
+        model.addAttribute("users", users.getContent());
+        model.addAttribute("emailKeyword", email);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", users.getTotalPages());
+        model.addAttribute("totalItems", users.getTotalElements());
         return "admin/user/show";
     }
 

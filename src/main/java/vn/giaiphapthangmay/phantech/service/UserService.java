@@ -2,8 +2,9 @@ package vn.giaiphapthangmay.phantech.service;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import vn.giaiphapthangmay.phantech.domain.Role;
@@ -32,9 +33,13 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    // public Page<User> getAllUsers(Pageable pageable) {
-    // return userRepository.findAll(pageable);
-    // }
+    public Page<User> getListUserForAdmin(String email, Pageable pageable) {
+        if (email != null && !email.isEmpty()) {
+            return this.userRepository.findByEmailContaining(email, pageable);
+        } else {
+            return this.userRepository.findAll(pageable);
+        }
+    }
 
     public User handleSaveUser(User user) {
         User newUser = this.userRepository.save(user);

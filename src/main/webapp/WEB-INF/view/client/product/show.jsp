@@ -243,7 +243,8 @@
                                                             <input type="hidden" name="${_csrf.parameterName}"
                                                                 value="${_csrf.token}" />
                                                             <button type="submit" class="btn btn-sm btn-primary">
-                                                                <i class="fas fa-shopping-cart"></i> Yêu cầu tư vấn
+                                                                <i class="fas fa-shopping-cart"></i> Thêm vào danh sách
+                                                                yêu cầu
                                                             </button>
                                                         </form>
                                                         <a href="/product/${product.id}"

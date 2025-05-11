@@ -20,6 +20,7 @@ import vn.giaiphapthangmay.phantech.domain.ClientRequestList;
 import vn.giaiphapthangmay.phantech.domain.ElevatorType;
 import vn.giaiphapthangmay.phantech.domain.Product;
 import vn.giaiphapthangmay.phantech.domain.Project;
+import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.domain.Form;
 import vn.giaiphapthangmay.phantech.domain.User;
 import vn.giaiphapthangmay.phantech.domain.dto.RegisterDTO;
@@ -29,6 +30,7 @@ import vn.giaiphapthangmay.phantech.service.ClientRequestListService;
 import vn.giaiphapthangmay.phantech.service.ElevatorTypeService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
+import vn.giaiphapthangmay.phantech.service.ReviewService;
 import vn.giaiphapthangmay.phantech.service.ServiceService;
 import vn.giaiphapthangmay.phantech.service.UserService;
 import org.springframework.ui.Model;
@@ -46,12 +48,14 @@ public class HomePageController {
     private final FormRepository formRepository;
     private final ServiceService serviceService;
     private final ElevatorTypeService elevatorTypeService;
+    private final ReviewService reviewService;
 
     public HomePageController(ElevatorTypeService elevatorTypeService, UserService userService,
             PasswordEncoder passwordEncoder,
             ProductService productService, ProjectService projectService,
             ClientRequestListService clientRequestListService, FormRepository formRepository,
-            ServiceService serviceService) {
+            ServiceService serviceService, ReviewService reviewService) {
+        this.reviewService = reviewService;
         this.userService = userService;
         this.projectService = projectService;
         this.productService = productService;
@@ -65,7 +69,7 @@ public class HomePageController {
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("registerDTO", new RegisterDTO());
-        return "client/auth/register"; // Trả về trang đăng ký
+        return "client/auth/register";
     }
 
     @PostMapping("/register")
@@ -95,7 +99,8 @@ public class HomePageController {
 
     @GetMapping("")
     public String getHomePage(Model model) {
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = this.productService.getPageProductForClient(null, null, null, null, null, null, null,
+                null, null, "rating", "desc", 1).getContent();
         model.addAttribute("products", products);
         List<Project> projects = projectService.getAllProjects();
         model.addAttribute("projects", projects);
@@ -103,7 +108,7 @@ public class HomePageController {
         model.addAttribute("services", services);
         List<ElevatorType> elevatorTypes = this.elevatorTypeService.getAllElevatorType();
         model.addAttribute("elevatorTypes", elevatorTypes);
-        return "client/auth/index"; // Trả về trang chính
+        return "client/auth/index";
     }
 
     @GetMapping("/login")
@@ -195,6 +200,18 @@ public class HomePageController {
             @RequestParam("message") String message) {
         this.formRepository.save(new Form(name, phone, email, address, message));
         return "redirect:/contact?success=send-message";
+    }
+
+    @GetMapping("/service/{id}")
+    public String getServiceDetail(@PathVariable("id") long id, Model model) {
+        vn.giaiphapthangmay.phantech.domain.Service service = serviceService.getServiceById(id);
+        model.addAttribute("service", service);
+        List<Review> reviews = reviewService.getNewReviewsOfService(id);
+        List<Project> projects = projectService.getNewProjectsByServiceId(id);
+        model.addAttribute("projects", projects);
+        model.addAttribute("reviews", reviews);
+        return "client/service/detail";
+
     }
 
 }

@@ -458,7 +458,7 @@
                                                 </div>
                                             </div>
                                             <div class="pcv-footer">
-                                                <a href="/projects/${project.id}" class="pcv-btn">Xem chi tiết <i
+                                                <a href="/project/${project.id}" class="pcv-btn">Xem chi tiết <i
                                                         class="fas fa-arrow-right"></i></a>
                                             </div>
                                         </div>

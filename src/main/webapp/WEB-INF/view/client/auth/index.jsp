@@ -30,7 +30,8 @@
                         <!-- Cột 1 -->
                         <c:forEach items="${elevatorTypes}" var="elevatorType">
                             <div class="col-lg-2 col-md-4 col-sm-6 text-center product-item">
-                                <a href="/product/${elevatorType.id}">
+                                <a
+                                    href="/product?name=&elevatorTypes=${elevatorType.id}&minPrice=&maxPrice=&minSpeed=&maxSpeed=&minLoad=&maxLoad=&sortBy=id&sortDir=desc">
                                     <div class="product-card">
                                         <div class="product-img-wrapper">
                                             <img src="/images/public/${elevatorType.image}" alt="${elevatorType.name}"
@@ -51,64 +52,86 @@
                 <h2 class="text-center text-primary mb-4">Một số sản phẩm được đánh giá cao nhất</h2>
 
                 <div class="container">
-                    <div id="top-products" class="my-5"></div>
-                    <div class="row d-flex flex-wrap g-3 justify-content-center">
-                        <c:forEach items="${products}" var="product" begin="0" end="7">
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="ecommerce-card h-100">
-                                    <div class="ec-image">
-                                        <img src="/images/product/${product.image1}" alt="${product.name}"
-                                            class="img-fluid">
-                                        <div class="hover-overlay">
-                                            <button class="quick-view-btn" data-product-id="${product.id}"><i
-                                                    class="fas fa-eye"></i> Xem chi tiết</button>
+                    <div id="top-products" class="my-5">
+                        <div class="row d-flex flex-wrap g-3 justify-content-center">
+                            <c:forEach items="${products}" var="product">
+                                <div class="col-lg-3 col-md-4 col-sm-12 mb-4">
+                                    <div class="ecommerce-card h-100">
+                                        <div class="ec-image">
+                                            <img src="/images/product/${product.image1}" alt="${product.name}"
+                                                class="img-fluid">
+                                            <div class="hover-overlay">
+                                                <a href="/product/${product.id}" class="quick-view-btn">
+                                                    <i class="fas fa-eye"></i> Xem chi tiết
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="ec-content">
-                                        <div class="ec-rating">
-                                            <c:forEach begin="1" end="${product.rating}">
-                                                <i class="fas fa-star"></i>
-                                            </c:forEach>
-                                            <c:if test="${product.rating % 1 != 0}">
-                                                <i class="fas fa-star-half-alt"></i>
-                                            </c:if>
-                                            <span>(${product.reviews.size()})</span>
+                                        <div class="ec-content">
+                                            <div class="ec-rating">
+                                                <c:forEach begin="1" end="${product.rating}">
+                                                    <i class="fas fa-star"></i>
+                                                </c:forEach>
+                                                <c:if test="${product.rating % 1 != 0}">
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </c:if>
+                                                <c:forEach begin="1" end="${5 - Math.ceil(product.rating)}">
+                                                    <i class="far fa-star"></i>
+                                                </c:forEach>
+                                                <span class="ms-1">(${product.reviews.size()})</span>
+                                            </div>
+                                            <h5 class="ec-title">${product.name}</h5>
+                                            <div class="ec-category">${product.elevatorType.name}</div>
+                                            <div class="ec-price">
+                                                <c:choose>
+                                                    <c:when test="${product.price > 0}">
+                                                        <span class="current-price">
+                                                            <fmt:formatNumber value="${product.price}" type="currency"
+                                                                currencySymbol="₫" maxFractionDigits="0" />
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="current-price">Liên hệ báo giá</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                            <div class="spec-label">
+                                                <i class="fas fa-info-circle"></i> ${product.shortDescription}
+                                            </div>
+                                            <div class="spec-label">
+                                                <i class="fas fa-tachometer-alt"></i> Tốc độ: ${product.speed}
+                                                m/s
+                                            </div>
+                                            <div class="spec-label">
+                                                <i class="fas fa-weight-hanging"></i> Tải trọng:
+                                                ${product.loadCapacity} kg
+                                            </div>
+                                            <div class="spec-label">
+                                                <i class="fas fa-door-open"></i> Loại cửa: ${product.doorType}
+                                            </div>
                                         </div>
-                                        <h5 class="ec-title">${product.name}</h5>
-                                        <div class="ec-category">${product.elevatorType.name}</div>
-                                        <div class="ec-price">
-                                            <span class="current-price">${product.price}₫</span>
-                                        </div>
-                                        <div class="spec-label me-1">
-                                            <i class="fas fa-tachometer-alt me-1"></i>${product.shortDescription}
-                                        </div>
-                                        <div class="spec-label me-1">
-                                            <i class="fas fa-tachometer-alt me-1"></i>Tốc độ: ${product.speed} m/s
-                                        </div>
-                                        <div class="spec-label me-1">
-                                            <i class="fas fa-weight me-1"></i>Tải trọng: ${product.loadCapacity}
-                                            kg
-                                        </div>
-                                        <div class="spec-label me-1">
-                                            <i class="fas fa-door-open me-1"></i>Loại cửa: ${product.doorType}
-                                        </div>
-                                    </div>
-                                    <div class="ec-footer">
-                                        <div class="ec-footer-row">
-                                            <form action="/add-product-to-request-list/${product.id}" method="post">
-                                                <input type="hidden" name="${_csrf.parameterName}"
-                                                    value="${_csrf.token}" />
-                                                <button type="submit" class="btn btn-primary rounded-pill">Thêm vào danh
-                                                    sách yêu cầu</button>
-                                            </form>
-                                            <a href="/product/${product.id}" class="btn btn-outline-secondary">Xem chi
-                                                tiết</a>
+                                        <div class="ec-footer">
+                                            <div class="ec-footer-row">
+                                                <form action="/add-product-to-request-list/${product.id}" method="post"
+                                                    class="me-2">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        <i class="fas fa-shopping-cart"></i> Thêm vào danh sách
+                                                        yêu cầu
+                                                    </button>
+                                                </form>
+                                                <a href="/product/${product.id}"
+                                                    class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fas fa-info-circle"></i> Chi tiết
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach>
+                        </div>
                     </div>
+
                 </div>
 
                 </div>

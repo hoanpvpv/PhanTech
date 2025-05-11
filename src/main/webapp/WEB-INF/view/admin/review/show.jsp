@@ -40,6 +40,89 @@
                                                         hàng</h4>
                                                 </div>
                                                 <div class="card-body">
+                                                    <div class="filter-section mb-4">
+                                                        <form method="get" action="/admin/review" class="row g-3">
+                                                            <div class="col-md-3">
+                                                                <label for="productName" class="form-label">Tên sản
+                                                                    phẩm</label>
+                                                                <input type="text" class="form-control" id="productName"
+                                                                    name="productName" value="${productName}"
+                                                                    placeholder="Nhập tên sản phẩm...">
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <label for="serviceName" class="form-label">Tên dịch
+                                                                    vụ</label>
+                                                                <input type="text" class="form-control" id="serviceName"
+                                                                    name="serviceName" value="${serviceName}"
+                                                                    placeholder="Nhập tên dịch vụ...">
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <label for="rating" class="form-label">Số sao</label>
+                                                                <select class="form-select" id="rating" name="rating">
+                                                                    <option value="" ${empty rating ? 'selected' : '' }>
+                                                                        Tất cả</option>
+                                                                    <option value="1" ${rating==1 ? 'selected' : '' }>1
+                                                                        sao</option>
+                                                                    <option value="2" ${rating==2 ? 'selected' : '' }>2
+                                                                        sao</option>
+                                                                    <option value="3" ${rating==3 ? 'selected' : '' }>3
+                                                                        sao</option>
+                                                                    <option value="4" ${rating==4 ? 'selected' : '' }>4
+                                                                        sao</option>
+                                                                    <option value="5" ${rating==5 ? 'selected' : '' }>5
+                                                                        sao</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <label for="fromDate" class="form-label">Từ ngày</label>
+                                                                <input type="date" class="form-control" id="fromDate"
+                                                                    name="fromDate" value="${fromDate}">
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <label for="toDate" class="form-label">Đến ngày</label>
+                                                                <input type="date" class="form-control" id="toDate"
+                                                                    name="toDate" value="${toDate}">
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <label for="sort" class="form-label">Sắp xếp</label>
+                                                                <select class="form-select" id="sort" name="sort">
+                                                                    <option value="createdAt" ${sort=='createdAt'
+                                                                        ? 'selected' : '' }>Ngày tạo</option>
+                                                                    <option value="rating" ${sort=='rating' ? 'selected'
+                                                                        : '' }>Số sao</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <label for="direction" class="form-label">Thứ tự</label>
+                                                                <select class="form-select" id="direction"
+                                                                    name="direction">
+                                                                    <option value="desc" ${direction=='desc'
+                                                                        ? 'selected' : '' }>Giảm dần</option>
+                                                                    <option value="asc" ${direction=='asc' ? 'selected'
+                                                                        : '' }>Tăng dần</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-md-2 d-flex align-items-end">
+                                                                <button type="submit" class="btn btn-primary w-100">
+                                                                    <i class="fas fa-search me-1"></i> Lọc
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="col-md-2 d-flex align-items-end">
+                                                                <a href="/admin/review"
+                                                                    class="btn btn-outline-secondary w-100">
+                                                                    <i class="fas fa-undo-alt me-1"></i> Đặt lại
+                                                                </a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                     <div class="table-responsive">
                                                         <table id="reviewTable" class="table table-striped table-hover">
                                                             <thead class="table-dark">
@@ -126,7 +209,7 @@
                                                                 <li
                                                                     class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
                                                                     <a class="page-link"
-                                                                        href="/admin/review?page=${currentPage - 1}"
+                                                                        href="/admin/review?page=${currentPage - 1}${not empty productName ? '&productName='.concat(productName) : ''}${not empty serviceName ? '&serviceName='.concat(serviceName) : ''}${not empty rating ? '&rating='.concat(rating) : ''}${not empty fromDate ? '&fromDate='.concat(fromDate) : ''}${not empty toDate ? '&toDate='.concat(toDate) : ''}${not empty sort ? '&sort='.concat(sort) : ''}${not empty direction ? '&direction='.concat(direction) : ''}"
                                                                         aria-label="Previous">
                                                                         <span aria-hidden="true">&laquo;</span>
                                                                     </a>
@@ -136,14 +219,14 @@
                                                                     <li
                                                                         class="page-item ${currentPage == i ? 'active' : ''}">
                                                                         <a class="page-link"
-                                                                            href="/admin/review?page=${i}">${i}</a>
+                                                                            href="/admin/review?page=${i}${not empty productName ? '&productName='.concat(productName) : ''}${not empty serviceName ? '&serviceName='.concat(serviceName) : ''}${not empty rating ? '&rating='.concat(rating) : ''}${not empty fromDate ? '&fromDate='.concat(fromDate) : ''}${not empty toDate ? '&toDate='.concat(toDate) : ''}${not empty sort ? '&sort='.concat(sort) : ''}${not empty direction ? '&direction='.concat(direction) : ''}">${i}</a>
                                                                     </li>
                                                                 </c:forEach>
 
                                                                 <li
                                                                     class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
                                                                     <a class="page-link"
-                                                                        href="/admin/review?page=${currentPage + 1}"
+                                                                        href="/admin/review?page=${currentPage + 1}${not empty productName ? '&productName='.concat(productName) : ''}${not empty serviceName ? '&serviceName='.concat(serviceName) : ''}${not empty rating ? '&rating='.concat(rating) : ''}${not empty fromDate ? '&fromDate='.concat(fromDate) : ''}${not empty toDate ? '&toDate='.concat(toDate) : ''}${not empty sort ? '&sort='.concat(sort) : ''}${not empty direction ? '&direction='.concat(direction) : ''}"
                                                                         aria-label="Next">
                                                                         <span aria-hidden="true">&raquo;</span>
                                                                     </a>
