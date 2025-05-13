@@ -65,7 +65,7 @@ public class ClientProductController {
                 manufacturers, minPrice, maxPrice,
                 minSpeed, maxSpeed, minLoad, maxLoad,
                 sortBy, sortDir, page);
-
+        List<Product> testList = productPage.getContent();
         List<ElevatorType> allElevatorTypes = this.elevatorTypeService.getAllElevatorType();
         List<Manufacturer> allManufacturers = this.manufacturerService.getAllManufacturers();
 

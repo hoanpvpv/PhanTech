@@ -151,6 +151,7 @@
                                             <form action="/submit-request-list" method="post">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                     value="${_csrf.token}">
+
                                                 <div class="mb-3">
                                                     <label for="fullNameInfo" class="form-label">Họ và tên <span
                                                             class="text-danger">*</span></label>
@@ -190,9 +191,6 @@
                                                     <button type="submit" class="btn btn-primary btn-lg">
                                                         <i class="fas fa-paper-plane me-2"></i>Gửi yêu cầu
                                                     </button>
-                                                    <a href="/product" class="btn btn-outline-secondary">
-                                                        <i class="fas fa-shopping-cart me-2"></i>Tiếp tục xem sản phẩm
-                                                    </a>
                                                 </div>
                                             </form>
                                         </div>

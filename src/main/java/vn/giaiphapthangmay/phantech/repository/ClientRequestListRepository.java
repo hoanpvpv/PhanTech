@@ -14,4 +14,6 @@ import vn.giaiphapthangmay.phantech.domain.ClientRequestList;
 public interface ClientRequestListRepository extends JpaRepository<ClientRequestList, Long>, JpaSpecificationExecutor {
     Page<ClientRequestList> findAll(Specification specification, Pageable pageable);
 
+    ClientRequestList findByUserId(long userId);
+
 }
