@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.giaiphapthangmay.phantech.domain.Manufacturer;
-import vn.giaiphapthangmay.phantech.repository.ManufacturerRepository;
+import vn.giaiphapthangmay.phantech.service.ManufacturerService;
 import vn.giaiphapthangmay.phantech.service.UploadService;
 
 @Controller
 @RequestMapping("/admin/manufacturer")
 public class ManufacturerController {
-    private final ManufacturerRepository manufacturerRepository;
+    private final ManufacturerService manufacturerService;
     private final UploadService uploadService;
 
-    public ManufacturerController(ManufacturerRepository manufacturerRepository, UploadService uploadService) {
-        this.manufacturerRepository = manufacturerRepository;
+    public ManufacturerController(ManufacturerService manufacturerService, UploadService uploadService) {
+        this.manufacturerService = manufacturerService;
         this.uploadService = uploadService;
     }
 
     @GetMapping("")
     public String getManufacturerPage(Model model) {
-        List<Manufacturer> manufacturers = manufacturerRepository.findAll();
+        List<Manufacturer> manufacturers = manufacturerService.getAllManufacturers();
         model.addAttribute("manufacturers", manufacturers);
         return "admin/manufacturer/show";
     }
@@ -49,15 +49,15 @@ public class ManufacturerController {
             String logoPath = uploadService.handleSaveUploadFile(logoFile, "public");
             manufacturer.setLogo(logoPath);
         }
-        manufacturerRepository.save(manufacturer);
+        this.manufacturerService.saveManufacturer(manufacturer);
         return "redirect:/admin/manufacturer";
     }
 
     @GetMapping("/edit/{id}")
     public String getEditManufacturerPage(@PathVariable long id, Model model) {
-        Optional<Manufacturer> manufacturerOpt = manufacturerRepository.findById(id);
-        if (manufacturerOpt.isPresent()) {
-            model.addAttribute("manufacturer", manufacturerOpt.get());
+        Manufacturer manufacturer = manufacturerService.getManufacturerById(id);
+        if (manufacturer != null) {
+            model.addAttribute("manufacturer", manufacturer);
             return "admin/manufacturer/edit";
         }
         return "redirect:/admin/manufacturer";
@@ -67,9 +67,8 @@ public class ManufacturerController {
     public String updateManufacturer(@PathVariable long id,
             @ModelAttribute Manufacturer manufacturer,
             @RequestParam("logoFile") MultipartFile logoFile) throws IOException {
-        Optional<Manufacturer> existingOpt = manufacturerRepository.findById(id);
-        if (existingOpt.isPresent()) {
-            Manufacturer existing = existingOpt.get();
+        Manufacturer existing = manufacturerService.getManufacturerById(id);
+        if (existing != null) {
             existing.setName(manufacturer.getName());
             existing.setOrigin(manufacturer.getOrigin());
 
@@ -77,15 +76,14 @@ public class ManufacturerController {
                 String logoPath = uploadService.handleSaveUploadFile(logoFile, "public");
                 existing.setLogo(logoPath);
             }
-
-            manufacturerRepository.save(existing);
+            manufacturerService.saveManufacturer(existing);
         }
         return "redirect:/admin/manufacturer";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteManufacturer(@PathVariable long id) {
-        manufacturerRepository.deleteById(id);
+        this.manufacturerService.deleteManufacturer(id);
         return "redirect:/admin/manufacturer";
     }
 }

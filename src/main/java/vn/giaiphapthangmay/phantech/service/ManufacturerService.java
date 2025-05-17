@@ -18,4 +18,19 @@ public class ManufacturerService {
     public List<Manufacturer> getAllManufacturers() {
         return manufacturerRepository.findAll();
     }
+
+    public void saveManufacturer(Manufacturer manufacturer) {
+        manufacturerRepository.save(manufacturer);
+    }
+
+    public Manufacturer getManufacturerById(long id) {
+        return manufacturerRepository.findById(id).orElse(null);
+    }
+
+    public void deleteManufacturer(long id) {
+        Manufacturer manufacturer = manufacturerRepository.findById(id).orElse(null);
+        if (manufacturer != null) {
+            manufacturerRepository.delete(manufacturer);
+        }
+    }
 }

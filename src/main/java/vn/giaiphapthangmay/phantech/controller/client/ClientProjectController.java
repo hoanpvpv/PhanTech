@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import vn.giaiphapthangmay.phantech.domain.Service;
-import vn.giaiphapthangmay.phantech.domain.ElevatorType;
 import vn.giaiphapthangmay.phantech.domain.Project;
-import vn.giaiphapthangmay.phantech.service.ElevatorTypeService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
 import vn.giaiphapthangmay.phantech.service.ProjectService;
 import vn.giaiphapthangmay.phantech.service.ServiceService;
@@ -25,15 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/project")
 public class ClientProjectController {
 
-    private final ElevatorTypeService elevatorTypeService;
     private final ProjectService projectService;
     private final ServiceService serviceService;
 
     public ClientProjectController(ProjectService projectService, ServiceService serviceService,
-            ProductService productService, ElevatorTypeService elevatorTypeService) {
+            ProductService productService) {
         this.projectService = projectService;
         this.serviceService = serviceService;
-        this.elevatorTypeService = elevatorTypeService;
     }
 
     @GetMapping("")

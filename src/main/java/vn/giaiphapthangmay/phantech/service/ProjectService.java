@@ -23,31 +23,26 @@ import vn.giaiphapthangmay.phantech.domain.Product;
 import vn.giaiphapthangmay.phantech.domain.Product_;
 import vn.giaiphapthangmay.phantech.domain.Project;
 import vn.giaiphapthangmay.phantech.domain.Project_;
-import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.domain.Service_;
+import vn.giaiphapthangmay.phantech.repository.ProductRepository;
 import vn.giaiphapthangmay.phantech.repository.ProjectRepository;
-import vn.giaiphapthangmay.phantech.repository.ServiceRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.access.method.P;
 
 @Service
 public class ProjectService {
 
     private final UploadService uploadService;
     private final ProjectRepository projectRepository;
-    private final ProductService productService;
-    private final ServiceService serviceService;
+    private final ProductRepository productRepository;
 
     public ProjectService(UploadService uploadService,
             ProjectRepository projectRepository,
-            ProductService productService,
+            ProductRepository productRepository,
             ServiceService serviceService) {
         this.uploadService = uploadService;
         this.projectRepository = projectRepository;
-        this.productService = productService;
-        this.serviceService = serviceService;
+        this.productRepository = productRepository;
+
     }
 
     public Project createProject(Project project, MultipartFile imageFile) throws IOException {
@@ -76,7 +71,7 @@ public class ProjectService {
             // Xử lý Product - Cải thiện xử lý product ID
             if (project.getProduct() != null && project.getProduct().getId() > 0) {
                 Long productId = project.getProduct().getId();
-                Optional<Product> productOpt = productService.getProductById(productId);
+                Optional<Product> productOpt = productRepository.findById(productId);
                 if (productOpt.isPresent()) {
                     existing.setProduct(productOpt.get());
                 } else {

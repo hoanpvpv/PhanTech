@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vn.giaiphapthangmay.phantech.domain.ElevatorType;
 import vn.giaiphapthangmay.phantech.domain.Manufacturer;
 import vn.giaiphapthangmay.phantech.domain.Product;
-import vn.giaiphapthangmay.phantech.domain.Project;
-import vn.giaiphapthangmay.phantech.domain.Review;
 import vn.giaiphapthangmay.phantech.service.ElevatorTypeService;
 import vn.giaiphapthangmay.phantech.service.ManufacturerService;
 import vn.giaiphapthangmay.phantech.service.ProductService;
@@ -28,8 +26,6 @@ public class ClientProductController {
     private final ProductService productService;
     private final ElevatorTypeService elevatorTypeService;
     private final ManufacturerService manufacturerService;
-    private final ProjectService projectService;
-    private final ReviewService reviewService;
 
     public ClientProductController(ProductService productService,
             ElevatorTypeService elevatorTypeService,
@@ -38,8 +34,6 @@ public class ClientProductController {
         this.productService = productService;
         this.elevatorTypeService = elevatorTypeService;
         this.manufacturerService = manufacturerService;
-        this.projectService = projectService;
-        this.reviewService = reviewService;
 
     }
 
@@ -65,7 +59,6 @@ public class ClientProductController {
                 manufacturers, minPrice, maxPrice,
                 minSpeed, maxSpeed, minLoad, maxLoad,
                 sortBy, sortDir, page);
-        List<Product> testList = productPage.getContent();
         List<ElevatorType> allElevatorTypes = this.elevatorTypeService.getAllElevatorType();
         List<Manufacturer> allManufacturers = this.manufacturerService.getAllManufacturers();
 
@@ -94,11 +87,9 @@ public class ClientProductController {
     @GetMapping("/{id}")
     public String getProductDetail(@PathVariable("id") long id, Model model) {
         Product product = productService.getProductById(id).get();
-        List<Project> projects = projectService.getNewProjectsByProductId(id);
-        List<Review> reviews = reviewService.getNewReviewsOfProduct(id);
         model.addAttribute("product", product);
-        model.addAttribute("projects", projects);
-        model.addAttribute("reviews", reviews);
+        model.addAttribute("projects", product.getProjects());
+        model.addAttribute("reviews", product.getReviews());
         return "client/product/detail";
     }
 }

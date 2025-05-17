@@ -63,13 +63,6 @@
                                                                 <td>
                                                                     <div class="btn-group" role="group">
                                                                         <button type="button"
-                                                                            class="btn btn-sm btn-info"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#viewModal${manufacturer.id}"
-                                                                            title="Xem chi tiết">
-                                                                            <i class="fas fa-eye"></i>
-                                                                        </button>
-                                                                        <button type="button"
                                                                             class="btn btn-sm btn-warning"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#editModal${manufacturer.id}"
@@ -85,92 +78,6 @@
                                                                         </button>
                                                                     </div>
 
-                                                                    <!-- Manufacturer Details Modal -->
-                                                                    <div class="modal fade"
-                                                                        id="viewModal${manufacturer.id}" tabindex="-1"
-                                                                        aria-labelledby="viewModalLabel${manufacturer.id}"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog modal-lg">
-                                                                            <div class="modal-content">
-                                                                                <div
-                                                                                    class="modal-header bg-info text-white">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="viewModalLabel${manufacturer.id}">
-                                                                                        Thông tin chi tiết nhà sản xuất:
-                                                                                        ${manufacturer.name}
-                                                                                    </h5>
-                                                                                    <button type="button"
-                                                                                        class="btn-close"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close"></button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <div class="container-fluid">
-                                                                                        <div class="row mb-3">
-                                                                                            <div
-                                                                                                class="col-md-3 fw-bold">
-                                                                                                ID:</div>
-                                                                                            <div class="col-md-9">
-                                                                                                ${manufacturer.id}</div>
-                                                                                        </div>
-                                                                                        <div class="row mb-3">
-                                                                                            <div
-                                                                                                class="col-md-3 fw-bold">
-                                                                                                Tên nhà sản xuất:</div>
-                                                                                            <div class="col-md-9">
-                                                                                                ${manufacturer.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row mb-3">
-                                                                                            <div
-                                                                                                class="col-md-3 fw-bold">
-                                                                                                Xuất xứ:</div>
-                                                                                            <div class="col-md-9">
-                                                                                                ${manufacturer.origin}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row mb-3">
-                                                                                            <div
-                                                                                                class="col-md-3 fw-bold">
-                                                                                                Logo:</div>
-                                                                                            <div class="col-md-9">
-                                                                                                <c:if
-                                                                                                    test="${not empty manufacturer.logo}">
-
-                                                                                                    <img src="/images/public/${manufacturer.logo}"
-                                                                                                        alt="${manufacturer.name}"
-                                                                                                        class="img-fluid"
-                                                                                                        style="max-height: 200px;">
-                                                                                                </c:if>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row mb-3">
-                                                                                            <div
-                                                                                                class="col-md-3 fw-bold">
-                                                                                                Số sản phẩm:</div>
-                                                                                            <div class="col-md-9">
-                                                                                                ${manufacturer.products.size()}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-secondary"
-                                                                                        data-bs-dismiss="modal">Đóng</button>
-                                                                                    <button type="button"
-                                                                                        class="btn btn-warning"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#editModal${manufacturer.id}"
-                                                                                        data-bs-dismiss="modal">
-                                                                                        <i
-                                                                                            class="fas fa-edit me-1"></i>Chỉnh
-                                                                                        sửa
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                     <!-- Modal Chỉnh Sửa Nhà Sản Xuất -->
                                                                     <c:forEach items="${manufacturers}"
                                                                         var="manufacturer">
